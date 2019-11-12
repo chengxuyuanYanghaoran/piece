@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hlwxy.xr_piece.system.dao.WagesDao">
+
+	<select id="get" resultType="com.hlwxy.xr_piece.system.domain.WagesDO">
+		select `id`,`bill_code`,`bill_date`,`acc_date`,`date_mark`,`people_code`,`name`,`pro_code`,`pro_name`,`product_code`,`product_name`,`harvest`,`price`,`money`,`auditor`,`audit_date` from wages where id = #{value}
+	</select>
+
+	<select id="list" resultType="com.hlwxy.xr_piece.system.domain.WagesDO">
+		select `id`,`bill_code`,`bill_date`,`acc_date`,`date_mark`,`people_code`,`name`,`pro_code`,`pro_name`,`product_code`,`product_name`,`harvest`,`price`,`money`,`auditor`,`audit_date` from wages
+        <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="billCode != null and billCode != ''"> and bill_code = #{billCode} </if>
+		  		  <if test="billDate != null and billDate != ''"> and bill_date = #{billDate} </if>
+		  		  <if test="accDate != null and accDate != ''"> and acc_date = #{accDate} </if>
+		  		  <if test="dateMark != null and dateMark != ''"> and date_mark = #{dateMark} </if>
+		  		  <if test="peopleCode != null and peopleCode != ''"> and people_code = #{peopleCode} </if>
+		  		  <if test="name != null and name != ''"> and name = #{name} </if>
+		  		  <if test="proCode != null and proCode != ''"> and pro_code = #{proCode} </if>
+		  		  <if test="proName != null and proName != ''"> and pro_name = #{proName} </if>
+		  		  <if test="productCode != null and productCode != ''"> and product_code = #{productCode} </if>
+		  		  <if test="productName != null and productName != ''"> and product_name = #{productName} </if>
+		  		  <if test="harvest != null and harvest != ''"> and harvest = #{harvest} </if>
+		  		  <if test="price != null and price != ''"> and price = #{price} </if>
+		  		  <if test="money != null and money != ''"> and money = #{money} </if>
+		  		  <if test="auditor != null and auditor != ''"> and auditor = #{auditor} </if>
+		  		  <if test="auditDate != null and auditDate != ''"> and audit_date = #{auditDate} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from wages
+		 <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="billCode != null and billCode != ''"> and bill_code = #{billCode} </if>
+		  		  <if test="billDate != null and billDate != ''"> and bill_date = #{billDate} </if>
+		  		  <if test="accDate != null and accDate != ''"> and acc_date = #{accDate} </if>
+		  		  <if test="dateMark != null and dateMark != ''"> and date_mark = #{dateMark} </if>
+		  		  <if test="peopleCode != null and peopleCode != ''"> and people_code = #{peopleCode} </if>
+		  		  <if test="name != null and name != ''"> and name = #{name} </if>
+		  		  <if test="proCode != null and proCode != ''"> and pro_code = #{proCode} </if>
+		  		  <if test="proName != null and proName != ''"> and pro_name = #{proName} </if>
+		  		  <if test="productCode != null and productCode != ''"> and product_code = #{productCode} </if>
+		  		  <if test="productName != null and productName != ''"> and product_name = #{productName} </if>
+		  		  <if test="harvest != null and harvest != ''"> and harvest = #{harvest} </if>
+		  		  <if test="price != null and price != ''"> and price = #{price} </if>
+		  		  <if test="money != null and money != ''"> and money = #{money} </if>
+		  		  <if test="auditor != null and auditor != ''"> and auditor = #{auditor} </if>
+		  		  <if test="auditDate != null and auditDate != ''"> and audit_date = #{auditDate} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.hlwxy.xr_piece.system.domain.WagesDO" useGeneratedKeys="true" keyProperty="id">
+		insert into wages
+		(
+			`bill_code`, 
+			`bill_date`, 
+			`acc_date`, 
+			`date_mark`, 
+			`people_code`, 
+			`name`, 
+			`pro_code`, 
+			`pro_name`, 
+			`product_code`, 
+			`product_name`, 
+			`harvest`, 
+			`price`, 
+			`money`, 
+			`auditor`, 
+			`audit_date`
+		)
+		values
+		(
+			#{billCode}, 
+			#{billDate}, 
+			#{accDate}, 
+			#{dateMark}, 
+			#{peopleCode}, 
+			#{name}, 
+			#{proCode}, 
+			#{proName}, 
+			#{productCode}, 
+			#{productName}, 
+			#{harvest}, 
+			#{price}, 
+			#{money}, 
+			#{auditor}, 
+			#{auditDate}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.hlwxy.xr_piece.system.domain.WagesDO">
+		update wages 
+		<set>
+			<if test="billCode != null">`bill_code` = #{billCode}, </if>
+			<if test="billDate != null">`bill_date` = #{billDate}, </if>
+			<if test="accDate != null">`acc_date` = #{accDate}, </if>
+			<if test="dateMark != null">`date_mark` = #{dateMark}, </if>
+			<if test="peopleCode != null">`people_code` = #{peopleCode}, </if>
+			<if test="name != null">`name` = #{name}, </if>
+			<if test="proCode != null">`pro_code` = #{proCode}, </if>
+			<if test="proName != null">`pro_name` = #{proName}, </if>
+			<if test="productCode != null">`product_code` = #{productCode}, </if>
+			<if test="productName != null">`product_name` = #{productName}, </if>
+			<if test="harvest != null">`harvest` = #{harvest}, </if>
+			<if test="price != null">`price` = #{price}, </if>
+			<if test="money != null">`money` = #{money}, </if>
+			<if test="auditor != null">`auditor` = #{auditor}, </if>
+			<if test="auditDate != null">`audit_date` = #{auditDate}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="remove">
+		delete from wages where id = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from wages where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

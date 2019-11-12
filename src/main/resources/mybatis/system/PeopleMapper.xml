@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hlwxy.xr_piece.system.dao.PeopleDao">
+
+	<select id="get" resultType="com.hlwxy.xr_piece.system.domain.PeopleDO">
+		select `id`,`people_code`,`people_name`,`bm_id` from people where id = #{value}
+	</select>
+
+	<select id="list" resultType="com.hlwxy.xr_piece.system.domain.PeopleDO">
+		select `id`,`people_code`,`people_name`,`bm_id` from people
+        <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="peopleCode != null and peopleCode != ''"> and people_code = #{peopleCode} </if>
+		  		  <if test="peopleName != null and peopleName != ''"> and people_name = #{peopleName} </if>
+		  		  <if test="bmId != null and bmId != ''"> and bm_id = #{bmId} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from people
+		 <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="peopleCode != null and peopleCode != ''"> and people_code = #{peopleCode} </if>
+		  		  <if test="peopleName != null and peopleName != ''"> and people_name = #{peopleName} </if>
+		  		  <if test="bmId != null and bmId != ''"> and bm_id = #{bmId} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.hlwxy.xr_piece.system.domain.PeopleDO" useGeneratedKeys="true" keyProperty="id">
+		insert into people
+		(
+			`people_code`, 
+			`people_name`, 
+			`bm_id`
+		)
+		values
+		(
+			#{peopleCode}, 
+			#{peopleName}, 
+			#{bmId}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.hlwxy.xr_piece.system.domain.PeopleDO">
+		update people 
+		<set>
+			<if test="peopleCode != null">`people_code` = #{peopleCode}, </if>
+			<if test="peopleName != null">`people_name` = #{peopleName}, </if>
+			<if test="bmId != null">`bm_id` = #{bmId}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="remove">
+		delete from people where id = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from people where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

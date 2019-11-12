@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hlwxy.xr_piece.system.dao.DepartmentDao">
+
+	<select id="get" resultType="com.hlwxy.xr_piece.system.domain.DepartmentDO">
+		select `id`,`bm_code`,`bm_name` from department where id = #{value}
+	</select>
+
+	<select id="list" resultType="com.hlwxy.xr_piece.system.domain.DepartmentDO">
+		select `id`,`bm_code`,`bm_name` from department
+        <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="bmCode != null and bmCode != ''"> and bm_code = #{bmCode} </if>
+		  		  <if test="bmName != null and bmName != ''"> and bm_name = #{bmName} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from department
+		 <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="bmCode != null and bmCode != ''"> and bm_code = #{bmCode} </if>
+		  		  <if test="bmName != null and bmName != ''"> and bm_name = #{bmName} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.hlwxy.xr_piece.system.domain.DepartmentDO" useGeneratedKeys="true" keyProperty="id">
+		insert into department
+		(
+			`bm_code`, 
+			`bm_name`
+		)
+		values
+		(
+			#{bmCode}, 
+			#{bmName}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.hlwxy.xr_piece.system.domain.DepartmentDO">
+		update department 
+		<set>
+			<if test="bmCode != null">`bm_code` = #{bmCode}, </if>
+			<if test="bmName != null">`bm_name` = #{bmName}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="remove">
+		delete from department where id = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from department where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>
