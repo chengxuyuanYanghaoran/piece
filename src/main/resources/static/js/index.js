@@ -7,68 +7,68 @@ layui.use(["element", "layer", "okUtils", "okTab", "okLayer", "jQContextMenu"], 
   var layer = layui.layer;
   var okLayer = layui.okLayer;
 
-  var okTab = layui.okTab({
-    // 菜单请求路径
-    url: "data/navs.json",
-    // 允许同时选项卡的个数
-    openTabNum: 30,
-    // 如果返回的结果和navs.json中的数据结构一致可省略这个方法
-    parseData: function (data) {
-      return data;
-    }
-  });
-  objOkTab = okTab;
-
-  /**
-   * 左侧导航渲染完成之后的操作
-   */
-  okTab.render(function () {
-    /**tab栏的鼠标右键事件**/
-    $("body .ok-tab").contextMenu({
-      width: 'auto',
-      itemHeight: 30,
-      menu: [
-        {
-          text: "定位所在页",
-          icon: "fa fa-remove",
-          callback: function () {
-            okTab.positionTab();
-          }
-        },
-        {
-          text: "关闭当前页",
-          icon: "fa fa-remove",
-          callback: function () {
-            okTab.tabClose(1);
-          }
-        },
-        {
-          text: "关闭其他页",
-          icon: "fa fa-remove",
-          callback: function () {
-            okTab.tabClose(2);
-          }
-        },
-        {
-          text: "关闭所有页",
-          icon: "fa fa-remove",
-          callback: function () {
-
-            okTab.tabClose(3);
-          }
-        }
-      ]
-    });
-  });
+  // var okTab = layui.okTab({
+  //   // 菜单请求路径
+  //   url: "data/navs.json",
+  //   // 允许同时选项卡的个数
+  //   openTabNum: 30,
+  //   // 如果返回的结果和navs.json中的数据结构一致可省略这个方法
+  //   parseData: function (data) {
+  //     return data;
+  //   }
+  // });
+  // objOkTab = okTab;
+  //
+  // /**
+  //  * 左侧导航渲染完成之后的操作
+  //  */
+  // okTab.render(function () {
+  //   /**tab栏的鼠标右键事件**/
+  //   $("body .ok-tab").contextMenu({
+  //     width: 'auto',
+  //     itemHeight: 30,
+  //     menu: [
+  //       {
+  //         text: "定位所在页",
+  //         icon: "fa fa-remove",
+  //         callback: function () {
+  //           okTab.positionTab();
+  //         }
+  //       },
+  //       {
+  //         text: "关闭当前页",
+  //         icon: "fa fa-remove",
+  //         callback: function () {
+  //           okTab.tabClose(1);
+  //         }
+  //       },
+  //       {
+  //         text: "关闭其他页",
+  //         icon: "fa fa-remove",
+  //         callback: function () {
+  //           okTab.tabClose(2);
+  //         }
+  //       },
+  //       {
+  //         text: "关闭所有页",
+  //         icon: "fa fa-remove",
+  //         callback: function () {
+  //
+  //           okTab.tabClose(3);
+  //         }
+  //       }
+  //     ]
+  //   });
+  // });
 
   /**
    * 添加新窗口
    */
   $("body").on("click", "#navBar .layui-nav-item a, #userInfo a", function () {
     // 如果不存在子级
-    if ($(this).siblings().length == 0) {
-      okTab.tabAdd($(this));
-    }
+    // if ($(this).siblings().length == 0) {
+    //   okTab.tabAdd($(this));
+    // }
     // 关闭其他展开的二级标签
     $(this).parent("li").siblings().removeClass("layui-nav-itemed");
     if (!$(this).attr("lay-id")) {

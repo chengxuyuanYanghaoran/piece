@@ -1,7 +1,7 @@
 //欢迎信息
 
 layer.config({
-    extend: ['extend/layer.ext.js', 'skin/moon/style.css'],
+    extend: ['extend/layer.ext.js', 'skin/moon/style01.css'],
     skin: 'layer-ext-moon'
 });
 
