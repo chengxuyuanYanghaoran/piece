@@ -12,7 +12,6 @@ $.validator.setDefaults({
 
 //ajax提交
 function login() {
-	alert(9999)
     $.ajax({
         dataType: 'json', // 注意：这里是指希望服务端返回json格式的数据-->
         cache: true,
