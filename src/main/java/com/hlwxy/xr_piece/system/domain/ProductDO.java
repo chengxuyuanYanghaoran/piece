@@ -1,6 +1,7 @@
 package com.hlwxy.xr_piece.system.domain;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 
 /**
@@ -22,7 +23,7 @@ public class ProductDO implements Serializable {
 	//规格型号
 	private String productModel;
 	//产品计件单价
-	private Double productPrice;
+	private BigDecimal productPrice;
 
 	/**
 	 * 设置：id
@@ -72,16 +73,12 @@ public class ProductDO implements Serializable {
 	public String getProductModel() {
 		return productModel;
 	}
-	/**
-	 * 设置：产品计件单价
-	 */
-	public void setProductPrice(Double productPrice) {
-		this.productPrice = productPrice;
-	}
-	/**
-	 * 获取：产品计件单价
-	 */
-	public Double getProductPrice() {
+
+	public BigDecimal getProductPrice() {
 		return productPrice;
+	}
+
+	public void setProductPrice(BigDecimal productPrice) {
+		this.productPrice = productPrice;
 	}
 }

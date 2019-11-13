@@ -38,12 +38,11 @@ public class LoginController {
     @RequestMapping("/main")
     @ResponseBody
     public R findByUsername(String username, String password, HttpSession session, UserDO userDO) {
-
         userDO.setUsername(username);
         userDO.setPassword(password);
         userDO = this.userService.findByUsername(userDO);
         if (userDO != null) {
-            session.setAttribute("userDO", userDO);
+            session.setAttribute("user", userDO);
             return R.ok();
         } else {
             session.setAttribute("error", "账号或密码错误!请重新输入");

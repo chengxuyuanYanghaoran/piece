@@ -1,6 +1,7 @@
 package com.hlwxy.xr_piece.system.domain;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 
 /**
@@ -20,7 +21,7 @@ public class ProcedureDO implements Serializable {
 	//工序名称
 	private String proName;
 	//工序计件单价
-	private Double proPrice;
+	private BigDecimal proPrice;
 
 	/**
 	 * 设置：id
@@ -58,16 +59,12 @@ public class ProcedureDO implements Serializable {
 	public String getProName() {
 		return proName;
 	}
-	/**
-	 * 设置：工序计件单价
-	 */
-	public void setProPrice(Double proPrice) {
-		this.proPrice = proPrice;
-	}
-	/**
-	 * 获取：工序计件单价
-	 */
-	public Double getProPrice() {
+
+	public BigDecimal getProPrice() {
 		return proPrice;
+	}
+
+	public void setProPrice(BigDecimal proPrice) {
+		this.proPrice = proPrice;
 	}
 }
