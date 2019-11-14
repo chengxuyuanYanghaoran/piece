@@ -27,7 +27,28 @@
 			limit #{offset}, #{limit}
 		</if>
 	</select>
-	
+
+	<select id="listAll" resultType="com.hlwxy.xr_piece.system.dto.PeopleDTO">
+		SELECT p.*,d.bm_name FROM people p LEFT JOIN department d ON p.bm_id=d.id
+		<where>
+			<if test="id != null and id != ''"> and id = #{id} </if>
+			<if test="peopleCode != null and peopleCode != ''"> and people_code = #{peopleCode} </if>
+			<if test="peopleName != null and peopleName != ''"> and people_name = #{peopleName} </if>
+			<if test="bmId != null and bmId != ''"> and bm_id = #{bmId} </if>
+		</where>
+		<choose>
+			<when test="sort != null and sort.trim() != ''">
+				order by ${sort} ${order}
+			</when>
+			<otherwise>
+				order by p.id ASC
+			</otherwise>
+		</choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+
  	<select id="count" resultType="int">
 		select count(*) from people
 		 <where>  

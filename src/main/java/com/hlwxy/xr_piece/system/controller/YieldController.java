@@ -3,11 +3,8 @@ package com.hlwxy.xr_piece.system.controller;
 import java.util.List;
 import java.util.Map;
 
-import com.hlwxy.xr_piece.system.domain.DepartmentDO;
-import com.hlwxy.xr_piece.system.domain.PeopleDO;
-import com.hlwxy.xr_piece.system.dto.PeopleDTO;
-import com.hlwxy.xr_piece.system.service.DepartmentService;
-import com.hlwxy.xr_piece.system.service.PeopleService;
+import com.hlwxy.xr_piece.system.domain.YieldDO;
+import com.hlwxy.xr_piece.system.service.YieldService;
 import com.hlwxy.xr_piece.utils.PageUtils;
 import com.hlwxy.xr_piece.utils.Query;
 import com.hlwxy.xr_piece.utils.R;
@@ -17,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -27,21 +25,18 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * 
  * @author lu
  * @email 1992lcg@163.com
- * @date 2019-11-11 17:24:26
+ * @date 2019-11-13 11:31:00
  */
  
 @Controller
-@RequestMapping("/system/people")
-public class PeopleController {
+@RequestMapping("/system/yield")
+public class YieldController {
 	@Autowired
-	private PeopleService peopleService;
-
-	@Autowired
-	private DepartmentService departmentService;
+	private YieldService yieldService;
 	
 	@GetMapping()
-	String People(){
-	    return "system/people/people";
+	String Yield(){
+	    return "system/yield/yield";
 	}
 	
 	@ResponseBody
@@ -49,27 +44,22 @@ public class PeopleController {
 	public PageUtils list(@RequestParam Map<String, Object> params){
 		//查询列表数据
         Query query = new Query(params);
-		List<PeopleDTO> peopleList = peopleService.listAll(query);
-		int total = peopleService.count(query);
-		PageUtils pageUtils = new PageUtils(peopleList, total);
+		List<YieldDO> yieldList = yieldService.list(query);
+		int total = yieldService.count(query);
+		PageUtils pageUtils = new PageUtils(yieldList, total);
 		return pageUtils;
 	}
 	
 	@GetMapping("/add")
-	String add(Model model){
-        List<DepartmentDO> departmentList = departmentService.list(null);
-        model.addAttribute("departmentList",departmentList);
-        return "system/people/add";
+	String add(){
+	    return "system/yield/add";
 	}
 
 	@GetMapping("/edit/{id}")
 	String edit(@PathVariable("id") Integer id,Model model){
-        List<DepartmentDO> departmentList = departmentService.list(null);
-        model.addAttribute("departmentList",departmentList);
-
-		PeopleDO people = peopleService.get(id);
-		model.addAttribute("people", people);
-	    return "system/people/edit";
+		YieldDO yield = yieldService.get(id);
+		model.addAttribute("yield", yield);
+	    return "system/yield/edit";
 	}
 	
 	/**
@@ -77,8 +67,8 @@ public class PeopleController {
 	 */
 	@ResponseBody
 	@PostMapping("/save")
-	public R save(PeopleDO people){
-		if(peopleService.save(people)>0){
+	public R save(YieldDO yield){
+		if(yieldService.save(yield)>0){
 			return R.ok();
 		}
 		return R.error();
@@ -88,8 +78,8 @@ public class PeopleController {
 	 */
 	@ResponseBody
 	@RequestMapping("/update")
-	public R update( PeopleDO people){
-		peopleService.update(people);
+	public R update( YieldDO yield){
+		yieldService.update(yield);
 		return R.ok();
 	}
 	
@@ -99,7 +89,7 @@ public class PeopleController {
 	@PostMapping( "/remove")
 	@ResponseBody
 	public R remove( Integer id){
-		if(peopleService.remove(id)>0){
+		if(yieldService.remove(id)>0){
 		return R.ok();
 		}
 		return R.error();
@@ -111,7 +101,7 @@ public class PeopleController {
 	@PostMapping( "/batchRemove")
 	@ResponseBody
 	public R remove(@RequestParam("ids[]") Integer[] ids){
-		peopleService.batchRemove(ids);
+		yieldService.batchRemove(ids);
 		return R.ok();
 	}
 	

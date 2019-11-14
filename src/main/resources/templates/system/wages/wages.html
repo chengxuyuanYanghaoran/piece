@@ -22,7 +22,7 @@
 						</div>
 						<div class="columns pull-right col-md-2 nopadding">
 							<input id="searchName" type="text" class="form-control"
-								placeholder="">
+								placeholder="姓名">
 						</div>
 					</div>
 					<table id="exampleTable" data-mobile-responsive="true">
@@ -31,30 +31,7 @@
 			</div>
 		</div>
 	</div>
-	<!--shiro控制bootstraptable行内按钮看见性 来自bootdo的创新方案 -->
-		<div>
-			<script type="text/javascript">
-				var s_edit_h = 'hidden';
-				var s_remove_h = 'hidden';
-				var s_resetPwd_h = 'hidden';
-			</script>
-		</div>
-		<div shiro:hasPermission="xu_boot2:wages:edit">
-			<script type="text/javascript">
-				s_edit_h = '';
-			</script>
-		</div>
-		<div shiro:hasPermission="xu_boot2:wages:remove">
-			<script type="text/javascript">
-				var s_remove_h = '';
-			</script>
-		</div>
-		<div shiro:hasPermission="xu_boot2:wages:resetPwd">
-			<script type="text/javascript">
-				var s_resetPwd_h = '';
-			</script>
-		</div>
-	</div>
+
 	<div th:include="include :: footer"></div>
 	<script type="text/javascript" src="/static/js/appjs/system/wages/wages.js"></script>
 </body>

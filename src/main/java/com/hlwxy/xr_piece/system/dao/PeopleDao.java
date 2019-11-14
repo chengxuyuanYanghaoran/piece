@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.hlwxy.xr_piece.system.domain.PeopleDO;
+import com.hlwxy.xr_piece.system.dto.PeopleDTO;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
@@ -29,4 +30,6 @@ public interface PeopleDao {
 	int remove(Integer id);
 	
 	int batchRemove(Integer[] ids);
+
+	List<PeopleDTO> listAll(Map<String, Object> map);
 }

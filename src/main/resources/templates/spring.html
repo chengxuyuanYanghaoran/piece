@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="/static/layui/css/layui.css">
+    <style>
+        /* 弹出框 */
+        .layui-form-item{
+            margin: 8em auto 0;
+        }
+        .layui-form-item .layui-form-label{
+            width:236px;
+        }
+    </style>
+</head>
+<body>
+<form class="layui-form" action="">
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">请选择 计件方式:</label>
+        <div class="layui-input-block">
+            <input type="radio" name="check" value="产品计件" title="产品计件" checked>
+            <input type="radio" name="check" value="工序计件" title="工序计件">
+        </div>
+    </div>
+
+</form>
+<script src="/static/layui/layui.js"></script>
+<script>
+    //Demo
+    layui.use('form', function(){
+        var form = layui.form;
+
+        //监听提交
+        // form.on('submit(formDemo)', function(data){
+        //   layer.msg(JSON.stringify(data.field));
+        //   return false;
+        // });
+    });
+</script>
+
+</body>
+</html>

@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.hlwxy.xr_piece.system.dao.WagesDao">
+<mapper namespace="com.hlwxy.xr_piece.system.dao.YieldDao">
 
-	<select id="get" resultType="com.hlwxy.xr_piece.system.domain.WagesDO">
-		select `id`,`bill_code`,`date_mark`,`people_code`,`name`,`pro_code`,`pro_name`,`product_code`,`product_name`,`harvest`,`price`,`money` from wages where id = #{value}
+	<select id="get" resultType="com.hlwxy.xr_piece.system.domain.YieldDO">
+		select `id`,`yield_code`,`date_mark`,`people_code`,`name`,`pro_code`,`pro_name`,`product_code`,`product_name`,`harvest` from yield where id = #{value}
 	</select>
 
-	<select id="list" resultType="com.hlwxy.xr_piece.system.domain.WagesDO">
-		select `id`,`bill_code`,`date_mark`,`people_code`,`name`,`pro_code`,`pro_name`,`product_code`,`product_name`,`harvest`,`price`,`money` from wages
+	<select id="list" resultType="com.hlwxy.xr_piece.system.domain.YieldDO">
+		select `id`,`yield_code`,`date_mark`,`people_code`,`name`,`pro_code`,`pro_name`,`product_code`,`product_name`,`harvest` from yield
         <where>  
 		  		  <if test="id != null and id != ''"> and id = #{id} </if>
-		  		  <if test="billCode != null and billCode != ''"> and bill_code = #{billCode} </if>
+		  		  <if test="yieldCode != null and yieldCode != ''"> and yield_code = #{yieldCode} </if>
 		  		  <if test="dateMark != null and dateMark != ''"> and date_mark = #{dateMark} </if>
 		  		  <if test="peopleCode != null and peopleCode != ''"> and people_code = #{peopleCode} </if>
 		  		  <if test="name != null and name != ''"> and name = #{name} </if>
@@ -19,9 +19,7 @@
 		  		  <if test="proName != null and proName != ''"> and pro_name = #{proName} </if>
 		  		  <if test="productCode != null and productCode != ''"> and product_code = #{productCode} </if>
 		  		  <if test="productName != null and productName != ''"> and product_name = #{productName} </if>
-		  		  <if test="harvest != null and harvest != ''"> and harvest = #{harvest} </if>
-		  		  <if test="price != null and price != ''"> and price = #{price} </if>
-		  		  <if test="money != null and money != ''"> and money = #{money} </if>
+			      <if test="harvest != null and harvest != ''"> and harvest = #{harvest} </if>
 		  		</where>
         <choose>
             <when test="sort != null and sort.trim() != ''">
@@ -37,10 +35,10 @@
 	</select>
 	
  	<select id="count" resultType="int">
-		select count(*) from wages
+		select count(*) from yield
 		 <where>  
 		  		  <if test="id != null and id != ''"> and id = #{id} </if>
-		  		  <if test="billCode != null and billCode != ''"> and bill_code = #{billCode} </if>
+		  		  <if test="yieldCode != null and yieldCode != ''"> and yield_code = #{yieldCode} </if>
 		  		  <if test="dateMark != null and dateMark != ''"> and date_mark = #{dateMark} </if>
 		  		  <if test="peopleCode != null and peopleCode != ''"> and people_code = #{peopleCode} </if>
 		  		  <if test="name != null and name != ''"> and name = #{name} </if>
@@ -48,16 +46,14 @@
 		  		  <if test="proName != null and proName != ''"> and pro_name = #{proName} </if>
 		  		  <if test="productCode != null and productCode != ''"> and product_code = #{productCode} </if>
 		  		  <if test="productName != null and productName != ''"> and product_name = #{productName} </if>
-		  		  <if test="harvest != null and harvest != ''"> and harvest = #{harvest} </if>
-		  		  <if test="price != null and price != ''"> and price = #{price} </if>
-		  		  <if test="money != null and money != ''"> and money = #{money} </if>
+			      <if test="harvest != null and harvest != ''"> and harvest = #{harvest} </if>
 		  		</where>
 	</select>
 	 
-	<insert id="save" parameterType="com.hlwxy.xr_piece.system.domain.WagesDO" useGeneratedKeys="true" keyProperty="id">
-		insert into wages
+	<insert id="save" parameterType="com.hlwxy.xr_piece.system.domain.YieldDO" useGeneratedKeys="true" keyProperty="id">
+		insert into yield
 		(
-			`bill_code`, 
+			`yield_code`, 
 			`date_mark`, 
 			`people_code`, 
 			`name`, 
@@ -65,13 +61,11 @@
 			`pro_name`, 
 			`product_code`, 
 			`product_name`, 
-			`harvest`, 
-			`price`, 
-			`money`
+			`harvest`
 		)
 		values
 		(
-			#{billCode}, 
+			#{yieldCode}, 
 			#{dateMark}, 
 			#{peopleCode}, 
 			#{name}, 
@@ -79,16 +73,14 @@
 			#{proName}, 
 			#{productCode}, 
 			#{productName}, 
-			#{harvest}, 
-			#{price}, 
-			#{money}
+			#{harvest}
 		)
 	</insert>
 	 
-	<update id="update" parameterType="com.hlwxy.xr_piece.system.domain.WagesDO">
-		update wages 
+	<update id="update" parameterType="com.hlwxy.xr_piece.system.domain.YieldDO">
+		update yield 
 		<set>
-			<if test="billCode != null">`bill_code` = #{billCode}, </if>
+			<if test="yieldCode != null">`yield_code` = #{yieldCode}, </if>
 			<if test="dateMark != null">`date_mark` = #{dateMark}, </if>
 			<if test="peopleCode != null">`people_code` = #{peopleCode}, </if>
 			<if test="name != null">`name` = #{name}, </if>
@@ -96,19 +88,17 @@
 			<if test="proName != null">`pro_name` = #{proName}, </if>
 			<if test="productCode != null">`product_code` = #{productCode}, </if>
 			<if test="productName != null">`product_name` = #{productName}, </if>
-			<if test="harvest != null">`harvest` = #{harvest}, </if>
-			<if test="price != null">`price` = #{price}, </if>
-			<if test="money != null">`money` = #{money}</if>
+			<if test="harvest != null">`harvest` = #{harvest} </if>
 		</set>
 		where id = #{id}
 	</update>
 	
 	<delete id="remove">
-		delete from wages where id = #{value}
+		delete from yield where id = #{value}
 	</delete>
 	
 	<delete id="batchRemove">
-		delete from wages where id in 
+		delete from yield where id in 
 		<foreach item="id" collection="array" open="(" separator="," close=")">
 			#{id}
 		</foreach>

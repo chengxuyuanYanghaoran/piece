@@ -32,8 +32,8 @@ function load() {
 							return {
 								//说明：传入后台的参数包括offset开始索引，limit步长，sort排序列，order：desc或者,以及所有列的键值对
 								limit: params.limit,
-								offset:params.offset
-					           // name:$('#searchName').val(),
+								offset:params.offset,
+                                name:$('#searchName').val()
 					           // username:$('#searchName').val()
 							};
 						},
@@ -47,22 +47,17 @@ function load() {
 								{
 									checkbox : true
 								},
-
+								// 								{
+								// 	field : 'id',
+								// 	title : '工资核算表id'
+								// },
 																{
 									field : 'billCode', 
 									title : '单据编号' 
 								},
 																{
-									field : 'billDate', 
-									title : '单据日期' 
-								},
-																{
-									field : 'accDate', 
-									title : '核算期间（日期型，只显示年月）' 
-								},
-																{
 									field : 'dateMark', 
-									title : '日期' 
+									title : '日期'
 								},
 																{
 									field : 'peopleCode', 
@@ -99,14 +94,6 @@ function load() {
 																{
 									field : 'money', 
 									title : '金额' 
-								},
-																{
-									field : 'auditor', 
-									title : '审核人' 
-								},
-																{
-									field : 'auditDate', 
-									title : '审核日期' 
 								},
 																{
 									title : '操作',

@@ -2,6 +2,7 @@ package com.hlwxy.xr_piece.system.service;
 
 
 import com.hlwxy.xr_piece.system.domain.PeopleDO;
+import com.hlwxy.xr_piece.system.dto.PeopleDTO;
 
 import java.util.List;
 import java.util.Map;
@@ -28,4 +29,6 @@ public interface PeopleService {
 	int remove(Integer id);
 	
 	int batchRemove(Integer[] ids);
+
+	List<PeopleDTO> listAll(Map<String, Object> map);
 }

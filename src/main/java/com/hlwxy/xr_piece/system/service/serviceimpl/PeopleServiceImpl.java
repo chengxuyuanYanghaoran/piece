@@ -2,6 +2,7 @@ package com.hlwxy.xr_piece.system.service.serviceimpl;
 
 import com.hlwxy.xr_piece.system.dao.PeopleDao;
 import com.hlwxy.xr_piece.system.domain.PeopleDO;
+import com.hlwxy.xr_piece.system.dto.PeopleDTO;
 import com.hlwxy.xr_piece.system.service.PeopleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -52,5 +53,10 @@ public class PeopleServiceImpl implements PeopleService {
 	public int batchRemove(Integer[] ids){
 		return peopleDao.batchRemove(ids);
 	}
-	
+
+	@Override
+	public List<PeopleDTO> listAll(Map<String, Object> map) {
+		return peopleDao.listAll(map);
+	}
+
 }

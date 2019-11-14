@@ -7,59 +7,39 @@ layui.use(["element", "layer", "okUtils", "okTab", "okLayer", "jQContextMenu"], 
   var layer = layui.layer;
   var okLayer = layui.okLayer;
 
-  // var okTab = layui.okTab({
-  //   // 菜单请求路径
-  //   url: "data/navs.json",
-  //   // 允许同时选项卡的个数
-  //   openTabNum: 30,
-  //   // 如果返回的结果和navs.json中的数据结构一致可省略这个方法
-  //   parseData: function (data) {
-  //     return data;
-  //   }
-  // });
-  // objOkTab = okTab;
-  //
-  // /**
-  //  * 左侧导航渲染完成之后的操作
-  //  */
-  // okTab.render(function () {
-  //   /**tab栏的鼠标右键事件**/
-  //   $("body .ok-tab").contextMenu({
-  //     width: 'auto',
-  //     itemHeight: 30,
-  //     menu: [
-  //       {
-  //         text: "定位所在页",
-  //         icon: "fa fa-remove",
-  //         callback: function () {
-  //           okTab.positionTab();
-  //         }
-  //       },
-  //       {
-  //         text: "关闭当前页",
-  //         icon: "fa fa-remove",
-  //         callback: function () {
-  //           okTab.tabClose(1);
-  //         }
-  //       },
-  //       {
-  //         text: "关闭其他页",
-  //         icon: "fa fa-remove",
-  //         callback: function () {
-  //           okTab.tabClose(2);
-  //         }
-  //       },
-  //       {
-  //         text: "关闭所有页",
-  //         icon: "fa fa-remove",
-  //         callback: function () {
-  //
-  //           okTab.tabClose(3);
-  //         }
-  //       }
-  //     ]
-  //   });
-  // });
+    var active = {
+        setTop: function(){
+            var that = this;
+            //多窗口模式，层叠置顶
+            layer.open({
+                type: 2 //此处以iframe举例
+                ,title: '信息'
+                ,area: ['600px', '360px']
+                ,shade: 0
+                ,maxmin: true
+                ,offset: 'auto'
+                ,content: 'spring.html'
+                ,btn: ['确定', '取消'] //只是为了演示
+                // ,yes: function(){
+                //   $(that).click(); 
+                // }
+                // ,btn2: function(){
+                //   layer.closeAll();
+                // }
+
+                ,zIndex: 0 //重点1
+                ,success: function(layero){
+                    layer.setTop(layero); //重点2
+                }
+            });
+        }
+    };
+
+
+    $('.layui-btn-hfl').on('click', function(){
+        var othis = $(this), method = othis.data('method');
+        active[method] ? active[method].call(this, othis) : '';
+    });
 
   /**
    * 添加新窗口

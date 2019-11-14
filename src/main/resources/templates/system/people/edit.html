@@ -25,7 +25,11 @@
 														<div class="form-group">	
 								<label class="col-sm-3 control-label">所属部门：</label>
 								<div class="col-sm-8">
-									<input id="bmId" name="bmId" th:value="${people.bmId}" class="form-control" type="text">
+									<!--<input id="bmId" name="bmId" th:value="${people.bmId}" class="form-control" type="text">-->
+									<select id="bmName" name="bmId" class="form-control">
+										<option th:each="dict: ${departmentList}" th:value="${dict.id}"
+												th:text="${dict.bmName}"></option>
+									</select>
 								</div>
 							</div>
 																					<div class="form-group">
