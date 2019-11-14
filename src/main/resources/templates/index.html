@@ -141,7 +141,6 @@
 
             <ul id="tabTitle" class="layui-tab-title ok-tab-title not-scroll">
                 <li class="layui-this" lay-id="1" tab="index">
-                    <i class="fa fa-thumbs-o-up"></i>
                     <cite is-close=false>首页</cite>
                 </li>
             </ul>
@@ -155,52 +154,38 @@
         </div>
     </div>
 </div>
-<div class="yy"></div>
+
+<!--计件方式-->
+<form  id="signupForm" style="display: none;">
+    <div class="layui-form-item">
+        <label class="layui-form-label">请选择 计件方式:</label>
+        <div class="layui-input-block">
+            <input type="radio" id='mode' class="mode" name="state" value="产品计件" title="产品计件" checked>产品计件
+            <input type="radio" id='mode1' class="mode" name="state" value="工序计件" title="工序计件">工序计件
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <div class="footer-btn">
+                <button class="layui-btn layui-btn-normal" onclick="closeWindow()" lay-submit lay-filter="formDemo">确 定</button>
+                    <button class="layui-btn layui-btn-primary" onclick="closeWindow()">取 消</button>
+            </div>
+        </div>
+    </div>
+</form>
+
 <!--js-->
 <script src="/static/js/jquery.min.js"></script>
 <script src="/static/layui/layui.js"></script>
 <script src="/static/js/index.js"></script>
 <script>
-    layui.use('element', function() {
-        var element = layui.element; //加载Tab的element模块
+    //取消确认 按钮 弹窗消失
+    function closeWindow(){
+        var index = parent.layer.getFrameIndex(window.name);
+        parent.layer.closeAll(index);
+        // $("#tabTitle").find(".layui-this").addClass("remove-li").remove();
 
-        //触发事件
-        var active = {
-            tabAdd: function() {
-                //给当前点击的a标签添加自定义属性  
-                var htmlurl = $(this).attr('data-url');
-                var mytitle = $(this).attr('mytitle');
-
-                //创建一个数组            
-                var newArry = [];
-                $(".layui-tab-title").find('li').each(function() {
-                    var li = $(this).attr("lay-id");
-                    newArry.push(li);
-                });
-                var tabs = $.inArray(mytitle, newArry); //$.inArray() 函数用于在数组中查找指定值，并返回它的索引值
-
-                if(tabs >= 0) {   //tab栏已有标签
-
-                    element.tabChange('demo', mytitle); //用于外部切换到指定的Tab项上  , 切换到当前点击的页面
-
-                } else {    //没有相同tab 添加tab项
-                    $("#iframe").remove(); //如果页面有两个iframe标签，通过指定id对前一个iframe标签删除。           
-                    element.tabAdd('demo', {  //新增一个Tab选项               
-                        title: mytitle,
-                        content: '<iframe style="border:0; width:100%; height:630px" src=' + htmlurl + ' ></iframe>'                ,
-                        id: mytitle
-                    })
-                    element.tabChange('demo', mytitle); //切换到当前点击的页面              
-                }
-            }
-        };
-
-        $(".btabs").click(function() {
-            var type = "tabAdd";
-            var othis = $(this);
-            active[type] ? active[type].call(this, othis) : '';
-        });
-    });
+    }
 </script>
 </body>
 </html>

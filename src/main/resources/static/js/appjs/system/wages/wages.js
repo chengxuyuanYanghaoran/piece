@@ -88,9 +88,13 @@ function load() {
 									title : '产量' 
 								},
 																{
-									field : 'price', 
-									title : '单价' 
+									field : 'proPrice',
+									title : '工序单价'
 								},
+                            {
+                                field : 'productPrice',
+                                title : '产品单价'
+                            },
 																{
 									field : 'money', 
 									title : '金额' 

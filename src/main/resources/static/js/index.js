@@ -1,64 +1,97 @@
-// /^http(s*):\/\//.test(location.href) || alert('请先部署到 localhost 下再访问');
+layui.use('element', function () {
+    var element = layui.element; //加载Tab的element模块
 
-var objOkTab = "";
-layui.use(["element", "layer", "okUtils", "okTab", "okLayer", "jQContextMenu"], function () {
-  var okUtils = layui.okUtils;
-  var $ = layui.jquery;
-  var layer = layui.layer;
-  var okLayer = layui.okLayer;
+    //触发事件
+    var active = {
+        tabAdd: function () {
+            //给当前点击的a标签添加自定义属性  
+            var htmlurl = $(this).attr('data-url');
+            var mytitle = $(this).attr('mytitle');
 
-    var active = {
-        setTop: function(){
-            var that = this;
-            //多窗口模式，层叠置顶
+            //创建一个数组            
+            var newArry = [];
+            $(".layui-tab-title").find('li').each(function () {
+                var li = $(this).attr("lay-id");
+                newArry.push(li);
+            });
+            var tabs = $.inArray(mytitle, newArry); //$.inArray() 函数用于在数组中查找指定值，并返回它的索引值
+
+            if (tabs >= 0) { //tab栏已有标签
+
+                element.tabChange('demo', mytitle); //用于外部切换到指定的Tab项上  , 切换到当前点击的页面
+
+            } else { //没有相同tab 添加tab项
+                $("#iframe").remove(); //如果页面有两个iframe标签，通过指定id对前一个iframe标签删除。           
+                element.tabAdd('demo', { //新增一个Tab选项               
+                    title: mytitle,
+                    content: '<iframe style="border:0; width:100%; height:630px" src=' +
+                    htmlurl + ' ></iframe>',
+                    id: mytitle
+                })
+                element.tabChange('demo', mytitle); //切换到当前点击的页面              
+            }
+        }
+    };
+
+    $(".btabs").click(function () {
+        var type = "tabAdd";
+        var othis = $(this);
+        active[type] ? active[type].call(this, othis) : '';
+    });
+});
+
+
+
+
+
+layui.use(['layer', 'form'], function () {
+    var form = layui.form;
+    var layer = layui.layer;
+    $ = layui.jquery;
+
+    var active = {
+        setTop: function(){
+//多窗口模式，层叠置顶
             layer.open({
-                type: 2 //此处以iframe举例
-                ,title: '信息'
-                ,area: ['600px', '360px']
-                ,shade: 0
-                ,maxmin: true
-                ,offset: 'auto'
-                ,content: 'spring.html'
-                ,btn: ['确定', '取消'] //只是为了演示
-                // ,yes: function(){
-                //   $(that).click(); 
-                // }
-                // ,btn2: function(){
-                //   layer.closeAll();
-                // }
-
-                ,zIndex: 0 //重点1
-                ,success: function(layero){
-                    layer.setTop(layero); //重点2
-                }
+                type: 1 //此处以iframe举例
+                ,title: '信息'
+                ,area: ['600px', '360px']
+                ,shade: 0.3
+                ,maxmin: true
+                ,offset: 'auto'
+                ,content: $("#signupForm").html()
+                ,zIndex: layer.zIndex
             });
         }
     };
 
+    $('.layui-btn-hfl').on('click', function(){
+        var othis = $(this), method = othis.data('method');
+        active[method] ? active[method].call(this, othis) : '';
+    });
+    form.on('submit(formDemo)', function (data) {
+        var value = $("input[name='state']:checked").val();
+        alert(value)
+        $.ajax({
+            url: '',
+            type: 'post',
+            data: '$("input[name="state"]:checked").val();',
+            dataType: 'json',
+            cache: true,
+            async: false,
+            error: function () {
 
-    $('.layui-btn-hfl').on('click', function(){
-        var othis = $(this), method = othis.data('method');
-        active[method] ? active[method].call(this, othis) : '';
+            },
+            success: function (data) {
+
+            },
+
+        });
+
     });
 
-  /**
-   * 添加新窗口
-   */
-  $("body").on("click", "#navBar .layui-nav-item a, #userInfo a", function () {
-    // 如果不存在子级
-    // if ($(this).siblings().length == 0) {
-    //   okTab.tabAdd($(this));
-    // }
-    // 关闭其他展开的二级标签
-    $(this).parent("li").siblings().removeClass("layui-nav-itemed");
-    if (!$(this).attr("lay-id")) {
-      var topLevelEle = $(this).parents("li.layui-nav-item");
-      var childs = $("#navBar > li > dl.layui-nav-child").not(topLevelEle.children("dl.layui-nav-child"));
-      childs.removeAttr("style");
-    }
-  });
 
-  /**
+/**
    * 左侧菜单展开动画
    */
   $("#navBar").on("click", ".layui-nav-item a", function () {
@@ -103,29 +136,6 @@ layui.use(["element", "layer", "okUtils", "okTab", "okLayer", "jQContextMenu"], 
     }
   });
 
-  /**
-   * tab左右移动
-   */
-  $("body").on("click", ".okNavMove", function () {
-    var moveId = $(this).attr("data-id");
-    var that = this;
-    okTab.navMove(moveId, that);
-  });
-
-  /**
-   * 刷新当前tab页
-   */
-  $("body").on("click", ".ok-refresh", function () {
-    okTab.refresh(this);
-  });
-
-  /**
-   * 关闭tab页
-   */
-  $("body").on("click", "#tabAction a", function () {
-    var num = $(this).attr("data-num");
-    okTab.tabClose(num);
-  });
 
   /**
    * 全屏/退出全屏
@@ -239,31 +249,9 @@ layui.use(["element", "layer", "okUtils", "okTab", "okLayer", "jQContextMenu"], 
    */
   $("#logout").click(function () {
     okLayer.confirm("确定要退出吗？", function (index) {
-      window.location = "pages/login.html";
+      window.location = "login.html";
     });
   });
-
-  /**
-   * 锁定账户
-   */
-  $("#lock").click(function () {
-    okLayer.confirm("确定要锁定账户吗？", function (index) {
-      layer.close(index);
-      $(".yy").show();
-      layer.prompt({
-        btn: ['确定'],
-        title: '输入密码解锁(123456)',
-        closeBtn: 0,
-        formType: 1
-      }, function (value, index, elem) {
-        if (value == "123456") {
-          layer.close(index);
-          $(".yy").hide();
-        } else {
-          layer.msg('密码错误', {anim: 6, time: 1000});
-        }
-      });
-    });
-  });
-
 });
+
+

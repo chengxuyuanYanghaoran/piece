@@ -32,6 +32,7 @@ public class LoginController {
 
     @RequestMapping("/toPageMain")
     public String toPageMain(Model model) {
+
         return "index";
     }
 

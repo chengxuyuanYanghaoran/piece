@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 
 
@@ -35,15 +36,17 @@ public class WagesDO implements Serializable {
 	private String productName;
 	//产量
 	private Integer harvest;
-	//单价
-	private Double price;
+	//工序单价
+	private BigDecimal proPrice;
+	//产品单价
+	private BigDecimal productPrice;
 	//金额
-	private Integer money;
+	private BigDecimal money;
 
 	public WagesDO() {
 	}
 
-	public WagesDO(Integer id, String billCode, Date dateMark, String peopleCode, String name, String proCode, String proName, String productCode, String productName, Integer harvest, Double price, Integer money) {
+	public WagesDO(Integer id, String billCode, Date dateMark, String peopleCode, String name, String proCode, String proName, String productCode, String productName, Integer harvest, BigDecimal proPrice, BigDecimal productPrice, BigDecimal money) {
 		this.id = id;
 		this.billCode = billCode;
 		this.dateMark = dateMark;
@@ -54,7 +57,8 @@ public class WagesDO implements Serializable {
 		this.productCode = productCode;
 		this.productName = productName;
 		this.harvest = harvest;
-		this.price = price;
+		this.proPrice = proPrice;
+		this.productPrice = productPrice;
 		this.money = money;
 	}
 
@@ -138,19 +142,27 @@ public class WagesDO implements Serializable {
 		this.harvest = harvest;
 	}
 
-	public Double getPrice() {
-		return price;
+	public BigDecimal getProPrice() {
+		return proPrice;
 	}
 
-	public void setPrice(Double price) {
-		this.price = price;
+	public void setProPrice(BigDecimal proPrice) {
+		this.proPrice = proPrice;
 	}
 
-	public Integer getMoney() {
+	public BigDecimal getProductPrice() {
+		return productPrice;
+	}
+
+	public void setProductPrice(BigDecimal productPrice) {
+		this.productPrice = productPrice;
+	}
+
+	public BigDecimal getMoney() {
 		return money;
 	}
 
-	public void setMoney(Integer money) {
+	public void setMoney(BigDecimal money) {
 		this.money = money;
 	}
 }

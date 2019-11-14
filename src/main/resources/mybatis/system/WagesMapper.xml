@@ -4,11 +4,11 @@
 <mapper namespace="com.hlwxy.xr_piece.system.dao.WagesDao">
 
 	<select id="get" resultType="com.hlwxy.xr_piece.system.domain.WagesDO">
-		select `id`,`bill_code`,`date_mark`,`people_code`,`name`,`pro_code`,`pro_name`,`product_code`,`product_name`,`harvest`,`price`,`money` from wages where id = #{value}
+		select `id`,`bill_code`,`date_mark`,`people_code`,`name`,`pro_code`,`pro_name`,`product_code`,`product_name`,`harvest`,`pro_price`,`product_price`,`money` from wages where id = #{value}
 	</select>
 
 	<select id="list" resultType="com.hlwxy.xr_piece.system.domain.WagesDO">
-		select `id`,`bill_code`,`date_mark`,`people_code`,`name`,`pro_code`,`pro_name`,`product_code`,`product_name`,`harvest`,`price`,`money` from wages
+		select `id`,`bill_code`,`date_mark`,`people_code`,`name`,`pro_code`,`pro_name`,`product_code`,`product_name`,`harvest`,`pro_price`,`product_price`,`money` from wages
         <where>  
 		  		  <if test="id != null and id != ''"> and id = #{id} </if>
 		  		  <if test="billCode != null and billCode != ''"> and bill_code = #{billCode} </if>
@@ -20,7 +20,8 @@
 		  		  <if test="productCode != null and productCode != ''"> and product_code = #{productCode} </if>
 		  		  <if test="productName != null and productName != ''"> and product_name = #{productName} </if>
 		  		  <if test="harvest != null and harvest != ''"> and harvest = #{harvest} </if>
-		  		  <if test="price != null and price != ''"> and price = #{price} </if>
+		  		  <if test="proPrice != null and proPrice != ''"> and pro_price = #{proPrice} </if>
+			      <if test="productPrice != null and productPrice != ''"> and product_price = #{productPrice} </if>
 		  		  <if test="money != null and money != ''"> and money = #{money} </if>
 		  		</where>
         <choose>
@@ -49,7 +50,8 @@
 		  		  <if test="productCode != null and productCode != ''"> and product_code = #{productCode} </if>
 		  		  <if test="productName != null and productName != ''"> and product_name = #{productName} </if>
 		  		  <if test="harvest != null and harvest != ''"> and harvest = #{harvest} </if>
-		  		  <if test="price != null and price != ''"> and price = #{price} </if>
+			      <if test="proPrice != null and proPrice != ''"> and pro_price = #{proPrice} </if>
+			      <if test="productPrice != null and productPrice != ''"> and product_price = #{productPrice} </if>
 		  		  <if test="money != null and money != ''"> and money = #{money} </if>
 		  		</where>
 	</select>
@@ -66,7 +68,8 @@
 			`product_code`, 
 			`product_name`, 
 			`harvest`, 
-			`price`, 
+			`pro_price`,
+			`product_price`,
 			`money`
 		)
 		values
@@ -80,7 +83,8 @@
 			#{productCode}, 
 			#{productName}, 
 			#{harvest}, 
-			#{price}, 
+			#{proPrice},
+			#{productPrice},
 			#{money}
 		)
 	</insert>
@@ -97,7 +101,8 @@
 			<if test="productCode != null">`product_code` = #{productCode}, </if>
 			<if test="productName != null">`product_name` = #{productName}, </if>
 			<if test="harvest != null">`harvest` = #{harvest}, </if>
-			<if test="price != null">`price` = #{price}, </if>
+			<if test="proPrice != null">`pro_price` = #{proPrice}, </if>
+			<if test="productPrice != null">`product_price` = #{productPrice}, </if>
 			<if test="money != null">`money` = #{money}</if>
 		</set>
 		where id = #{id}

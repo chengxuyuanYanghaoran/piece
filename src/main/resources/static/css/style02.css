@@ -738,3 +738,28 @@
 
 .okadmin.blue_theme .ok-tab .okadmin-tabs-control:hover, .okadmin.blue_theme .ok-tab .layui-tab-title li.layui-this {
     color: #2D8CF0; }
+
+
+/*弹出框样式*/
+
+.layui-form-item{
+    margin: 8em auto 0;
+}
+.layui-form-item .layui-form-label{
+    width:236px;
+}
+.layui-layer-setwin .layui-layer-close1{
+    display: none;
+}
+
+
+.layui-form-label{
+    padding: 0;
+    width:188px;
+}
+.footer-btn{
+    margin-left: 15em;
+}
+.mode{
+    margin-left: 3em;
+}
