@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <meta charset="utf-8">
 <head th:include="include :: header"></head>
 <body class="gray-bg">
@@ -7,12 +7,24 @@
 		<div class="col-sm-12">
 			<div class="ibox">
 				<div class="ibox-body">
+
+<form class="">
+<div class="form-head" style="display: flex; justify-content: space-around">
+<div class="form-group">
+<label for="exampleInputName2">单据编号:</label> <input type="text" class="form-control" id="exampleInputName2" placeholder=""></div>
+<div class="form-group">
+<label for="exampleInputEmail2">单据日期:</label><input type="date" class="form-control" id="exampleInputEmail2" placeholder=""></div>
+<div class="form-group">
+<label for="exampleInputEmail2">核算期间:</label><input type="date" class="form-control" id="exampleInputEmail2" placeholder=""></div>
+</div>
+<hr style="margin: 0"/>
+
 					<div class="fixed-table-toolbar">
 						<div class="columns pull-left">
-							<button shiro:hasPermission="xu_boot2:wages:add" type="button" class="btn  btn-primary" onclick="add()">
+							<button type="button" class="btn  btn-primary" onclick="add()">
 								<i class="fa fa-plus" aria-hidden="true"></i>添加
 							</button>
-							<button shiro:hasPermission="xu_boot2:wages:batchRemove" type="button" class="btn  btn-danger"
+							<button type="button" class="btn  btn-danger"
 								onclick="batchRemove()">
 								<i class="fa fa-trash" aria-hidden="true"></i>删除
 							</button>
@@ -25,14 +37,29 @@
 								placeholder="姓名">
 						</div>
 					</div>
-					<table id="exampleTable" data-mobile-responsive="true">
-					</table>
+					<table id="exampleTable" data-mobile-responsive="true"></table>
+
+<hr style="margin-top: 0; margin-bottom: 10px"/>
+<div class="form-footer" style="display: flex; justify-content: space-around">
+<div class="form-group">
+<label for="exampleInputName2">审核人:</label><input type="text" class="form-control" id="exampleInputName2" placeholder=""></div>
+<div class="form-group">
+<label for="exampleInputEmail2">审核日期:</label><input type="date" class="form-control" id="exampleInputEmail2" placeholder=""></div>
+</div>
+</form>   
+
 				</div>
 			</div>
 		</div>
 	</div>
 
 	<div th:include="include :: footer"></div>
-	<script type="text/javascript" src="/static/js/appjs/system/wages/wages.js"></script>
+	<!--th:inline="javascript"-->
+	<script type="text/javascript"  src="/static/js/appjs/system/wages/wages.js"></script>
+
+<script th:inline="javascript">
+    var index=[[${index}]];
+</script>
+
 </body>
 </html>

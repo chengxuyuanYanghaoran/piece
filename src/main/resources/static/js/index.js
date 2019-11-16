@@ -59,7 +59,7 @@ layui.use(['layer', 'form'], function () {
                 ,shade: 0.3
                 ,maxmin: true
                 ,offset: 'auto'
-                ,content: $("#signupForm").html()
+                ,content: $("#signupForm")
                 ,zIndex: layer.zIndex
             });
         }
@@ -70,27 +70,8 @@ layui.use(['layer', 'form'], function () {
         active[method] ? active[method].call(this, othis) : '';
     });
     form.on('submit(formDemo)', function (data) {
-        var value = $("input[name='state']:checked").val();
-        alert(value)
-        $.ajax({
-            url: '',
-            type: 'post',
-            data: '$("input[name="state"]:checked").val();',
-            dataType: 'json',
-            cache: true,
-            async: false,
-            error: function () {
-
-            },
-            success: function (data) {
-
-            },
-
-        });
 
     });
-
-
 /**
    * 左侧菜单展开动画
    */
@@ -235,14 +216,7 @@ layui.use(['layer', 'form'], function () {
     });
   }
 
-  /**
-   * 弹窗皮肤
-   */
-  $("#alertSkin").click(function () {
-    okLayer.open("皮肤动画", "pages/system/alertSkin.html", "50%", "45%", function (layero) {
-    }, function () {
-    });
-  });
+
 
   /**
    * 退出操作

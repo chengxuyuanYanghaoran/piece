@@ -8,6 +8,7 @@ import com.hlwxy.xr_piece.system.service.WagesService;
 import com.hlwxy.xr_piece.utils.PageUtils;
 import com.hlwxy.xr_piece.utils.Query;
 import com.hlwxy.xr_piece.utils.R;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.stereotype.Controller;
@@ -53,14 +54,26 @@ public class WagesController {
 	    return "system/wages/add";
 	}
 
+	@GetMapping("/add1")
+	String add1(){
+		return "system/wages/add1";
+	}
+
 	@GetMapping("/edit/{id}")
 	String edit(@PathVariable("id") Integer id,Model model){
 		WagesDO wages = wagesService.get(id);
 		model.addAttribute("wages", wages);
 	    return "system/wages/edit";
 	}
+
+	@GetMapping("/edit1/{id}")
+	String edit1(@PathVariable("id") Integer id,Model model){
+		WagesDO wages = wagesService.get(id);
+		model.addAttribute("wages",wages);
+		return "system/wages/edit1";
+	}
 	
-	/**
+	/**s
 	 * 保存
 	 */
 	@ResponseBody
@@ -70,6 +83,14 @@ public class WagesController {
 			return R.ok();
 		}
 		return R.error();
+	}
+	/**
+	 * 判断
+	 */
+	@GetMapping("/toPage/{id}")
+	public String  toPage(@PathVariable("id") String id,Model model){
+		model.addAttribute("index",id);
+		return "/system/wages/wages";
 	}
 	/**
 	 * 修改

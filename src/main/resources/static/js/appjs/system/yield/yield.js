@@ -83,10 +83,10 @@ function load() {
 									field : 'productName', 
 									title : '产品名称' 
 								},
-																{
-									field : 'harvest',
-									title : '产量' 
-								},
+								// 								{
+								// 	field : 'harvest',
+								// 	title : '产量'
+								// },
 																{
 									title : '操作',
 									field : 'id',

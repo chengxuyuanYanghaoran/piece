@@ -9,18 +9,20 @@
 			<div class="ibox">
 				<div class="ibox-body">
 
-                                    <form class="form-inline">
-                                        <div class="form-group">
-                                                <label>单据编号:</label>
-                                        
-                                       <input id="exampleInputEmail2" name="exampleInputEmail2"  class="form-control" type="text">
-                                              </div>
-                                          <div class="form-group">
-                                            <label>单据日期:</label>
-                                            <input type="date" class="form-control" id="exampleInputEmail2"name="exampleInputEmail2">
-                                          </div>
-                       
-                          
+                       <form class="">
+<div class="form-head" style="display: flex; justify-content: space-around">
+<div class="form-group">
+<label for="exampleInputName2">单据编号:</label> <input type="text" class="form-control" id="exampleInputName2" placeholder=""></div>
+<div class="form-group">
+<label for="exampleInputEmail2">单据日期:</label><input type="date" class="form-control" id="exampleInputEmail2" placeholder=""></div>
+
+                    <!---->
+<div class="layui-upload layui-inline layui-show-xs-block">
+<button type="button" class="layui-btn layui-btn-normal" id="btnSelectFile">选择Excel</button>
+<button type="button" class="layui-btn" id="btnImport">开始导入</button>
+</div>
+</div>
+ <hr style="margin: 0"/>
 
                         <div class="fixed-table-toolbar">
                             <div class="columns pull-left">
@@ -40,21 +42,18 @@
                                        placeholder="工序名称  产品名称">
                             </div>
                         </div>
-                        <table id="exampleTable" data-mobile-responsive="true"></table>   
+                        <table id="exampleTable" data-mobile-responsive="true"></table>  
+                     
+                        <hr style="margin-top: 0; margin-bottom: 10px"/>
+<div class="form-footer" style="display: flex; justify-content: space-around">
+<div class="form-group">
+<label for="exampleInputName2">审核人:</label><input type="text" class="form-control" id="exampleInputName2" placeholder=""></div>
+<div class="form-group">
+<label for="exampleInputEmail2">审核日期:</label><input type="date" class="form-control" id="exampleInputEmail2" placeholder=""></div>
+</div>
+</form>   
 
-                        
-
-                        <div class="form-footer">
-                        <div class="form-group">
-                                <label>审核人:</label>
-                                <input type="text" class="form-control" id="exampleInputName2" placeholder="">
-                              </div>
-                          <div class="form-group">
-                            <label>审核日期:</label>
-                            <input type="date" class="form-control" id="exampleInputEmail2" placeholder="">
-                          </div>
-                    </div>
-                    </form>
+                     
 
 
 				</div>

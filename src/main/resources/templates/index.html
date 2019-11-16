@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -111,13 +111,14 @@
                 <li class="layui-nav-item">
                     <a href="javascript:;"><i class="fa fa-hand-rock-o"></i>系统选项</a>
                     <dl class="layui-nav-child"> <!-- 二级菜单 -->
-                        <dd><a href="#" class="btabs layui-btn-hfl" data-method="setTop" data-url="" mytitle="计件方式">计件方式</a></dd>
+                        <dd><a href="#" class="btabs layui-btn-hfl" data-method="setTop" data-url=""
+                               mytitle="计件方式">计件方式</a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item">
                     <a href="javascript:;"><i class="fa fa-hand-paper-o"></i>业务单据</a>
                     <dl class="layui-nav-child"> <!-- 二级菜单 -->
-                        <dd><a href="#" class="btabs" data-url="/system/yield" mytitle="产量统计表">产量统计表</a></dd>
+                        <dd><a href="#" class="btabs" data-url="/system/yield" mytitle="统计表">统计表</a></dd>
                         <dd><a href="#" class="btabs" data-url="/system/wages" mytitle="工资核算">工资核算</a></dd>
                     </dl>
                 </li>
@@ -151,7 +152,9 @@
             <div id="tabContent" class="layui-tab-content ok-tab-content">
                 <div class="layui-tab-item layui-show">
                     <iframe src='/system/department' frameborder="0" scrolling="yes" width="100%"
-                            height="100%"></iframe>
+                                                           height="100%"></iframe>
+                    <!--<iframe src='/system/department' frameborder="0" scrolling="yes" width="100%"-->
+                            <!--height="100%"></iframe>-->
                 </div>
             </div>
         </div>
@@ -159,19 +162,21 @@
 </div>
 
 <!--计件方式-->
-<form  id="signupForm" style="display: none;">
+<form id="signupForm" style="display: none;">
     <div class="layui-form-item">
         <label class="layui-form-label">请选择 计件方式:</label>
         <div class="layui-input-block">
-            <input type="radio" id='mode' class="mode" name="state" value="产品计件" title="产品计件" checked>产品计件
-            <input type="radio" id='mode1' class="mode" name="state" value="工序计件" title="工序计件">工序计件
+            <input type="radio" id='mode' class="mode" name="state" value="0" title="产品计件" checked>产品计件
+            <input type="radio" id='mode1' class="mode" name="state" value="1" title="工序计件">工序计件
         </div>
     </div>
     <div class="layui-form-item">
         <div class="layui-input-block">
             <div class="footer-btn">
-                <button class="layui-btn layui-btn-normal" onclick="closeWindow()" lay-submit lay-filter="formDemo">确 定</button>
-                    <button class="layui-btn layui-btn-primary" onclick="closeWindow()">取 消</button>
+                <button type="button" value="" id="btnn" class="layui-btn layui-btn-normal" onclick="closeWindow()"
+                        lay-submit lay-filter="formDemo">确 定
+                </button>
+                <button type="button" class="layui-btn layui-btn-primary" onclick="openwindow()">取 消</button>
             </div>
         </div>
     </div>
@@ -180,12 +185,20 @@
 <!--js-->
 
 <script>
-    //取消确认 按钮 弹窗消失
-    function closeWindow(){
+    function closeWindow() {
+        //button按钮 value赋值
+        var id = $("input[name='state']:checked").val();
+        var btn = document.getElementById("btnn");
+        btn.setAttribute('value', id);
+        $('iframe').attr('src', '/system/wages/toPage/' + id);
         var index = parent.layer.getFrameIndex(window.name);
         parent.layer.closeAll(index);
-        // $("#tabTitle").find(".layui-this").addClass("remove-li").remove();
+    }
 
+    //取消确认 按钮 弹窗消失
+    function openwindow() {
+        var index = parent.layer.getFrameIndex(window.name);
+        parent.layer.closeAll(index);
     }
 </script>
 </body>
