@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hlwxy.xr_piece.system.dao.ReportSelectionDao">
+
+	<resultMap id="departmentDO" type="com.hlwxy.xr_piece.system.domain.DepartmentDO">
+		<id column="id" property="id"></id>
+		<result column="bm_code" property="bmCode"></result>
+		<result column="bm_name" property="bmName"></result>
+	</resultMap>
+	<resultMap id="peopleDO" type="com.hlwxy.xr_piece.system.domain.PeopleDO">
+		<id column="id" property="id"></id>
+		<result column="people_code" property="peopleCode"></result>
+		<result column="people_name" property="peopleName"></result>
+		<result column="bm_id" property="bmId"></result>
+	</resultMap>
+	<resultMap id="procedureDO" type="com.hlwxy.xr_piece.system.domain.ProcedureDO">
+		<id column="id" property="id"></id>
+		<result column="pro_code" property="proCode"></result>
+		<result column="pro_name" property="proName"></result>
+		<result column="pro_price" property="proPrice"></result>
+	</resultMap>
+	<resultMap id="productDO" type="com.hlwxy.xr_piece.system.domain.ProductDO">
+		<id column="id" property="id"></id>
+		<result column="pro_code" property="proCode"></result>
+		<result column="pro_name" property="proName"></result>
+		<result column="pro_price" property="proPrice"></result>
+		<result column="pro_price" property="proPrice"></result>
+	</resultMap>
+
+
+	<!--查询部门-->
+	<select id="findDepartmentName" resultMap="departmentDO">
+		SELECT * FROM department
+	</select>
+	<!--查询人员-->
+	<select id="findPeopleName" resultMap="peopleDO">
+		SELECT * FROM people
+	</select>
+	<!--查询工序-->
+	<select id="findProcedureName" resultMap="procedureDO">
+		SELECT * FROM `procedure`
+	</select>
+	<!--查询产品-->
+	<select id="findProductName" resultMap="productDO">
+		SELECT * FROM product
+	</select>
+
+
+</mapper>

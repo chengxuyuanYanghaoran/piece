@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/static/layui-v2.5.5/layui/css/layui.css">
+    <link rel="stylesheet" href="/static/css/one.css">
+    <link rel="stylesheet" href="/static/css/font-awsome2/font-awesome-4.7.0/css/font-awesome.min.css">
+    <script src="/static/layui-v2.5.5/layui/layui.js"></script>
+    <script src="/static/js/jquery-3.4.0.min.js"></script>
+    <script src="/static/js/one_three.js"></script>
+</head>
+<body>
+<div id="ddd" style="display: none">
+    <!--日期区间-->
+    <!--年月-->
+    <div class="layui-row" style="margin-left: -520px;padding-top: 20px">
+        <div class="layui-col-md8 layui-col-md-offset3 bo ttt">
+            <label class="layui-form-label" style="width:30%;">年月开始时间:</label>
+            <input id="start_timer" class="layui-input" style="width: 20%" type="text" name="stateDate" autocomplete="off" placeholder="开始时间">
+        </div>
+    </div>
+    <div class="layui-row" style="margin-left: -520px">
+        <div class="layui-col-md8 layui-col-md-offset3 bo" style="margin-top:15px;">
+            <label class="layui-form-label" style="width:30%;">年月结束时间:</label>
+            <input id="end_timer" class="layui-input" style="width: 20%" type="text" autocomplete="off" placeholder="结束时间" name="endDate">
+        </div>
+    </div>
+    <!--部门-->
+    <div class="dec_ddd">
+        <p style="display: inline-block">部门</p>
+        <!--<input type="text" class="ddd_input" id="dec_input">-->
+        <p id="dec_input" class="ddd_input" style="top: 43%" contenteditable="true"></p>
+        <i class="fa fa-user-circle-o fa-lg" id="depection" aria-hidden="true" style="margin-top: 1px;cursor: pointer;margin-left: -10px"></i>
+    </div>
+    <!--部门ajax渲染内容-->
+    <div class="daaa" id="daaa">
+        <div style='position: fixed;top: 58%;left: 46%'>
+            <button type="button" id='true' class="layui-btn layui-btn-sm layui-btn-warm">确定</button>
+        </div>
+    </div>
+    <!--人员-->
+    <div class="dec_ddd">
+        <p style="display: inline-block">人员</p>
+        <p id="dec_input_two" class="ddd_input" style="" contenteditable="true"></p>
+        <i class="fa fa-telegram fa-lg" id="depection_two" aria-hidden="true" style="margin-top: 1px;cursor: pointer;margin-left: -10px"></i>
+    </div>
+    <!--人员ajax渲染内容-->
+    <div class="daaa" id="daaa_two" style="margin-top: -140px">
+        <div style='position: fixed;top: 58%;left: 46%'>
+            <button type="button" id='true_one' class="layui-btn layui-btn-sm layui-btn-warm">确定</button>
+        </div>
+    </div>
+    <!--工序-->
+    <div class="dec_ddd">
+        <p style="display: inline-block">工序</p>
+        <p id="dec_input_three" class="ddd_input" style="" contenteditable="true"></p>
+        <i class="fa fa-binoculars fa-lg" id="depection_three" aria-hidden="true" style="margin-top: 1px;cursor: pointer;margin-left: -10px"></i>
+    </div>
+    <!--工序ajax渲染内容-->
+    <div class="daaa" id="daaa_three" style="margin-top: -180px">
+        <div style='position: fixed;top: 58%;left: 46%'>
+            <button type="button" id='true_three' class="layui-btn layui-btn-sm layui-btn-warm">确定</button>
+        </div>
+    </div>
+    <!--产品-->
+    <div class="dec_ddd">
+        <p style="display: inline-block">产品</p>
+        <p id="dec_input_four" class="ddd_input" style="" contenteditable="true"></p>
+        <i class="fa fa-puzzle-piece fa-lg" id="depection_four" aria-hidden="true" style="margin-top: 1px;cursor: pointer;margin-left: -10px"></i>
+    </div>
+    <!--产品ajax渲染内容-->
+    <div class="daaa" id="daaa_four" style="margin-top: -250px">
+        <div style='position: fixed;top: 58%;left: 46%'>
+            <button type="button" id='true_four' class="layui-btn layui-btn-sm layui-btn-warm">确定</button>
+        </div>
+    </div>
+
+    <!---->
+    <button type="button" class="layui-btn layui-btn-danger" onclick="ddd()" style="margin-left: 320px;margin-top: 30px">确认选择</button>
+</div>
+
+<!--表格-->
+<div id="test_div">
+    <table class="layui-hide" id="test"></table>
+</div>
+</body>
+
+</html>

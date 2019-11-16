@@ -8,6 +8,9 @@
     <link rel="stylesheet" href="/static/layui/css/layui.css">
     <link rel="stylesheet" href="/static/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="/static/css/style02.css">
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/layui/layui.js"></script>
+    <script src="/static/js/index.js"></script>
 </head>
 <body class="layui-layout-body">
 <!-- Eg:orange_theme|blue_theme -->
@@ -121,9 +124,9 @@
                 <li class="layui-nav-item">
                     <a href="javascript:;"><i class="fa fa-hand-peace-o"></i>报表</a>
                     <dl class="layui-nav-child"> <!-- 二级菜单 -->
-                        <dd><a href="javascript:" lay-id="9" data-url="">工资统计表</a></dd>
-                        <dd><a href="javascript:" lay-id="10" data-url="">工资明细表</a></dd>
-                        <dd><a href="javascript:" lay-id="11" data-url="">工资统计</a></dd>
+                        <dd><a href="#"  class="btabs" data-url="/system/reportForm/getstatistics" mytitle="工资统计表">工资统计表</a></dd>
+                        <dd><a href="javascript:" class="btabs" lay-id="10" data-url="/system/reportForm/statisticsTwo" mytitle="工资明细表">工资明细表</a></dd>
+                        <dd><a href="javascript:" class="btabs" lay-id="11" data-url="/system/reportForm/statisticsThree" mytitle="工资统计">工资统计</a></dd>
                     </dl>
                 </li>
             </ul>
@@ -175,9 +178,7 @@
 </form>
 
 <!--js-->
-<script src="/static/js/jquery.min.js"></script>
-<script src="/static/layui/layui.js"></script>
-<script src="/static/js/index.js"></script>
+
 <script>
     //取消确认 按钮 弹窗消失
     function closeWindow(){

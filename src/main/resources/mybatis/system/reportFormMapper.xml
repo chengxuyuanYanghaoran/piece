@@ -1,0 +1,391 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hlwxy.xr_piece.system.dao.reportFormDao">
+
+	<resultMap id="wagesDO" type="com.hlwxy.xr_piece.system.domain.WagesDO">
+		<id column="id" property="id"></id>
+		<result column="bill_code" property="billCode"></result>
+		<result column="date_mark" property="dateMark2"></result>
+		<result column="people_code" property="peopleCode"></result>
+		<result column="name" property="name"></result>
+		<result column="pro_code" property="proCode"></result>
+		<result column="pro_name" property="proName"></result>
+		<result column="product_code" property="productCode"></result>
+		<result column="product_name" property="productName"></result>
+		<result column="harvest" property="harvest"></result>
+		<result column="pro_price" property="proPrice"></result>
+        <result column="product_price" property="productPrice"></result>
+		<result column="money" property="money"></result>
+	</resultMap>
+
+	<resultMap id="returnDO" type="com.hlwxy.xr_piece.system.domain.ReturnDO">
+		<result column="moneys" property="moneys"></result>
+		<result column="name" property="peoples"></result>
+		<result column="bill_date" property="accDatas"></result>
+	</resultMap>
+
+	<!--工资明细表-->
+	<select id="findDetailed" parameterType="com.hlwxy.xr_piece.system.domain.ConditionDo" resultMap="wagesDO">
+		SELECT
+			wages.*
+		FROM
+			wages_header
+			LEFT JOIN wages ON wages.bill_code = wages_header.bill_code
+			LEFT JOIN people ON wages.people_code=people.people_code
+			LEFT JOIN department ON people.bm_id=department.id
+			LEFT JOIN `procedure` ON wages.pro_code=`procedure`.pro_code
+			LEFT JOIN product ON wages.product_code=product.product_code
+		<where>
+			1=1
+			<if test="accDataOn != null and accDataOff != null">
+				AND (DATE_FORMAT( wages_header.bill_date, '%Y-%m-%d' ) &lt;= DATE_FORMAT( '${accDataOn}', '%Y-%m-%d' ))
+			</if>
+			-- 	核算区间，上线。如果时间参数为空，查询到的数据为空
+			<if test="accDataOff != null and accDataOn != null">
+				AND (DATE_FORMAT( wages_header.bill_date, '%Y-%m-%d' ) &gt;= DATE_FORMAT( '${accountingOff}', '%Y-%m-%d' ))
+			</if>
+			-- 	完工时间区间，上线。如果时间参数为空，查询到的数据为空
+			<if test="comDataOn != null and comDataOff != null">
+				AND (DATE_FORMAT( wages.date_mark, '%Y-%m-%d' ) &lt;= DATE_FORMAT( '${completionOn}', '%Y-%m-%d' ))
+			</if>
+			-- 	完工时间区间，上线。如果时间参数为空，查询到的数据为空
+			<if test="comDataOff != null and comDataOn != null">
+				AND (DATE_FORMAT( wages.date_mark, '%Y-%m-%d' ) &gt;= DATE_FORMAT( '${comDataOff}', '%Y-%m-%d' ))
+			</if>
+			-- 	选择部门条件，可多选
+			<if test="departments != null and departments.size()> 0">
+				AND
+				<foreach collection="departments" index="index" item="department" open="(" separator="OR" close=")">
+					 department.bm_name LIKE '%${department}%'
+				</foreach>
+			</if>
+			--  选择人员条件，可多选
+			<if test="peoples != null and peoples.size()> 0">
+				AND
+				<foreach collection="peoples" index="index" item="people" open="(" separator="OR" close=")">
+					people.people_name LIKE '%${people}%'
+				</foreach>
+			</if>
+			-- 	选择工序查询，可多选。需要遍历，并且要判断是否为空，为空的话不加
+ 			<if test="procedures != null and procedures.size()> 0">
+ 				AND
+ 				<foreach collection="procedures" index="index" item="procedure" open="(" separator="OR" close=")">
+ 					`procedure`.pro_name LIKE '%${procedure}%'
+ 				</foreach>
+ 			</if>
+			-- 	选择产品查询，可多选。需要遍历，并且要判断是否为空，为空的话不加
+			<if test="products != null and products.size()> 0">
+				AND
+				<foreach collection="products" index="index" item="product" open="(" separator="OR" close=")">
+					product.product_name LIKE '%${product}%'
+				</foreach>
+			</if>
+		</where>
+		LIMIT ${pc},${limit};
+	</select>
+	<!--工资明细表数据总条数-->
+	<select id="countDetailed" parameterType="com.hlwxy.xr_piece.system.domain.ConditionDo" resultType="java.lang.Integer">
+		SELECT
+			COUNT(*)
+		FROM
+			wages_header
+			LEFT JOIN wages ON wages.bill_code = wages_header.bill_code
+			LEFT JOIN people ON wages.people_code=people.people_code
+			LEFT JOIN department ON people.bm_id=department.id
+			LEFT JOIN `procedure` ON wages.pro_code=`procedure`.pro_code
+			LEFT JOIN product ON wages.product_code=product.product_code
+		<where>
+			1=1
+			<if test="accDataOn != null and accDataOff != null">
+				AND (DATE_FORMAT( wages_header.bill_date, '%Y-%m-%d' ) &lt;= DATE_FORMAT( '${accDataOn}', '%Y-%m-%d' ))
+			</if>
+			-- 	核算区间，上线。如果时间参数为空，查询到的数据为空
+			<if test="accDataOff != null and accDataOn != null">
+				AND (DATE_FORMAT( wages_header.bill_date, '%Y-%m-%d' ) &gt;= DATE_FORMAT( '${accountingOff}', '%Y-%m-%d' ))
+			</if>
+			-- 	完工时间区间，上线。如果时间参数为空，查询到的数据为空
+			<if test="comDataOn != null and comDataOff != null">
+				AND (DATE_FORMAT( wages.date_mark, '%Y-%m-%d' ) &lt;= DATE_FORMAT( '${completionOn}', '%Y-%m-%d' ))
+			</if>
+			-- 	完工时间区间，上线。如果时间参数为空，查询到的数据为空
+			<if test="comDataOff != null and comDataOn != null">
+				AND (DATE_FORMAT( wages.date_mark, '%Y-%m-%d' ) &gt;= DATE_FORMAT( '${comDataOff}', '%Y-%m-%d' ))
+			</if>
+			-- 	选择部门条件，可多选
+			<if test="departments != null and departments.size()> 0">
+				AND
+				<foreach collection="departments" index="index" item="department" open="(" separator="OR" close=")">
+					department.bm_name LIKE '%${department}%'
+				</foreach>
+			</if>
+			--  选择人员条件，可多选
+			<if test="peoples != null and peoples.size()> 0">
+				AND
+				<foreach collection="peoples" index="index" item="people" open="(" separator="OR" close=")">
+					people.people_name LIKE '%${people}%'
+				</foreach>
+			</if>
+			-- 	选择工序查询，可多选。需要遍历，并且要判断是否为空，为空的话不加
+			<if test="procedures != null and procedures.size()> 0">
+				AND
+				<foreach collection="procedures" index="index" item="procedure" open="(" separator="OR" close=")">
+					`procedure`.pro_name LIKE '%${procedure}%'
+				</foreach>
+			</if>
+			-- 	选择产品查询，可多选。需要遍历，并且要判断是否为空，为空的话不加
+			<if test="products != null and products.size()> 0">
+				AND
+				<foreach collection="products" index="index" item="product" open="(" separator="OR" close=")">
+					product.product_name LIKE '%${product}%'
+				</foreach>
+			</if>
+		</where>
+	</select>
+
+	<!--工资统计-->
+	<select id="findStatistics" parameterType="com.hlwxy.xr_piece.system.domain.ConditionDo" resultMap="returnDO">
+		SELECT
+			wages_header.bill_date,
+			SUM(wages.money) AS moneys
+		FROM
+			wages_header
+			LEFT JOIN wages ON wages.bill_code = wages_header.bill_code
+			LEFT JOIN people ON wages.people_code=people.people_code
+			LEFT JOIN department ON people.bm_id=department.id
+			LEFT JOIN `procedure` ON wages.pro_code=`procedure`.pro_code
+			LEFT JOIN product ON wages.product_code=product.product_code
+			<where>
+				1=1
+				<if test="accDataOn != null and accDataOff != null">
+					AND (DATE_FORMAT( wages_header.bill_date, '%Y-%m-%d' ) &lt;= DATE_FORMAT( '${accDataOn}', '%Y-%m-%d' ))
+				</if>
+				-- 	核算区间，上线。如果时间参数为空，查询到的数据为空
+				<if test="accDataOff != null and accDataOn != null">
+					AND (DATE_FORMAT( wages_header.bill_date, '%Y-%m-%d' ) &gt;= DATE_FORMAT( '${accountingOff}', '%Y-%m-%d' ))
+				</if>
+				-- 	完工时间区间，上线。如果时间参数为空，查询到的数据为空
+				<if test="comDataOn != null and comDataOff != null">
+					AND (DATE_FORMAT( wages.date_mark, '%Y-%m-%d' ) &lt;= DATE_FORMAT( '${completionOn}', '%Y-%m-%d' ))
+				</if>
+				-- 	完工时间区间，上线。如果时间参数为空，查询到的数据为空
+				<if test="comDataOff != null and comDataOn != null">
+					AND (DATE_FORMAT( wages.date_mark, '%Y-%m-%d' ) &gt;= DATE_FORMAT( '${comDataOff}', '%Y-%m-%d' ))
+				</if>
+				-- 	选择部门条件，可多选
+				<if test="departments != null and departments.size()> 0">
+					AND
+					<foreach collection="departments" index="index" item="department" open="(" separator="OR" close=")">
+						department.bm_name LIKE '%${department}%'
+					</foreach>
+				</if>
+				--  选择人员条件，可多选
+				<if test="peoples != null and peoples.size()> 0">
+					AND
+					<foreach collection="peoples" index="index" item="people" open="(" separator="OR" close=")">
+						people.people_name LIKE '%${people}%'
+					</foreach>
+				</if>
+				-- 	选择工序查询，可多选。需要遍历，并且要判断是否为空，为空的话不加
+				<if test="procedures != null and procedures.size()> 0">
+					AND
+					<foreach collection="procedures" index="index" item="procedure" open="(" separator="OR" close=")">
+						`procedure`.pro_name LIKE '%${procedure}%'
+					</foreach>
+				</if>
+				-- 	选择产品查询，可多选。需要遍历，并且要判断是否为空，为空的话不加
+				<if test="products != null and products.size()> 0">
+					AND
+					<foreach collection="products" index="index" item="product" open="(" separator="OR" close=")">
+						product.product_name LIKE '%${product}%'
+					</foreach>
+				</if>
+			</where>
+			GROUP BY wages_header.bill_date
+			LIMIT ${pc},${limit};
+	</select>
+	<!--工资统计总条数-->
+	<select id="countFindStatistics" parameterType="com.hlwxy.xr_piece.system.domain.ConditionDo" resultMap="returnDO">
+		SELECT
+		wages_header.bill_date,
+		SUM(wages.money) AS moneys
+		FROM
+		wages_header
+		LEFT JOIN wages ON wages.bill_code = wages_header.bill_code
+		LEFT JOIN people ON wages.people_code=people.people_code
+		LEFT JOIN department ON people.bm_id=department.id
+		LEFT JOIN `procedure` ON wages.pro_code=`procedure`.pro_code
+		LEFT JOIN product ON wages.product_code=product.product_code
+		<where>
+			1=1
+			<if test="accDataOn != null and accDataOff != null">
+				AND (DATE_FORMAT( wages_header.bill_date, '%Y-%m-%d' ) &lt;= DATE_FORMAT( '${accDataOn}', '%Y-%m-%d' ))
+			</if>
+			-- 	核算区间，上线。如果时间参数为空，查询到的数据为空
+			<if test="accDataOff != null and accDataOn != null">
+				AND (DATE_FORMAT( wages_header.bill_date, '%Y-%m-%d' ) &gt;= DATE_FORMAT( '${accountingOff}', '%Y-%m-%d' ))
+			</if>
+			-- 	完工时间区间，上线。如果时间参数为空，查询到的数据为空
+			<if test="comDataOn != null and comDataOff != null">
+				AND (DATE_FORMAT( wages.date_mark, '%Y-%m-%d' ) &lt;= DATE_FORMAT( '${completionOn}', '%Y-%m-%d' ))
+			</if>
+			-- 	完工时间区间，上线。如果时间参数为空，查询到的数据为空
+			<if test="comDataOff != null and comDataOn != null">
+				AND (DATE_FORMAT( wages.date_mark, '%Y-%m-%d' ) &gt;= DATE_FORMAT( '${comDataOff}', '%Y-%m-%d' ))
+			</if>
+			-- 	选择部门条件，可多选
+			<if test="departments != null and departments.size()> 0">
+				AND
+				<foreach collection="departments" index="index" item="department" open="(" separator="OR" close=")">
+					department.bm_name LIKE '%${department}%'
+				</foreach>
+			</if>
+			--  选择人员条件，可多选
+			<if test="peoples != null and peoples.size()> 0">
+				AND
+				<foreach collection="peoples" index="index" item="people" open="(" separator="OR" close=")">
+					people.people_name LIKE '%${people}%'
+				</foreach>
+			</if>
+			-- 	选择工序查询，可多选。需要遍历，并且要判断是否为空，为空的话不加
+			<if test="procedures != null and procedures.size()> 0">
+				AND
+				<foreach collection="procedures" index="index" item="procedure" open="(" separator="OR" close=")">
+					`procedure`.pro_name LIKE '%${procedure}%'
+				</foreach>
+			</if>
+			-- 	选择产品查询，可多选。需要遍历，并且要判断是否为空，为空的话不加
+			<if test="products != null and products.size()> 0">
+				AND
+				<foreach collection="products" index="index" item="product" open="(" separator="OR" close=")">
+					product.product_name LIKE '%${product}%'
+				</foreach>
+			</if>
+		</where>
+		GROUP BY wages_header.bill_date;
+	</select>
+
+	<!--工资统计表-->
+	<select id="findStatisticsTable" parameterType="com.hlwxy.xr_piece.system.domain.ConditionDo" resultMap="returnDO">
+		SELECT
+			wages_header.bill_date,
+			wages.`name`,
+			SUM(wages.money) AS moneys
+		FROM
+			wages_header
+			LEFT JOIN wages ON wages.bill_code = wages_header.bill_code
+			LEFT JOIN people ON wages.people_code=people.people_code
+			LEFT JOIN department ON people.bm_id=department.id
+			LEFT JOIN `procedure` ON wages.pro_code=`procedure`.pro_code
+			LEFT JOIN product ON wages.product_code=product.product_code
+		<where>
+			1=1
+			<if test="accDataOn != null and accDataOff != null">
+				AND (DATE_FORMAT( wages_header.bill_date, '%Y-%m-%d' ) &lt;= DATE_FORMAT( '${accDataOn}', '%Y-%m-%d' ))
+			</if>
+			-- 	核算区间，上线。如果时间参数为空，查询到的数据为空
+			<if test="accDataOff != null and accDataOn != null">
+				AND (DATE_FORMAT( wages_header.bill_date, '%Y-%m-%d' ) &gt;= DATE_FORMAT( '${accountingOff}', '%Y-%m-%d' ))
+			</if>
+			-- 	完工时间区间，上线。如果时间参数为空，查询到的数据为空
+			<if test="comDataOn != null and comDataOff != null">
+				AND (DATE_FORMAT( wages.date_mark, '%Y-%m-%d' ) &lt;= DATE_FORMAT( '${completionOn}', '%Y-%m-%d' ))
+			</if>
+			-- 	完工时间区间，上线。如果时间参数为空，查询到的数据为空
+			<if test="comDataOff != null and comDataOn != null">
+				AND (DATE_FORMAT( wages.date_mark, '%Y-%m-%d' ) &gt;= DATE_FORMAT( '${comDataOff}', '%Y-%m-%d' ))
+			</if>
+			-- 	选择部门条件，可多选
+			<if test="departments != null and departments.size()> 0">
+				AND
+				<foreach collection="departments" index="index" item="department" open="(" separator="OR" close=")">
+					department.bm_name LIKE '%${department}%'
+				</foreach>
+			</if>
+			--  选择人员条件，可多选
+			<if test="peoples != null and peoples.size()> 0">
+				AND
+				<foreach collection="peoples" index="index" item="people" open="(" separator="OR" close=")">
+					people.people_name LIKE '%${people}%'
+				</foreach>
+			</if>
+			-- 	选择工序查询，可多选。需要遍历，并且要判断是否为空，为空的话不加
+			<if test="procedures != null and procedures.size()> 0">
+				AND
+				<foreach collection="procedures" index="index" item="procedure" open="(" separator="OR" close=")">
+					`procedure`.pro_name LIKE '%${procedure}%'
+				</foreach>
+			</if>
+			-- 	选择产品查询，可多选。需要遍历，并且要判断是否为空，为空的话不加
+			<if test="products != null and products.size()> 0">
+				AND
+				<foreach collection="products" index="index" item="product" open="(" separator="OR" close=")">
+					product.product_name LIKE '%${product}%'
+				</foreach>
+			</if>
+		</where>
+		GROUP BY wages_header.bill_date,wages.`name`
+		LIMIT ${pc},${limit};
+	</select>
+	<!--工资统计表总条数-->
+	<select id="countStatisticsTable" parameterType="com.hlwxy.xr_piece.system.domain.ConditionDo" resultMap="returnDO">
+		SELECT
+			wages_header.bill_date,
+			wages.`name`,
+			SUM(wages.money) AS moneys
+		FROM
+			wages_header
+			LEFT JOIN wages ON wages.bill_code = wages_header.bill_code
+			LEFT JOIN people ON wages.people_code=people.people_code
+			LEFT JOIN department ON people.bm_id=department.id
+			LEFT JOIN `procedure` ON wages.pro_code=`procedure`.pro_code
+			LEFT JOIN product ON wages.product_code=product.product_code
+			<where>
+				1=1
+				<if test="accDataOn != null and accDataOff != null">
+					AND (DATE_FORMAT( wages_header.bill_date, '%Y-%m-%d' ) &lt;= DATE_FORMAT( '${accDataOn}', '%Y-%m-%d' ))
+				</if>
+				-- 	核算区间，上线。如果时间参数为空，查询到的数据为空
+				<if test="accDataOff != null and accDataOn != null">
+					AND (DATE_FORMAT( wages_header.bill_date, '%Y-%m-%d' ) &gt;= DATE_FORMAT( '${accountingOff}', '%Y-%m-%d' ))
+				</if>
+				-- 	完工时间区间，上线。如果时间参数为空，查询到的数据为空
+				<if test="comDataOn != null and comDataOff != null">
+					AND (DATE_FORMAT( wages.date_mark, '%Y-%m-%d' ) &lt;= DATE_FORMAT( '${completionOn}', '%Y-%m-%d' ))
+				</if>
+				-- 	完工时间区间，上线。如果时间参数为空，查询到的数据为空
+				<if test="comDataOff != null and comDataOn != null">
+					AND (DATE_FORMAT( wages.date_mark, '%Y-%m-%d' ) &gt;= DATE_FORMAT( '${comDataOff}', '%Y-%m-%d' ))
+				</if>
+				-- 	选择部门条件，可多选
+				<if test="departments != null and departments.size()> 0">
+					AND
+					<foreach collection="departments" index="index" item="department" open="(" separator="OR" close=")">
+						department.bm_name LIKE '%${department}%'
+					</foreach>
+				</if>
+				--  选择人员条件，可多选
+				<if test="peoples != null and peoples.size()> 0">
+					AND
+					<foreach collection="peoples" index="index" item="people" open="(" separator="OR" close=")">
+						people.people_name LIKE '%${people}%'
+					</foreach>
+				</if>
+				-- 	选择工序查询，可多选。需要遍历，并且要判断是否为空，为空的话不加
+				<if test="procedures != null and procedures.size()> 0">
+					AND
+					<foreach collection="procedures" index="index" item="procedure" open="(" separator="OR" close=")">
+						`procedure`.pro_name LIKE '%${procedure}%'
+					</foreach>
+				</if>
+				-- 	选择产品查询，可多选。需要遍历，并且要判断是否为空，为空的话不加
+				<if test="products != null and products.size()> 0">
+					AND
+					<foreach collection="products" index="index" item="product" open="(" separator="OR" close=")">
+						product.product_name LIKE '%${product}%'
+					</foreach>
+				</if>
+			</where>
+			GROUP BY wages_header.bill_date,wages.`name`
+	</select>
+</mapper>

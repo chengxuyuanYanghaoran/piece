@@ -1,5 +1,8 @@
 package com.hlwxy.xr_piece.system.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -15,6 +18,9 @@ public class WagesHeaderDO implements Serializable {
 	//单据编号
 	private String billCode;
 	//核算期间
+    //日期
+    @DateTimeFormat(pattern="yyyy-MM-dd")
+    @JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd")
 	private Date billDate;
 	//审核人
 	private String auditor;
