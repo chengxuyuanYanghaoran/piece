@@ -222,6 +222,7 @@ window.onload=function () {
 };
 
 function ddd(){
+    var a = parent.$("#btnn").val();
     var Get_start_time = $("#start_timer").val();
     var Get_end_time = $("#end_timer").val();
     var Get_start_time_day = $("#start").val();
@@ -230,6 +231,21 @@ function ddd(){
     var Get_dec_input_three = $("#dec_input_three").text();
     var Get_dec_input_two = $("#dec_input_two").text();
     var Get_dec_input = $("#dec_input").text();
+
+    if (a==0){
+        if ($("#dec_input_four").text()==""){
+            alert("请选择或输入产品条件！");
+            return false;
+        }
+    }else if (a==1){
+        if ($("#dec_input_three").text()==""){
+            alert("请选择或输入工序条件！");
+            return false;
+        }
+    }else {
+        alert("请选择计价方式！");
+        return false;
+    }
 
     layui.use('table', function () {
         var table = layui.table;
@@ -244,17 +260,17 @@ function ddd(){
                     "accountingOff":Get_start_time,
                     "accountingOn":Get_end_time,
                     "completionOff":Get_start_time_day,
-                    "completionOn":Get_end_time_day
+                    "completionOn":Get_end_time_day,
+                    "mode":a
             }
             , cols: [[
                 {type: 'checkbox'}
                 , {field: 'dateMark2', title: '日期', sort: true}
                 , {field: 'name', title: '人员'}
                 , {field: 'proName', title: '工序名称', sort: true}
-                , {field: 'proPrice', title: '工序单价', sort: true}
                 , {field: 'productName', title: '产品名称', sort: true}
-                , {field: 'productPrice', title: '产品单价', sort: true}
                 , {field: 'harvest', title: '产量', sort: true}
+                , {field: 'productPrice', title: '单价', sort: true}
                 , {field: 'money', title: '金额', sort: true}
             ]]
             , page: true,
@@ -262,6 +278,7 @@ function ddd(){
             limit : 5 //每页默认显示的数量
         });
     });
+
 
     //点击关闭弹框
     $(".layui-layer-close1").trigger('click');
@@ -288,6 +305,17 @@ layui.use('layer',function(){
         , offset:['20px','80px']
         , tipsMore: true
         , maxmin: true//这里content是一个普通的String
+        , success:function (res) {
+            if(parent.$("#btnn").val() == 0 ) {
+                $("#dec_ddd_two").show();
+                $("#dec_ddd").hide();
+            } else if(parent.$("#btnn").val() == 1 ) {
+                $("#dec_ddd").show();
+                $("#dec_ddd_two").hide();
+            } else {
+                alert("选择失败！")
+            }
+        }
     });
 
 });

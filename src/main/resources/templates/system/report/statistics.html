@@ -16,14 +16,14 @@
     <div class="layui-row" style="margin-left: -520px;padding-top: 20px">
         <div class="layui-col-md8 layui-col-md-offset3 bo ttt">
             <label class="layui-form-label" style="width:30%;">开始时间:</label>
-            <input id="start_timer" class="layui-input" style="width: 30%" type="text" name="stateDate" autocomplete="off" placeholder="开始时间">
+            <input id="start_timer" class="layui-input" style="width: 30%" type="text" name="stateDate" autocomplete="off" placeholder="搜索开始时间">
         </div>
     </div>
 
     <div class="layui-row" style="margin-left: -520px">
         <div class="layui-col-md8 layui-col-md-offset3 bo" style="margin-top:15px;">
             <label class="layui-form-label" style="width:30%;">结束时间:</label>
-            <input id="end_timer" class="layui-input" style="width: 30%" type="text" autocomplete="off" placeholder="结束时间" name="endDate">
+            <input id="end_timer" class="layui-input" style="width: 30%" type="text" autocomplete="off" placeholder="搜索结束时间" name="endDate">
         </div>
     </div>
 
@@ -53,7 +53,7 @@
         </div>
     </div>
     <!--工序-->
-    <div class="dec_ddd">
+    <div class="dec_ddd" id="dec_ddd">
         <p style="display: inline-block">工序</p>
         <p id="dec_input_three" class="ddd_input" style="" contenteditable="true"></p>
         <i class="fa fa-binoculars fa-lg" id="depection_three" aria-hidden="true" style="margin-top: 1px;cursor: pointer;margin-left: -10px"></i>
@@ -65,7 +65,7 @@
         </div>
     </div>
     <!--产品-->
-    <div class="dec_ddd">
+    <div class="dec_ddd" id="dec_ddd_two">
         <p style="display: inline-block">产品</p>
         <p id="dec_input_four" class="ddd_input" style="" contenteditable="true"></p>
         <i class="fa fa-puzzle-piece fa-lg" id="depection_four" aria-hidden="true" style="margin-top: 1px;cursor: pointer;margin-left: -10px"></i>

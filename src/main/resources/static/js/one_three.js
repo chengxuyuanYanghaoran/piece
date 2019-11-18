@@ -188,6 +188,7 @@ window.onload=function () {
 };
 
 function ddd(){
+    var a = parent.$("#btnn").val();
     var Get_start_time = $("#start_timer").val();
     var Get_end_time = $("#end_timer").val();
     var Get_dec_input_four = $("#dec_input_four").text();
@@ -244,6 +245,17 @@ layui.use('layer',function(){
         , offset:['20px','80px']
         , tipsMore: true
         , maxmin: true//这里content是一个普通的String
+        , success:function (res) {
+            if(parent.$("#btnn").val() == 0 ) {
+                $("#dec_ddd_two").show();
+                $("#dec_ddd").hide();
+            } else if(parent.$("#btnn").val() == 1 ) {
+                $("#dec_ddd").show();
+                $("#dec_ddd_two").hide();
+            } else {
+                alert("选择失败！")
+            }
+        }
     });
 
 });

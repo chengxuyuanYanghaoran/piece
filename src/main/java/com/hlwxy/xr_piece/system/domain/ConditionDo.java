@@ -24,6 +24,9 @@ public class ConditionDo implements Serializable {
     private List<String> products;
     private String product;
 
+    //计价方式
+    private String mode;
+
     //核算期间上限
     private String accountingOn;
     private Date accDataOn;
@@ -45,7 +48,7 @@ public class ConditionDo implements Serializable {
     public ConditionDo() {
     }
 
-    public ConditionDo(List<String> departments, String department, List<String> peoples, String people, List<String> procedures, String procedure, List<String> products, String product, String accountingOn, Date accDataOn, String accountingOff, Date accDataOff, String completionOn, Date comDataOn, String completionOff, Date comDataOff, Integer limit, Integer page, Integer pp, Integer pc) {
+    public ConditionDo(List<String> departments, String department, List<String> peoples, String people, List<String> procedures, String procedure, List<String> products, String product, String mode, String accountingOn, Date accDataOn, String accountingOff, Date accDataOff, String completionOn, Date comDataOn, String completionOff, Date comDataOff, Integer limit, Integer page, Integer pp, Integer pc) {
         this.departments = departments;
         this.department = department;
         this.peoples = peoples;
@@ -54,6 +57,7 @@ public class ConditionDo implements Serializable {
         this.procedure = procedure;
         this.products = products;
         this.product = product;
+        this.mode = mode;
         this.accountingOn = accountingOn;
         this.accDataOn = accDataOn;
         this.accountingOff = accountingOff;
@@ -66,6 +70,14 @@ public class ConditionDo implements Serializable {
         this.page = page;
         this.pp = pp;
         this.pc = pc;
+    }
+
+    public String getMode() {
+        return mode;
+    }
+
+    public void setMode(String mode) {
+        this.mode = mode;
     }
 
     public Integer getLimit() {

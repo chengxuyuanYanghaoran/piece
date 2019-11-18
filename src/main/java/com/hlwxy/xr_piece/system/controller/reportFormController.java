@@ -51,8 +51,14 @@ public class reportFormController {
         //计算开始检索位置
         conditionDo.setPc(conditionDo.getLimit()*(conditionDo.getPage()-1));
         try{
+
             Integer pp=reportFormService.countDetailed(conditionDo);
             List<WagesDO> list=reportFormService.findDetailed(conditionDo);
+            if (!conditionDo.getMode().equals("0")){ //工序计价
+                for (WagesDO wagesDO:list){
+                    wagesDO.setProductPrice(wagesDO.getProPrice());
+                }
+            }
             System.out.println("结束");
             map.put("data", list);
             map.put("count",pp);
