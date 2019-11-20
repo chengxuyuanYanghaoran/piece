@@ -88,9 +88,36 @@ window.onload=function () {
             datatype:"json",
             success:function (res) {
                 $.each(res.productDOS,function (index,obj) {
-                    $("#daaa_four").append("<div><input type='checkbox' name=\"check-4\" style='margin-right: 10px;margin-top: 10px' value='"+obj["productName"]+"'/> "+ obj["productName"]+ "</div>"
+                    $("#daaa_four").append("<div style='display: inline-block;margin-left: 10px;margin-top: 15px'><input type='checkbox' name=\"check-4\" value='"+obj["productName"]+"'/> "+ obj["productName"]+ "</div>"
                     )
                 })
+                var obox = document.getElementById("working");
+                var odiv = document.getElementById("daaa_four");
+                var ach = odiv.getElementsByTagName("input");
+                obox.onclick = function () {
+                    for (var i = 0; i < ach.length; i++) {
+                        ach[i].checked = this.checked;
+                    }
+                };
+                // alert(ach.length);
+                for (var i = 0; i < ach.length; i++) {
+                    ach[i].onclick = function () {
+                        if (!this.checked) {
+                            obox.checked = false;
+                        }
+
+                        var flag = true;
+                        for (var i = 0; i < ach.length; i++) {
+                            if (!ach[i].checked) {
+                                flag = false;
+                                break;
+                            }
+                        }
+                        if (flag) {
+                            obox.checked = true;
+                        }
+                    };
+                }
             },
             error:function () {
                 alert("失败");
@@ -105,9 +132,9 @@ window.onload=function () {
             alert("选中的checkbox的值为：" + text);
             //给p标签动态添加内容
             $("#dec_input_four").append("<span>" + text + "," + "</span>");
-            $("#daaa_four").fadeOut();
+            $("#daaa_four_son").fadeOut();
         })
-        $("#daaa_four").fadeToggle();
+        $("#daaa_four_son").fadeToggle();
     });
     //工序
     $("#depection_three").click(function () {
@@ -124,9 +151,36 @@ window.onload=function () {
             datatype:"json",
             success:function (res) {
                 $.each(res.procedureDOS,function (index,obj) {
-                    $("#daaa_three").append("<div><input type='checkbox' name=\"check-3\" style='margin-right: 10px;margin-top: 10px' value='"+obj["proName"]+"'/> "+ obj["proName"]+ "</div>"
+                    $("#daaa_three").append("<div style='display: inline-block;margin-left: 10px;margin-top: 15px'><input type='checkbox' name=\"check-3\" value='"+obj["proName"]+"'/> "+ obj["proName"]+ "</div>"
                     )
                 })
+                var obox = document.getElementById("product");
+                var odiv = document.getElementById("daaa_three");
+                var ach = odiv.getElementsByTagName("input");
+                obox.onclick = function () {
+                    for (var i = 0; i < ach.length; i++) {
+                        ach[i].checked = this.checked;
+                    }
+                };
+                // alert(ach.length);
+                for (var i = 0; i < ach.length; i++) {
+                    ach[i].onclick = function () {
+                        if (!this.checked) {
+                            obox.checked = false;
+                        }
+
+                        var flag = true;
+                        for (var i = 0; i < ach.length; i++) {
+                            if (!ach[i].checked) {
+                                flag = false;
+                                break;
+                            }
+                        }
+                        if (flag) {
+                            obox.checked = true;
+                        }
+                    };
+                }
             },
             error:function () {
                 alert("失败");
@@ -141,9 +195,9 @@ window.onload=function () {
             alert("选中的checkbox的值为：" + text);
             //给p标签动态添加内容
             $("#dec_input_three").append("<span>" + text + "," + "</span>");
-            $("#daaa_three").fadeOut();
+            $("#daaa_three_son").fadeOut();
         })
-        $("#daaa_three").fadeToggle();
+        $("#daaa_three_son").fadeToggle();
     });
     //人员
     $("#depection_two").click(function () {
@@ -160,9 +214,36 @@ window.onload=function () {
             datatype:"json",
             success:function (res) {
                 $.each(res.peopleDOS,function (index,obj) {
-                    $("#daaa_two").append("<div><input type='checkbox' name=\"check-2\" style='margin-right: 10px;margin-top: 10px' value='"+obj["peopleName"]+"'/> "+ obj["peopleName"]+ "</div>"
+                    $("#daaa_two").append("<div style='display: inline-block;margin-left: 10px;margin-top: 15px'><input type='checkbox' name=\"check-2\" value='"+obj["peopleName"]+"'/> "+ obj["peopleName"]+ "</div>"
                     )
                 })
+                var obox = document.getElementById("everything");
+                var odiv = document.getElementById("daaa_two");
+                var ach = odiv.getElementsByTagName("input");
+                obox.onclick = function () {
+                    for (var i = 0; i < ach.length; i++) {
+                        ach[i].checked = this.checked;
+                    }
+                };
+                // alert(ach.length);
+                for (var i = 0; i < ach.length; i++) {
+                    ach[i].onclick = function () {
+                        if (!this.checked) {
+                            obox.checked = false;
+                        }
+
+                        var flag = true;
+                        for (var i = 0; i < ach.length; i++) {
+                            if (!ach[i].checked) {
+                                flag = false;
+                                break;
+                            }
+                        }
+                        if (flag) {
+                            obox.checked = true;
+                        }
+                    };
+                }
             },
             error:function () {
                 alert("失败");
@@ -177,9 +258,9 @@ window.onload=function () {
             alert("选中的checkbox的值为：" + text);
             //给p标签动态添加内容
             $("#dec_input_two").append("<span>" + text + "," + "</span>");
-            $("#daaa_two").fadeOut();
+            $("#daaa_two_son").fadeOut();
         })
-        $("#daaa_two").fadeToggle();
+        $("#daaa_two_son").fadeToggle();
     });
     //部门
     $("#depection").click(function () {
@@ -196,11 +277,37 @@ window.onload=function () {
             datatype:"json",
             success:function (res) {
                 $.each(res.departmentDOS,function (index,obj) {
-                    $("#daaa").append("<div>" +
-                        "<div><input type='checkbox' name=\"check-1\" style='margin-right: 10px;margin-top: 10px' value='"+obj["bmName"]+"'/> "
-                        + obj["bmName"]+ "</div>" + "</div>");
+                    $("#daaa").append(
+                        "<div style='display: inline-block;margin-left: 10px;margin-top: 15px'><input type='checkbox' name=\"check-1\" value='"+obj["bmName"]+"'/> "
+                        + obj["bmName"]+ "</div>" );
                 });
-                //获取所有复选框
+                var obox = document.getElementById("department");
+                var odiv = document.getElementById("daaa");
+                var ach = odiv.getElementsByTagName("input");
+                obox.onclick = function () {
+                    for (var i = 0; i < ach.length; i++) {
+                        ach[i].checked = this.checked;
+                    }
+                };
+                // alert(ach.length);
+                for (var i = 0; i < ach.length; i++) {
+                    ach[i].onclick = function () {
+                        if (!this.checked) {
+                            obox.checked = false;
+                        }
+
+                        var flag = true;
+                        for (var i = 0; i < ach.length; i++) {
+                            if (!ach[i].checked) {
+                                flag = false;
+                                break;
+                            }
+                        }
+                        if (flag) {
+                            obox.checked = true;
+                        }
+                    };
+                }
             },
             error:function () {
                 alert("失败");
@@ -215,14 +322,14 @@ window.onload=function () {
             alert("选中的checkbox的值为：" + text);
             //给p标签动态添加内容
             $("#dec_input").append("<span>" + text + "," + "</span>");
-            $("#daaa").fadeOut();
+            $("#daaa_son").fadeOut();
         })
-        $("#daaa").fadeToggle();
+        $("#daaa_son").fadeToggle();
     });
 };
 
 function ddd(){
-    var a = parent.$("#btnn").val();
+    var a = parent.$("input[name='state']:checked").val();
     var Get_start_time = $("#start_timer").val();
     var Get_end_time = $("#end_timer").val();
     var Get_start_time_day = $("#start").val();
@@ -306,10 +413,10 @@ layui.use('layer',function(){
         , tipsMore: true
         , maxmin: true//这里content是一个普通的String
         , success:function (res) {
-            if(parent.$("#btnn").val() == 0 ) {
+            if(parent.$("input[name='state']:checked").val() == 0 ) {
                 $("#dec_ddd_two").show();
                 $("#dec_ddd").hide();
-            } else if(parent.$("#btnn").val() == 1 ) {
+            } else if(parent.$("input[name='state']:checked").val() == 1 ) {
                 $("#dec_ddd").show();
                 $("#dec_ddd_two").hide();
             } else {
