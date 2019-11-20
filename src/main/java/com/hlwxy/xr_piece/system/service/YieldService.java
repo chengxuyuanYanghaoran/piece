@@ -2,7 +2,8 @@ package com.hlwxy.xr_piece.system.service;
 
 
 import com.hlwxy.xr_piece.system.domain.YieldDO;
-import org.springframework.web.multipart.MultipartFile;
+import com.hlwxy.xr_piece.system.domain.YieldHeaderDO;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.util.List;
 import java.util.Map;
@@ -30,6 +31,7 @@ public interface YieldService {
 	
 	int batchRemove(Integer[] ids);
 
-
+	//导入表格
+	void importTable(XSSFWorkbook hssfWorkbook, YieldHeaderDO yieldHeaderDO);
 
 }

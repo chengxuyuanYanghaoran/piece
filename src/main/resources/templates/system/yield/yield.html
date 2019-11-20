@@ -4,6 +4,7 @@
 <head th:include="include :: header">
 </head>
 <body class="gray-bg">
+
 <div class="wrapper wrapper-content ">
     <div class="col-sm-12">
         <div class="ibox">
@@ -18,11 +19,39 @@
                             <label>单据日期:</label><input name="yieldDate" type="month"  class="form-control"
                                                                                  id="yieldDate"></div>
 
-                        <!---->
-                        <div class="layui-upload layui-inline layui-show-xs-block">
-                            <button onclick="importUsers();" class="btn btn-primary radius" type="button">导入数据</button>
-                        </div>
-                    </div>
+	<div class="wrapper wrapper-content ">
+		<div class="col-sm-12">
+			<div class="ibox">
+				<div class="ibox-body">
+
+                       <form class="" method="post" enctype="multipart/form-data">
+<div class="form-head" style="display: flex; justify-content: space-around">
+<div class="form-group">
+<label>单据编号:</label><input  type="text" id="exampleInputName"/>
+</div>
+<div class="form-group">
+<label>核算期间:</label><input  type="date" id="exampleInputName2"/>
+</div>
+                    <!---->
+<!--<div class="layui-upload layui-inline layui-show-xs-block">-->
+<!--<button type="button" class="layui-btn layui-btn-normal" id="btnSelectFile">选择Excel</button>-->
+<!--<button type="button" class="layui-btn" id="btnImport">开始导入</button>-->
+<!--</div>-->
+    <div class="form-main">
+        <div class="form-group" style="margin-bottom: 0">
+            <input type="file" id="exampleInputFile" name="file" value="" style="width: 180px; margin-bottom: 2px">
+            <span class="span" style="color: red;font-size: 14px;">
+                *必须指定 Excel文件!
+            </span>
+        </div>
+        <div class="form-group" style="margin-bottom: 2px;">
+            <button type="button" id="btnImport">开始导入</button>
+        </div>
+    </div>
+
+</div>
+ <hr style="margin: 0"/>
+
                     <hr style="margin: 0"/>
                     <div class="fixed-table-toolbar">
                         <div class="columns pull-left">
@@ -49,13 +78,11 @@
                     <hr style="margin-top: 0; margin-bottom: 10px"/>
                     <div class="form-footer" style="display: flex; justify-content: space-around">
                         <div class="form-group">
-                            <label>审核人:</label><input name="auditor"  type="text"  class="form-control"
-                                                                               id="auditor" >
+                            <label>审核人:</label><input  type="text" id="exampleInputName3"/>
                         </div>
                         <div class="form-group">
-                            <label>审核日期:</label><input  name="auditDate"  type="date"  class="form-control"
-                                                                                 id="auditDate"
-                                                                                ></div>
+                            <label>审核日期:</label><input  type="date" id="exampleInputName4"/>
+                        </div>
                         <div class="layui-upload layui-inline layui-show-xs-block">
                             <button onclick="saveTable()"  class="btn btn-primary radius" type="button">提交</button>
                         </div>
@@ -64,7 +91,6 @@
                    
 
                              
-
 
             </div>
         </div>

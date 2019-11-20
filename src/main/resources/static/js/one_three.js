@@ -240,9 +240,9 @@ layui.use('layer',function(){
         type: 1
         , content: $("#ddd")
         , title:  ['查询条件！', 'font-size:18px;color:red']
-        , area: ['65%', '90%']
+        , area: ['65%', '80%']
         , shade: 0
-        , offset:['20px','80px']
+        , offset:['50px','140px']
         , tipsMore: true
         , maxmin: true//这里content是一个普通的String
         , success:function (res) {

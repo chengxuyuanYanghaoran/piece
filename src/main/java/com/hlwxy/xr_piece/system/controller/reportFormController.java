@@ -6,10 +6,8 @@ import com.hlwxy.xr_piece.system.domain.WagesDO;
 import com.hlwxy.xr_piece.system.service.reportFormService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.*;
 import java.text.SimpleDateFormat;
@@ -42,7 +40,7 @@ public class reportFormController {
         return "system/report/statistics_three";
     }
 
-    //工资明细表
+    //工资明细表  @RequestParam("file")
     @RequestMapping("/detailed")
     @ResponseBody
     public Map<String,Object> findDetailed(ConditionDo conditionDo) {

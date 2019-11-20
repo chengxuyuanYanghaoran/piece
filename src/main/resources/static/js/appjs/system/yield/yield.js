@@ -188,3 +188,44 @@ function batchRemove() {
 
 	});
 }
+
+$("#btnImport").on("click", function(){
+    var formData = new FormData();
+    formData.append("file",$('#exampleInputFile')[0].files[0]);//封装文件
+
+	//获取单据编号 .attr("value")
+    var yieldCode=$("#yield_code").val();
+    //获取核算期间
+    var yieldDate=$("#yieldDate").val();
+    //获取审核人
+    var auditor=$("#auditor").val();
+    //获取审核时间
+    var auditDate=$("#auditDate").val();
+
+    formData.append("yieldCode",yieldCode);//封装单据编号
+    formData.append("yieldDate",yieldDate);//封装核算区间
+    formData.append("auditor",auditor);//封装审核人
+    formData.append("auditDate",auditDate);//封装审核时间
+
+	alert(yieldCode);
+    alert(yieldDate);
+    alert(auditor);
+    alert(auditDate);
+
+
+    $.ajax({
+        type:'POST',
+		url:"/system/yield/import",
+        data:formData,
+        processData:false,
+        contentType:false,
+        dataType:"json",
+        success:function(data){
+            if(data.code == 0){
+                layer.msg('导入成功', {icon: 1});
+            }else{
+                layer.msg('导入失败', {icon: 2});
+            }
+        }
+    });
+})

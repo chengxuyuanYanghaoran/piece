@@ -5,7 +5,9 @@ import java.util.List;
 import java.util.Map;
 
 import com.hlwxy.xr_piece.system.domain.YieldDO;
+import com.hlwxy.xr_piece.system.domain.YieldHeaderDO;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
 /**
  * 
@@ -29,4 +31,7 @@ public interface YieldDao {
 	int remove(Integer id);
 	
 	int batchRemove(Integer[] ids);
+
+	//导入表格(产品)
+	void importTable(List<YieldDO> yieldDOS);
 }

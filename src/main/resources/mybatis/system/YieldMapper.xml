@@ -104,4 +104,20 @@
 		</foreach>
 	</delete>
 
+	<!--导入表格(产品)-->
+	<insert id="importTable" parameterType="java.util.List">
+		INSERT INTO `yield` (yield_code,date_mark,people_code,`name`,product_code,product_name,harvest) VALUES
+		<foreach collection="list" item="yieldDOS" index="index" separator=",">
+			(
+				#{yieldDOS.yieldCode},
+				#{yieldDOS.dateMark},
+				#{yieldDOS.peopleCode},
+				#{yieldDOS.name},
+				#{yieldDOS.productCode},
+				#{yieldDOS.productName},
+				#{yieldDOS.harvest}
+             )
+		</foreach>
+	</insert>
+
 </mapper>

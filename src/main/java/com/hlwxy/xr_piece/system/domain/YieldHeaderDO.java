@@ -9,21 +9,24 @@ import java.util.Date;
 
 
 /**
- * 
- * 
  * @author lu
  * @email 1992lcg@163.com
  * @date 2019-11-19 09:49:10
  */
+
 public class YieldHeaderDO implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
-	//产量统计表  id
+
+	//id
 	private Integer id;
 	//单据编号
 	private String yieldCode;
-	//单据日期
-	private String yieldDate;
+	//核算期间
+	//日期
+	@DateTimeFormat(pattern="yyyy-MM-dd")
+	@JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd")
+	private Date yieldDate;
+	private java.sql.Date yieldDate2;
 	//审核人
 	private String auditor;
 	//审核日期
@@ -31,64 +34,63 @@ public class YieldHeaderDO implements Serializable {
 	@JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd")
 	private Date auditDate;
 
-	/**
-	 * 设置：产量统计表  id
-	 */
-	public void setId(Integer id) {
-		this.id = id;
+	public YieldHeaderDO() {
 	}
-	/**
-	 * 获取：产量统计表  id
-	 */
+
+	public YieldHeaderDO(Integer id, String yieldCode, Date yieldDate, java.sql.Date yieldDate2, String auditor, Date auditDate) {
+		this.id = id;
+		this.yieldCode = yieldCode;
+		this.yieldDate = yieldDate;
+		this.yieldDate2 = yieldDate2;
+		this.auditor = auditor;
+		this.auditDate = auditDate;
+	}
+
 	public Integer getId() {
 		return id;
 	}
-	/**
-	 * 设置：单据编号
-	 */
-	public void setYieldCode(String yieldCode) {
-		this.yieldCode = yieldCode;
+
+	public void setId(Integer id) {
+		this.id = id;
 	}
-	/**
-	 * 获取：单据编号
-	 */
+
 	public String getYieldCode() {
 		return yieldCode;
 	}
-	/**
-	 * 设置：单据日期
-	 */
-	public void setYieldDate(String yieldDate) {
-		this.yieldDate = yieldDate;
+
+	public void setYieldCode(String yieldCode) {
+		this.yieldCode = yieldCode;
 	}
-	/**
-	 * 获取：单据日期
-	 */
-	public String getYieldDate() {
+
+	public Date getYieldDate() {
 		return yieldDate;
 	}
-	/**
-	 * 设置：审核人
-	 */
-	public void setAuditor(String auditor) {
-		this.auditor = auditor;
+
+	public void setYieldDate(Date yieldDate) {
+		this.yieldDate = yieldDate;
 	}
-	/**
-	 * 获取：审核人
-	 */
+
+	public java.sql.Date getYieldDate2() {
+		return yieldDate2;
+	}
+
+	public void setYieldDate2(java.sql.Date yieldDate2) {
+		this.yieldDate2 = yieldDate2;
+	}
+
 	public String getAuditor() {
 		return auditor;
 	}
-	/**
-	 * 设置：审核日期
-	 */
-	public void setAuditDate(Date auditDate) {
-		this.auditDate = auditDate;
+
+	public void setAuditor(String auditor) {
+		this.auditor = auditor;
 	}
-	/**
-	 * 获取：审核日期
-	 */
+
 	public Date getAuditDate() {
 		return auditDate;
+	}
+
+	public void setAuditDate(Date auditDate) {
+		this.auditDate = auditDate;
 	}
 }
