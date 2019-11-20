@@ -28,8 +28,8 @@
 .daaa{
     position: fixed;
     display: none;
-    width: 30%;
-    height: 40%;
+    width: 400px;
+    height: 250px;
     background-color: #c7ddef;
     margin-left: 430px;
     margin-top: -80px;

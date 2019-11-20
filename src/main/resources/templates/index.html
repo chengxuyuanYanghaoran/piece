@@ -173,7 +173,7 @@
     <div class="layui-form-item">
         <div class="layui-input-block">
             <div class="footer-btn">
-                <button type="button" value="" id="btnn" class="layui-btn layui-btn-normal" onclick="closeWindow()"
+                <button type="button" value="0" id="btnn" class="layui-btn layui-btn-normal" onclick="closeWindow()"
                         lay-submit lay-filter="formDemo">确 定
                 </button>
                 <button type="button" class="layui-btn layui-btn-primary" onclick="openwindow()">取 消</button>
@@ -190,7 +190,7 @@
         var id = $("input[name='state']:checked").val();
         var btn = document.getElementById("btnn");
         btn.setAttribute('value', id);
-
+        // alert(id);
        // $('iframe').attr('src', '/system/wages/toPage/' + id);
 
           window.location.href='/system/wages/toPage/' + id;

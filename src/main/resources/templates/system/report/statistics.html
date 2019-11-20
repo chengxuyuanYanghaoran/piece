@@ -31,13 +31,18 @@
     <div class="dec_ddd" style="margin-top: 50px">
         <p style="display: inline-block">部门</p>
         <!--<input type="text" class="ddd_input" id="dec_input">-->
-        <p id="dec_input" class="ddd_input" style="top: 43%" contenteditable="true"></p>
+        <p id="dec_input" class="ddd_input" style="" contenteditable="true"></p>
         <i class="fa fa-user-circle-o fa-lg" id="depection" aria-hidden="true" style="margin-top: 1px;cursor: pointer;margin-left: -10px"></i>
     </div>
     <!--部门ajax渲染内容-->
-    <div class="daaa" id="daaa" style="margin-top: -50px">
-        <div style='position: fixed;top: 67%;left: 66%'>
-            <button type="button" id='true' class="layui-btn layui-btn-sm layui-btn-warm">确定</button>
+    <div class="daaa" id="daaa_son" style="margin-top: -50px">
+        <div id="daaa"></div>
+        <div style="margin-top: 140px;margin-left: 220px">
+            <button type="button" id='true' class="layui-btn layui-btn-sm layui-btn-warm" style="float: left;margin-left: 30px">确定</button>
+            <div style="padding-top: 10px">
+                <input type="checkbox" id="department" style="float: left;margin-left: 30px">
+                <p style="float: left;margin-top: -5px">全选</p>
+            </div>
         </div>
     </div>
     <!--人员-->
@@ -47,9 +52,14 @@
         <i class="fa fa-telegram fa-lg" id="depection_two" aria-hidden="true" style="margin-top: 1px;cursor: pointer;margin-left: -10px"></i>
     </div>
     <!--人员ajax渲染内容-->
-    <div class="daaa" id="daaa_two" style="margin-top: -90px">
-        <div style='position: fixed;top: 67%;left: 66%'>
-            <button type="button" id='true_one' class="layui-btn layui-btn-sm layui-btn-warm">确定</button>
+    <div class="daaa" id="daaa_two_son" style="margin-top: -100px">
+        <div id="daaa_two"></div>
+        <div style="margin-top: 140px;margin-left: 220px">
+            <button type="button" id='true_one' class="layui-btn layui-btn-sm layui-btn-warm" style="float: left;margin-left: 30px">确定</button>
+            <div style="padding-top: 10px">
+                <input type="checkbox" id="everything" style="float: left;margin-left: 30px">
+                <p style="float: left;margin-top: -5px">全选</p>
+            </div>
         </div>
     </div>
     <!--工序-->
@@ -59,9 +69,14 @@
         <i class="fa fa-binoculars fa-lg" id="depection_three" aria-hidden="true" style="margin-top: 1px;cursor: pointer;margin-left: -10px"></i>
     </div>
     <!--工序ajax渲染内容-->
-    <div class="daaa" id="daaa_three" style="margin-top: -140px">
-        <div style='position: fixed;top: 65%;left: 66%'>
-            <button type="button" id='true_three' class="layui-btn layui-btn-sm layui-btn-warm">确定</button>
+    <div class="daaa" id="daaa_three_son" style="margin-top: -140px">
+        <div id="daaa_three"></div>
+        <div style="margin-top: 140px;margin-left: 220px">
+            <button type="button" id='true_three' class="layui-btn layui-btn-sm layui-btn-warm" style="float: left;margin-left: 30px">确定</button>
+            <div style="padding-top: 10px">
+                <input type="checkbox" id="product" style="float: left;margin-left: 30px">
+                <p style="float: left;margin-top: -5px">全选</p>
+            </div>
         </div>
     </div>
     <!--产品-->
@@ -71,9 +86,14 @@
         <i class="fa fa-puzzle-piece fa-lg" id="depection_four" aria-hidden="true" style="margin-top: 1px;cursor: pointer;margin-left: -10px"></i>
     </div>
     <!--产品ajax渲染内容-->
-    <div class="daaa" id="daaa_four" style="margin-top: -130px">
-        <div style='position: fixed;top: 67%;left: 66%'>
-            <button type="button" id='true_four' class="layui-btn layui-btn-sm layui-btn-warm">确定</button>
+    <div class="daaa" id="daaa_four_son" style="margin-top: -130px">
+        <div id="daaa_four"></div>
+        <div style="margin-top: 140px;margin-left: 220px">
+            <button type="button" id='true_four' class="layui-btn layui-btn-sm layui-btn-warm" style="float: left;margin-left: 30px">确定</button>
+            <div style="padding-top: 10px">
+                <input type="checkbox" id="working" style="float: left;margin-left: 30px">
+                <p style="float: left;margin-top: -5px">全选</p>
+            </div>
         </div>
     </div>
 

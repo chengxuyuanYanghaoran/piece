@@ -32,6 +32,11 @@ public interface YieldDao {
 	
 	int batchRemove(Integer[] ids);
 
+	//插入表头
+	void addYieldHeaderDO(YieldHeaderDO yieldHeaderDO);
+
 	//导入表格(产品)
 	void importTable(List<YieldDO> yieldDOS);
+	//导入表格(工序)
+	void importProTable(List<YieldDO> yieldDOS);
 }
