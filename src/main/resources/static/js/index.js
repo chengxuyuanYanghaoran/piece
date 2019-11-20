@@ -69,9 +69,7 @@ layui.use(['layer', 'form'], function () {
         var othis = $(this), method = othis.data('method');
         active[method] ? active[method].call(this, othis) : '';
     });
-    form.on('submit(formDemo)', function (data) {
 
-    });
 /**
    * 左侧菜单展开动画
    */
@@ -222,7 +220,8 @@ layui.use(['layer', 'form'], function () {
    * 退出操作
    */
   $("#logout").click(function () {
-    okLayer.confirm("确定要退出吗？", function (index) {
+
+      layer.confirm("确定要退出吗？", function (index) {
       window.location = "login.html";
     });
   });

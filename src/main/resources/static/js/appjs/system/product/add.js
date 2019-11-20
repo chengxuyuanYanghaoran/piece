@@ -36,14 +36,32 @@ function validateRule() {
 	var icon = "<i class='fa fa-times-circle'></i> ";
 	$("#signupForm").validate({
 		rules : {
-			name : {
+            productCode : {
 				required : true
-			}
+			},
+            productName : {
+                required : true
+            },
+            productModel : {
+                required : true
+            },
+            productPrice : {
+                required : true
+            }
 		},
 		messages : {
-			name : {
-				required : icon + "请输入姓名"
-			}
+            productCode : {
+				required : icon + "请输入产品编码"
+			},
+            productName : {
+                required : icon + "请输入产品名称"
+            },
+            productModel : {
+                required : icon + "请输入规格型号"
+            },
+            productPrice : {
+                required : icon + "请输入产品计件单价"
+            }
 		}
 	})
 }

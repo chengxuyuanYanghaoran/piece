@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 
 
@@ -18,26 +19,19 @@ public class WagesHeaderDO implements Serializable {
 	//单据编号
 	private String billCode;
 	//核算期间
+
+    private String accountingDate;
     //日期
-    @DateTimeFormat(pattern="yyyy-MM-dd")
-    @JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd")
-	private Date billDate;
+
+	private String billDate;
 	//审核人
 	private String auditor;
 	//审核日期
+    @DateTimeFormat(pattern="yyyy-MM-dd")
+    @JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd")
 	private Date auditDate;
 
-    public WagesHeaderDO() {
-    }
-
-    public WagesHeaderDO(Integer id, String billCode, Date billDate, String auditor, Date auditDate) {
-        this.id = id;
-        this.billCode = billCode;
-        this.billDate = billDate;
-        this.auditor = auditor;
-        this.auditDate = auditDate;
-    }
-
+   
     public Integer getId() {
         return id;
     }
@@ -54,11 +48,19 @@ public class WagesHeaderDO implements Serializable {
         this.billCode = billCode;
     }
 
-    public Date getBillDate() {
+    public String getAccountingDate() {
+        return accountingDate;
+    }
+
+    public void setAccountingDate(String accountingDate) {
+        this.accountingDate = accountingDate;
+    }
+
+    public String getBillDate() {
         return billDate;
     }
 
-    public void setBillDate(Date billDate) {
+    public void setBillDate(String billDate) {
         this.billDate = billDate;
     }
 
@@ -76,5 +78,17 @@ public class WagesHeaderDO implements Serializable {
 
     public void setAuditDate(Date auditDate) {
         this.auditDate = auditDate;
+    }
+
+    @Override
+    public String toString() {
+        return "WagesHeaderDO{" +
+                "id=" + id +
+                ", billCode='" + billCode + '\'' +
+                ", accountingDate=" + accountingDate +
+                ", billDate=" + billDate +
+                ", auditor='" + auditor + '\'' +
+                ", auditDate=" + auditDate +
+                '}';
     }
 }

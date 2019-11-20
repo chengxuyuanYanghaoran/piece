@@ -36,14 +36,26 @@ function validateRule() {
 	var icon = "<i class='fa fa-times-circle'></i> ";
 	$("#signupForm").validate({
 		rules : {
-			name : {
+            proCode : {
 				required : true
-			}
+			},
+            proName : {
+                required : true
+            },
+            proPrice : {
+                required : true
+            }
 		},
 		messages : {
-			name : {
-				required : icon + "请输入姓名"
-			}
+            proCode : {
+				required : icon + "请输入工序编码"
+			},
+            proName : {
+                required : icon + "请输入工序名称"
+            },
+            proPrice : {
+                required : icon + "请输入工序计件单价"
+            }
 		}
 	})
 }

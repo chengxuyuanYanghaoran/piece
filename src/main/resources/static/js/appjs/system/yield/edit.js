@@ -33,17 +33,17 @@ function update() {
 
 }
 function validateRule() {
-	var icon = "<i class='fa fa-times-circle'></i> ";
-	$("#signupForm").validate({
-		rules : {
-			name : {
-				required : true
-			}
-		},
-		messages : {
-			name : {
-				required : icon + "请输入名字"
-			}
-		}
-	})
+    var icon = "<i class='fa fa-times-circle'></i> ";
+    $("#signupForm").validate({
+        rules : {
+            yieldCode : {
+                required : true
+            }
+        },
+        messages : {
+            yieldCode : {
+                required : icon + "请输入单据编号"
+            }
+        }
+    })
 }

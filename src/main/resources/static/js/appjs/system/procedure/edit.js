@@ -33,17 +33,29 @@ function update() {
 
 }
 function validateRule() {
-	var icon = "<i class='fa fa-times-circle'></i> ";
-	$("#signupForm").validate({
-		rules : {
-			name : {
-				required : true
-			}
-		},
-		messages : {
-			name : {
-				required : icon + "请输入名字"
-			}
-		}
-	})
+    var icon = "<i class='fa fa-times-circle'></i> ";
+    $("#signupForm").validate({
+        rules : {
+            proCode : {
+                required : true
+            },
+            proName : {
+                required : true
+            },
+            proPrice : {
+                required : true
+            }
+        },
+        messages : {
+            proCode : {
+                required : icon + "请输入工序编码"
+            },
+            proName : {
+                required : icon + "请输入工序名称"
+            },
+            proPrice : {
+                required : icon + "请输入工序计件单价"
+            }
+        }
+    })
 }

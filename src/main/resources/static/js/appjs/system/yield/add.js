@@ -36,13 +36,24 @@ function validateRule() {
 	var icon = "<i class='fa fa-times-circle'></i> ";
 	$("#signupForm").validate({
 		rules : {
-			name : {
-				required : true
+            yieldCode : {
+				required : true,
+                // remote: {
+                //     url: "/system/yield/validateByCard",     //后台处理程序
+                //     type: "post",               //数据发送方式
+                //     dataType: "json",           //接受数据格式
+                //     data: {                     //要传递的数据
+                //         yieldCode:function () {
+                //             return $("#yieldCode").val()
+                //         }
+                //     }
+                // }
 			}
 		},
 		messages : {
-			name : {
-				required : icon + "请输入姓名"
+            yieldCode : {
+				required : icon + "请输入单据编号"
+                // remote:icon+"x"
 			}
 		}
 	})

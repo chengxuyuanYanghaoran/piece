@@ -8,14 +8,14 @@
 			<div class="ibox">
 				<div class="ibox-body">
 
-<form class="">
+<form class="form-horizontal m-t" id="signupForm">
 <div class="form-head" style="display: flex; justify-content: space-around">
 <div class="form-group">
-<label for="exampleInputName2">单据编号:</label> <input type="text" class="form-control" id="exampleInputName2" placeholder=""></div>
+<label>单据编号:</label> <input name="billCode" type="text" class="form-control" id="mydate" ></div>
 <div class="form-group">
-<label for="exampleInputEmail2">单据日期:</label><input type="date" class="form-control" id="exampleInputEmail2" placeholder=""></div>
+<label>单据日期:</label><input name="billDate" type="month" class="form-control" id="billDate" ></div>
 <div class="form-group">
-<label for="exampleInputEmail2">核算期间:</label><input type="date" class="form-control" id="exampleInputEmail2" placeholder=""></div>
+<label>核算期间:</label><input name="accountingDate" type="month" class="form-control" id="accountingDate" ></div>
 </div>
 <hr style="margin: 0"/>
 
@@ -42,9 +42,12 @@
 <hr style="margin-top: 0; margin-bottom: 10px"/>
 <div class="form-footer" style="display: flex; justify-content: space-around">
 <div class="form-group">
-<label for="exampleInputName2">审核人:</label><input type="text" class="form-control" id="exampleInputName2" placeholder=""></div>
+<label>审核人:</label><input name="auditor" type="text" class="form-control" id="auditor" ></div>
 <div class="form-group">
-<label for="exampleInputEmail2">审核日期:</label><input type="date" class="form-control" id="exampleInputEmail2" placeholder=""></div>
+<label>审核日期:</label><input name="auditDate" type="date" class="form-control" id="auditDate"></div>
+	<div class="layui-upload layui-inline layui-show-xs-block">
+		<button onclick="saveTable()"  class="btn btn-primary radius" type="button">提交</button>
+	</div>
 </div>
 </form>   
 
@@ -60,6 +63,34 @@
 <script th:inline="javascript">
     var index=[[${index}]];
 </script>
+	<script type="text/javascript">
 
+        function saveTable(){
+            $.ajax({
+                cache : true,
+                type : "POST",
+                url : "/system/wagesHeader/saveTable",
+                data : $('#signupForm').serialize(),// 你的formid
+                async : false,
+                error : function(request) {
+                    parent.layer.alert("Connection error");
+                },
+                success : function(data) {
+                    if (data.code == 0) {
+                        parent.layer.msg("操作成功");
+                        // parent.reLoad();
+                        var index = parent.layer.getFrameIndex(window.name); // 获取窗口索引
+                        parent.layer.close(index);
+
+                    } else {
+                        parent.layer.alert(data.msg)
+                    }
+
+                }
+            });
+
+        }
+
+	</script>
 </body>
 </html>

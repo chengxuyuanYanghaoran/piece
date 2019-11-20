@@ -11,13 +11,7 @@ import com.hlwxy.xr_piece.utils.R;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 
 /**
@@ -33,76 +27,89 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class YieldController {
 	@Autowired
 	private YieldService yieldService;
-	
+
 	@GetMapping()
-	String Yield(){
-	    return "system/yield/yield";
+	String Yield() {
+		return "system/yield/yield";
 	}
-	
+
+//	@ResponseBody
+//	@PostMapping("/validateByCard")
+//	public String validateByCard(String yieldCode) {
+//		if(yieldCode!=null){
+//			return "false";
+//		}
+//		return "true";
+//	}
+
 	@ResponseBody
 	@GetMapping("/list")
-	public PageUtils list(@RequestParam Map<String, Object> params){
+	public PageUtils list(@RequestParam Map<String, Object> params) {
 		//查询列表数据
-        Query query = new Query(params);
+		Query query = new Query(params);
 		List<YieldDO> yieldList = yieldService.list(query);
 		int total = yieldService.count(query);
 		PageUtils pageUtils = new PageUtils(yieldList, total);
 		return pageUtils;
 	}
-	
+
 	@GetMapping("/add")
-	String add(){
-	    return "system/yield/add";
+	String add() {
+		return "system/yield/add";
 	}
 
 	@GetMapping("/edit/{id}")
-	String edit(@PathVariable("id") Integer id,Model model){
+	String edit(@PathVariable("id") Integer id, Model model) {
 		YieldDO yield = yieldService.get(id);
 		model.addAttribute("yield", yield);
-	    return "system/yield/edit";
+		return "system/yield/edit";
 	}
-	
+
 	/**
 	 * 保存
 	 */
 	@ResponseBody
 	@PostMapping("/save")
-	public R save(YieldDO yield){
-		if(yieldService.save(yield)>0){
+	public R save(YieldDO yield) {
+		if (yieldService.save(yield) > 0) {
 			return R.ok();
 		}
 		return R.error();
 	}
+
+
 	/**
 	 * 修改
 	 */
 	@ResponseBody
 	@RequestMapping("/update")
-	public R update( YieldDO yield){
+	public R update(YieldDO yield) {
 		yieldService.update(yield);
 		return R.ok();
 	}
-	
+
 	/**
 	 * 删除
 	 */
-	@PostMapping( "/remove")
+	@PostMapping("/remove")
 	@ResponseBody
-	public R remove( Integer id){
-		if(yieldService.remove(id)>0){
-		return R.ok();
+	public R remove(Integer id) {
+		if (yieldService.remove(id) > 0) {
+			return R.ok();
 		}
 		return R.error();
 	}
-	
+
 	/**
 	 * 删除
 	 */
-	@PostMapping( "/batchRemove")
+	@PostMapping("/batchRemove")
 	@ResponseBody
-	public R remove(@RequestParam("ids[]") Integer[] ids){
+	public R remove(@RequestParam("ids[]") Integer[] ids) {
 		yieldService.batchRemove(ids);
 		return R.ok();
 	}
-	
+
+
 }
+

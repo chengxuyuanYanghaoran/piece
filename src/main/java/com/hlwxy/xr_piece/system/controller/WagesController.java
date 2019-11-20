@@ -88,7 +88,7 @@ public class WagesController {
 	 * 判断
 	 */
 	@GetMapping("/toPage/{id}")
-	public String  toPage(@PathVariable("id") String id,Model model){
+	public String  toPage(@PathVariable("id") Integer id,Model model){
 		model.addAttribute("index",id);
 		return "/system/wages/wages";
 	}

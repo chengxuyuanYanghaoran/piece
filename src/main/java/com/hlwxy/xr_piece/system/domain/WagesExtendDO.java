@@ -35,43 +35,8 @@ public class WagesExtendDO extends WagesHeaderDO implements Serializable{
 	//金额
 	private Integer money;
 
-	public WagesExtendDO() {
-	}
 
-	public WagesExtendDO(Integer id, String billCode, Date billDate, String auditor, Date auditDate) {
-		super(id, billCode, billDate, auditor, auditDate);
-	}
 
-	public WagesExtendDO(Integer id, String billCode, Date dateMark, String peopleCode, String name, String proCode, String proName, String productCode, String productName, Integer harvest, Double price, Integer money) {
-		this.id = id;
-		this.billCode = billCode;
-		this.dateMark = dateMark;
-		this.peopleCode = peopleCode;
-		this.name = name;
-		this.proCode = proCode;
-		this.proName = proName;
-		this.productCode = productCode;
-		this.productName = productName;
-		this.harvest = harvest;
-		this.price = price;
-		this.money = money;
-	}
-
-	public WagesExtendDO(Integer id, String billCode, Date billDate, String auditor, Date auditDate, Integer id1, String billCode1, Date dateMark, String peopleCode, String name, String proCode, String proName, String productCode, String productName, Integer harvest, Double price, Integer money) {
-		super(id, billCode, billDate, auditor, auditDate);
-		this.id = id1;
-		this.billCode = billCode1;
-		this.dateMark = dateMark;
-		this.peopleCode = peopleCode;
-		this.name = name;
-		this.proCode = proCode;
-		this.proName = proName;
-		this.productCode = productCode;
-		this.productName = productName;
-		this.harvest = harvest;
-		this.price = price;
-		this.money = money;
-	}
 
 	@Override
 	public Integer getId() {

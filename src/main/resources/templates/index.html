@@ -151,11 +151,11 @@
 
             <div id="tabContent" class="layui-tab-content ok-tab-content">
                 <div class="layui-tab-item layui-show">
-                    <iframe src='/system/department' frameborder="0" scrolling="yes" width="100%"
+                    <iframe id="demo" src='/system/department' frameborder="0" scrolling="yes" width="100%"
                                                            height="100%"></iframe>
-                    <!--<iframe src='/system/department' frameborder="0" scrolling="yes" width="100%"-->
-                            <!--height="100%"></iframe>-->
+
                 </div>
+                <!-- <div class="layui-tab-item-main"></div>-->
             </div>
         </div>
     </div>
@@ -190,7 +190,10 @@
         var id = $("input[name='state']:checked").val();
         var btn = document.getElementById("btnn");
         btn.setAttribute('value', id);
-        $('iframe').attr('src', '/system/wages/toPage/' + id);
+
+       // $('iframe').attr('src', '/system/wages/toPage/' + id);
+
+          window.location.href='/system/wages/toPage/' + id;
         var index = parent.layer.getFrameIndex(window.name);
         parent.layer.closeAll(index);
     }
