@@ -120,4 +120,33 @@
 		</foreach>
 	</insert>
 
+	<!--导入表格(工序)-->
+	<insert id="importProTable" parameterType="java.util.List">
+		INSERT INTO `yield` (yield_code,date_mark,people_code,`name`,pro_code,pro_name,harvest) VALUES
+		<foreach collection="list" item="yieldDOS" index="index" separator=",">
+			(
+			#{yieldDOS.yieldCode},
+			#{yieldDOS.dateMark},
+			#{yieldDOS.peopleCode},
+			#{yieldDOS.name},
+			#{yieldDOS.proCode},
+			#{yieldDOS.proName},
+			#{yieldDOS.harvest}
+			)
+		</foreach>
+	</insert>
+
+	<!--插入表头-->
+	<insert id="addYieldHeaderDO" parameterType="com.hlwxy.xr_piece.system.domain.YieldHeaderDO">
+		INSERT INTO `yield_header` (yield_code,yield_date,auditor,audit_date) VALUES
+			(
+			#{yieldCode},
+			#{yieldDate},
+			#{auditor},
+			#{auditDate}
+			)
+	</insert>
+
+	<!--查询是否存在该表头-->
+
 </mapper>

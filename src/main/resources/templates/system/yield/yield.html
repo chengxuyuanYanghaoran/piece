@@ -5,20 +5,6 @@
 </head>
 <body class="gray-bg">
 
-<div class="wrapper wrapper-content ">
-    <div class="col-sm-12">
-        <div class="ibox">
-            <div class="ibox-body">
-                <form class="form-horizontal m-t" id="signupForm">
-                    <div class="form-head" style="display: flex; justify-content: space-around">
-                        <div class="form-group">
-                            <label>单据编号:</label> <input name="yieldCode"  type="text"  class="form-control"
-                                                                                 id="yieldCode" >
-                        </div>
-                        <div class="form-group">
-                            <label>单据日期:</label><input name="yieldDate" type="month"  class="form-control"
-                                                                                 id="yieldDate"></div>
-
 	<div class="wrapper wrapper-content ">
 		<div class="col-sm-12">
 			<div class="ibox">
@@ -27,10 +13,10 @@
                        <form class="" method="post" enctype="multipart/form-data">
 <div class="form-head" style="display: flex; justify-content: space-around">
 <div class="form-group">
-<label>单据编号:</label><input  type="text" id="exampleInputName"/>
+<label>单据编号:</label><input  type="text" id="exampleInputEmail"/>
 </div>
 <div class="form-group">
-<label>核算期间:</label><input  type="date" id="exampleInputName2"/>
+<label>核算期间:</label><input  type="month" id="exampleInputEmail2"/>
 </div>
                     <!---->
 <!--<div class="layui-upload layui-inline layui-show-xs-block">-->
@@ -78,10 +64,10 @@
                     <hr style="margin-top: 0; margin-bottom: 10px"/>
                     <div class="form-footer" style="display: flex; justify-content: space-around">
                         <div class="form-group">
-                            <label>审核人:</label><input  type="text" id="exampleInputName3"/>
+                            <label>审核人:</label><input  type="text" id="exampleInputEmail3"/>
                         </div>
                         <div class="form-group">
-                            <label>审核日期:</label><input  type="date" id="exampleInputName4"/>
+                            <label>审核日期:</label><input  type="month" id="exampleInputEmail4"/>
                         </div>
                         <div class="layui-upload layui-inline layui-show-xs-block">
                             <button onclick="saveTable()"  class="btn btn-primary radius" type="button">提交</button>

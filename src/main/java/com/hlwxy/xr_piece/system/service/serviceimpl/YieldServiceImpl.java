@@ -66,7 +66,7 @@ public class YieldServiceImpl implements YieldService {
 	}
 
 	@Override
-	public void importTable(XSSFWorkbook hssfWorkbook, YieldHeaderDO yieldHeaderDO) {
+	public void importTable(XSSFWorkbook hssfWorkbook, YieldHeaderDO yieldHeaderDO,String mode) {
 		XSSFSheet sheet = hssfWorkbook.getSheetAt(0);
 		System.out.println("表格的最大行数："+sheet.getLastRowNum());
 		List<YieldDO> list = new ArrayList<>();
@@ -94,21 +94,25 @@ public class YieldServiceImpl implements YieldService {
 			if (row.getCell(2).toString()!=null&&!row.getCell(2).toString().equals("")){
 				yieldDO.setName(row.getCell(2).toString());
 			}
-//			if( 状态值==工序的状态值 ){
-//				if (row.getCell(3).toString()!=null&&!row.getCell(3).toString().equals("")){
-//					yieldDO.setProCode(row.getCell(3).toString());
-//				}
-//				if (row.getCell(4).toString()!=null&&!row.getCell(4).toString().equals("")){
-//					yieldDO.setProName(row.getCell(4).toString());
-//				}
-//			}
 
-			if (row.getCell(3).toString()!=null&&!row.getCell(3).toString().equals("")){
-				yieldDO.setProductCode(row.getCell(3).toString());
+			if(mode.equals("1") ){  //工序计价
+				if (row.getCell(3).toString()!=null&&!row.getCell(3).toString().equals("")){
+					yieldDO.setProCode(row.getCell(3).toString());
+				}
+				if (row.getCell(4).toString()!=null&&!row.getCell(4).toString().equals("")){
+					yieldDO.setProName(row.getCell(4).toString());
+				}
 			}
-			if (row.getCell(4).toString()!=null&&!row.getCell(4).toString().equals("")){
-				yieldDO.setProductName(row.getCell(4).toString());
+
+			if(mode.equals("0") ){  //产品计价
+				if (row.getCell(3).toString()!=null&&!row.getCell(3).toString().equals("")){
+					yieldDO.setProductCode(row.getCell(3).toString());
+				}
+				if (row.getCell(4).toString()!=null&&!row.getCell(4).toString().equals("")){
+					yieldDO.setProductName(row.getCell(4).toString());
+				}
 			}
+
 			if (row.getCell(5).toString()!=null&&!row.getCell(5).toString().equals("")){
 				String str = (row.getCell(5).toString()).substring(0,(row.getCell(5).toString()).indexOf("."));
 				yieldDO.setHarvest(Integer.valueOf(str));
@@ -116,7 +120,14 @@ public class YieldServiceImpl implements YieldService {
 
 			list.add(yieldDO);
 		}
-		yieldDao.importTable(list);
+
+		yieldDao.addYieldHeaderDO(yieldHeaderDO);//插入表头
+		if (mode.equals("0")){
+			yieldDao.importTable(list);//插入表体（产品）
+		}
+		if (mode.equals("1")){
+			yieldDao.importProTable(list);//插入表体（工序）
+		}
 
 	}
 
