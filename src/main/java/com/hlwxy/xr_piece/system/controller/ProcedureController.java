@@ -1,8 +1,10 @@
 package com.hlwxy.xr_piece.system.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.hlwxy.xr_piece.system.domain.PeopleDO;
 import com.hlwxy.xr_piece.system.domain.ProcedureDO;
 import com.hlwxy.xr_piece.system.service.ProcedureService;
 import com.hlwxy.xr_piece.utils.PageUtils;
@@ -101,6 +103,18 @@ public class ProcedureController {
 	public R remove(@RequestParam("ids[]") Integer[] ids){
 		procedureService.batchRemove(ids);
 		return R.ok();
+	}
+
+	@ResponseBody
+	@PostMapping("/validateByCard")
+	public String validateByCard(ProcedureDO procedureDO) {
+		Map<String,Object> map=new HashMap<>(1);
+		map.put("proCode",procedureDO.getProCode());
+		List<ProcedureDO> list = procedureService.list(map);
+		if(list.size()>0){
+			return "false";
+		}
+		return "true";
 	}
 	
 }

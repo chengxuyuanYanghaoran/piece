@@ -1,9 +1,12 @@
 package com.hlwxy.xr_piece.system.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import com.hlwxy.xr_piece.system.domain.WagesDO;
+import com.hlwxy.xr_piece.system.domain.WagesHeaderDO;
+import com.hlwxy.xr_piece.system.domain.YieldDO;
 import com.hlwxy.xr_piece.system.service.WagesService;
 import com.hlwxy.xr_piece.utils.PageUtils;
 import com.hlwxy.xr_piece.utils.Query;
@@ -123,5 +126,20 @@ public class WagesController {
 		wagesService.batchRemove(ids);
 		return R.ok();
 	}
-	
+
+	@ResponseBody
+	@PostMapping("/validateByCard")
+	public String validateByCard(WagesDO wagesDO) {
+		Map<String,Object> map=new HashMap<>(4);
+		map.put("billCode",wagesDO.getBillCode());
+		map.put("proCode",wagesDO.getProCode());
+		map.put("productCode",wagesDO.getProductCode());
+		List<WagesDO> list = wagesService.list(map);
+		if(list.size()>0){
+			return "false";
+		}
+		return "true";
+	}
+
+
 }

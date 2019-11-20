@@ -1,8 +1,10 @@
 package com.hlwxy.xr_piece.system.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.hlwxy.xr_piece.system.domain.ProcedureDO;
 import com.hlwxy.xr_piece.system.domain.ProductDO;
 import com.hlwxy.xr_piece.system.service.ProductService;
 import com.hlwxy.xr_piece.utils.PageUtils;
@@ -102,5 +104,16 @@ public class ProductController {
 		productService.batchRemove(ids);
 		return R.ok();
 	}
-	
+
+	@ResponseBody
+	@PostMapping("/validateByCard")
+	public String validateByCard(ProductDO productDO) {
+		Map<String,Object> map=new HashMap<>(1);
+		map.put("productCode",productDO.getProductCode());
+		List<ProductDO> list = productService.list(map);
+		if(list.size()>0){
+			return "false";
+		}
+		return "true";
+	}
 }

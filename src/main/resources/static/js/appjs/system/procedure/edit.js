@@ -35,20 +35,32 @@ function update() {
 function validateRule() {
     var icon = "<i class='fa fa-times-circle'></i> ";
     $("#signupForm").validate({
-        rules : {
-            proCode : {
-                required : true
+        rules: {
+            proCode: {
+                required: true,
+                remote: {
+                    url: "/system/procedure/validateByCard",     //后台处理程序
+                    type: "post",               //数据发送方式
+                    dataType: "json",           //接受数据格式
+                    data: {                     //要传递的数据
+                        proCode: function () {
+                            return $("#proCode").val()
+                        }
+                    }
+                }
             },
-            proName : {
-                required : true
+            proName: {
+                required: true
             },
-            proPrice : {
-                required : true
+            proPrice: {
+                required: true
             }
         },
+
         messages : {
             proCode : {
-                required : icon + "请输入工序编码"
+                required : icon + "请输入工序编码",
+                remote:icon+"工序编码已存在"
             },
             proName : {
                 required : icon + "请输入工序名称"
@@ -56,6 +68,7 @@ function validateRule() {
             proPrice : {
                 required : icon + "请输入工序计件单价"
             }
+
         }
     })
 }

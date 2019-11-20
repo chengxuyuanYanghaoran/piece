@@ -1,9 +1,11 @@
 package com.hlwxy.xr_piece.system.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import com.hlwxy.xr_piece.system.domain.DepartmentDO;
+import com.hlwxy.xr_piece.system.domain.YieldDO;
 import com.hlwxy.xr_piece.system.service.DepartmentService;
 import com.hlwxy.xr_piece.utils.PageUtils;
 import com.hlwxy.xr_piece.utils.Query;
@@ -61,7 +63,8 @@ public class DepartmentController {
 		model.addAttribute("department", department);
 	    return "system/department/edit";
 	}
-	
+
+
 	/**
 	 * 保存
 	 */
@@ -103,6 +106,18 @@ public class DepartmentController {
 	public R remove(@RequestParam("ids[]") Integer[] ids){
 		departmentService.batchRemove(ids);
 		return R.ok();
+	}
+
+	@ResponseBody
+	@PostMapping("/validateByCard")
+	public String validateByCard(DepartmentDO departmentDO) {
+		Map<String,Object> map=new HashMap<>(1);
+		map.put("bmCode",departmentDO.getBmCode());
+		List<DepartmentDO> list = departmentService.list(map);
+		if(list.size()>0){
+			return "false";
+		}
+		return "true";
 	}
 	
 }

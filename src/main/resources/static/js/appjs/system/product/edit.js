@@ -35,23 +35,35 @@ function update() {
 function validateRule() {
     var icon = "<i class='fa fa-times-circle'></i> ";
     $("#signupForm").validate({
-        rules : {
-            productCode : {
-                required : true
+        rules: {
+            productCode: {
+                required: true,
+                remote: {
+                    url: "/system/product/validateByCard",     //后台处理程序
+                    type: "post",               //数据发送方式
+                    dataType: "json",           //接受数据格式
+                    data: {                     //要传递的数据
+                        productCode: function () {
+                            return $("#productCode").val()
+                        }
+                    }
+                }
             },
-            productName : {
-                required : true
+            productName: {
+                required: true
             },
-            productModel : {
-                required : true
+            productModel: {
+                required: true
             },
-            productPrice : {
-                required : true
+            productPrice: {
+                required: true
             }
         },
+
         messages : {
             productCode : {
-                required : icon + "请输入产品编码"
+                required : icon + "请输入产品编码",
+                remote:icon+"产品编码已存在"
             },
             productName : {
                 required : icon + "请输入产品名称"
@@ -62,6 +74,7 @@ function validateRule() {
             productPrice : {
                 required : icon + "请输入产品计件单价"
             }
+
         }
     })
 }
