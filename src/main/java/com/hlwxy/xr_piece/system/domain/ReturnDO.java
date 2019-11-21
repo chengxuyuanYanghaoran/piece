@@ -18,14 +18,25 @@ public class ReturnDO implements Serializable {
     private String peoples;
     //核算期间
     private Date accDatas;
+    //页面显示的期间
+    private String accDataStr;
 
     public ReturnDO() {
     }
 
-    public ReturnDO(BigDecimal moneys, String peoples, Date accDatas) {
+    public ReturnDO(BigDecimal moneys, String peoples, Date accDatas, String accDataStr) {
         this.moneys = moneys;
         this.peoples = peoples;
         this.accDatas = accDatas;
+        this.accDataStr = accDataStr;
+    }
+
+    public String getAccDataStr() {
+        return accDataStr;
+    }
+
+    public void setAccDataStr(String accDataStr) {
+        this.accDataStr = accDataStr;
     }
 
     public BigDecimal getMoneys() {

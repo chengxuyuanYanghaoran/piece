@@ -36,7 +36,7 @@ public class DownloadExcelController {
 	public void product(HttpServletResponse response){
 		//下载产品表格
 		String fileRoute = "C:\\";
-		String fileName="导入.xlsx";
+		String fileName="产品模板.xlsx";
 		String filenameZip = fileRoute + fileName;//获取文件的路径
 		download(response,filenameZip,fileName);
 
@@ -47,7 +47,7 @@ public class DownloadExcelController {
 	@RequestMapping("/procedure")
 	public void procedure(HttpServletResponse response){
 		String fileRoute = "C:\\";
-		String fileName="导入.xlsx";
+		String fileName="工序模板.xlsx";
 		String filenameZip = fileRoute + fileName;//获取文件的路径
 		download(response,filenameZip,fileName);
 	}

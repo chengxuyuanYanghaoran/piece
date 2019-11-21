@@ -81,6 +81,7 @@ public class reportFormController {
         conditionDo.setComDataOn(null);
         try{
             List<ReturnDO> list=reportFormService.findStatistics(conditionDo);
+            list=uodateDccDatas(list);
             Integer pp=reportFormService.countFindStatistics(conditionDo).size();
             System.out.println("结束");
             map.put("data",list);
@@ -104,6 +105,7 @@ public class reportFormController {
         conditionDo.setPc(conditionDo.getLimit()*(conditionDo.getPage()-1));
         try{
             List<ReturnDO> list=reportFormService.findStatisticsTable(conditionDo);
+            list=uodateDccDatas(list);
             Integer pp=reportFormService.countStatisticsTable(conditionDo).size();
             System.out.println("结束");
             map.put("data",list);
@@ -234,6 +236,19 @@ public class reportFormController {
             e.printStackTrace();
         }
         return conditionDo;
+    }
+
+    //返回页面的时间处理
+    private List<ReturnDO> uodateDccDatas(List<ReturnDO> list){
+        try {
+            for (ReturnDO returnDO:list) {
+                returnDO.setAccDataStr((String.valueOf(returnDO.getAccDatas())).substring(0,7));
+            }
+        }catch (Exception e){
+            System.out.println("返回页面的时间处理失败");
+        }
+
+        return list;
     }
 
 }

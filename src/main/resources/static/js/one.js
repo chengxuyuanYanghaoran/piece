@@ -318,7 +318,7 @@ function ddd(){
             }
             , cols: [[
                 {type: 'checkbox'}
-                , {field: 'accDatas', title: '日期', sort: true}
+                , {field: 'accDataStr', title: '日期', sort: true}
                 , {field: 'peoples', title: '人员'}
                 , {field: 'moneys', title: '金额', sort: true}
             ]]
