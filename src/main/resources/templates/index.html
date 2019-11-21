@@ -155,7 +155,6 @@
                                                            height="100%"></iframe>
 
                 </div>
-                <!-- <div class="layui-tab-item-main"></div>-->
             </div>
         </div>
     </div>
@@ -173,36 +172,13 @@
     <div class="layui-form-item">
         <div class="layui-input-block">
             <div class="footer-btn">
-                <button type="button" value="0" id="btnn" class="layui-btn layui-btn-normal" onclick="closeWindow()"
-                        lay-submit lay-filter="formDemo">确 定
+                <button type="button" value="0" id="btnn" class="layui-btn layui-btn-normal layui-button"
+                        lay-submit lay-filter="formDemo" data-method="setbutton">确 定
                 </button>
-                <button type="button" class="layui-btn layui-btn-primary" onclick="openwindow()">取 消</button>
+                <button type="button" class="layui-btn layui-btn-primary" onclick="clonewindow()">取 消</button>
             </div>
         </div>
     </div>
 </form>
-
-<!--js-->
-
-<script>
-    function closeWindow() {
-        //button按钮 value赋值
-        var id = $("input[name='state']:checked").val();
-        var btn = document.getElementById("btnn");
-        btn.setAttribute('value', id);
-        // alert(id);
-       // $('iframe').attr('src', '/system/wages/toPage/' + id);
-
-          window.location.href='/system/wages/toPage/' + id;
-        var index = parent.layer.getFrameIndex(window.name);
-        parent.layer.closeAll(index);
-    }
-
-    //取消确认 按钮 弹窗消失
-    function openwindow() {
-        var index = parent.layer.getFrameIndex(window.name);
-        parent.layer.closeAll(index);
-    }
-</script>
 </body>
 </html>

@@ -36,103 +36,15 @@ function validateRule() {
     var icon = "<i class='fa fa-times-circle'></i> ";
     $("#signupForm").validate({
         rules : {
-            yieldCode: {
-                required: true,
-                remote: {
-                    url: "/system/yield/validateByCard",     //后台处理程序
-                    type: "post",               //数据发送方式
-                    dataType: "json",           //接受数据格式
-                    data: {                     //要传递的数据
-                        yieldCode: function () {
-                            return $("#yieldCode").val()
-                        }
-                    }
-                }
-            },
-            peopleCode: {
-                required: true,
-                remote: {
-                    url: "/system/yield/validateByCard",     //后台处理程序
-                    type: "post",               //数据发送方式
-                    dataType: "json",           //接受数据格式
-                    data: {                     //要传递的数据
-                        peopleCode: function () {
-                            return $("#peopleCode").val()
-                        }
-                    }
-                }
-            },
-            proCode: {
-                required: true,
-                remote: {
-                    url: "/system/yield/validateByCard",     //后台处理程序
-                    type: "post",               //数据发送方式
-                    dataType: "json",           //接受数据格式
-                    data: {                     //要传递的数据
-                        proCode: function () {
-                            return $("#proCode").val()
-                        }
-                    }
-                }
-            },
-            productCode: {
-                required: true,
-                remote: {
-                    url: "/system/yield/validateByCard",     //后台处理程序
-                    type: "post",               //数据发送方式
-                    dataType: "json",           //接受数据格式
-                    data: {                     //要传递的数据
-                        productCode: function () {
-                            return $("#productCode").val()
-                        }
-                    }
-                }
-            },
-            dateMark: {
-                required: true
-            },
-            name: {
-                required: true
-            },
-            proName: {
-                required: true
-            },
-            productName: {
-                required: true
+            name : {
+                required : true
             }
         },
-
-
         messages : {
-            yieldCode : {
-                required : icon + "请输入单据编号",
-                remote:icon+"单据编号已存在"
-            },
-            peopleCode : {
-                required : icon + "请输入人员编码",
-                remote:icon+"不能输入重复的人员编码"
-            },
-            proCode : {
-                required : icon + "请输入工序编码",
-                remote:icon+"不能输入重复的工序编码"
-            },
-            productCode : {
-                required : icon + "请输入产品编码",
-                remote:icon+"不能输入重复的产品编码"
-            },
-            dateMark : {
-                required : icon + "请输入日期",
-            },
             name : {
-                required : icon + "请输入姓名",
-            },
-            proName : {
-                required : icon + "请输入工序名称",
-            },
-            productName : {
-                required : icon + "请输入产品名称",
+                required : icon + "请输入名字"
             }
-
         }
     })
+
 }

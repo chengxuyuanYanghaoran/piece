@@ -10,13 +10,13 @@
 			<div class="ibox">
 				<div class="ibox-body">
 
-                       <form class="" method="post" enctype="multipart/form-data">
+                       <form id="signupForm" method="post" enctype="multipart/form-data">
 <div class="form-head" style="display: flex; justify-content: space-around">
 <div class="form-group">
-<label>单据编号:</label><input  type="text" id="exampleInputEmail"/>
+<label>单据编号:</label><input id="yieldCode" name="yieldCode"  type="text">
 </div>
 <div class="form-group">
-<label>核算期间:</label><input  type="month" id="exampleInputEmail2"/>
+<label>核算期间:</label><input id="yieldDate" name="yieldDate"  type="month">
 </div>
                     <!---->
 <!--<div class="layui-upload layui-inline layui-show-xs-block">-->
@@ -64,10 +64,10 @@
                     <hr style="margin-top: 0; margin-bottom: 10px"/>
                     <div class="form-footer" style="display: flex; justify-content: space-around">
                         <div class="form-group">
-                            <label>审核人:</label><input  type="text" id="exampleInputEmail3"/>
+                            <label>审核人:</label><input id="auditor" name="auditor"  type="text">
                         </div>
                         <div class="form-group">
-                            <label>审核日期:</label><input  type="month" id="exampleInputEmail4"/>
+                            <label>审核日期:</label><input id="auditDate" name="auditDate"  type="date">
                         </div>
                         <div class="layui-upload layui-inline layui-show-xs-block">
                             <button onclick="saveTable()"  class="btn btn-primary radius" type="button">提交</button>

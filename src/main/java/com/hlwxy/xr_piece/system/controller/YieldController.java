@@ -1,6 +1,8 @@
 package com.hlwxy.xr_piece.system.controller;
 
 import java.io.InputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,13 +15,14 @@ import com.hlwxy.xr_piece.system.service.YieldService;
 import com.hlwxy.xr_piece.utils.PageUtils;
 import com.hlwxy.xr_piece.utils.Query;
 import com.hlwxy.xr_piece.utils.R;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.stereotype.Controller;
 
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -51,14 +54,20 @@ public class YieldController {
 	}
 
 
-//	@ResponseBody
-//	@PostMapping("/validateByCard")
-//	public String validateByCard(String yieldCode) {
-//		if(yieldCode!=null){
-//			return "false";
-//		}
-//		return "true";
-//	}
+	@ResponseBody
+	@PostMapping("/validateByCard")
+	public String validateByCard(YieldDO yieldDO) {
+		Map<String,Object> map=new HashMap<>(4);
+		map.put("yieldCode",yieldDO.getYieldCode());
+		map.put("peopleCode",yieldDO.getPeopleCode());
+		map.put("proCode",yieldDO.getProCode());
+		map.put("productCode",yieldDO.getProductCode());
+		List<YieldDO> list = yieldService.list(map);
+		if(list.size()>0){
+			return "false";
+		}
+		return "true";
+	}
 
 	@ResponseBody
 	@GetMapping("/list")
@@ -133,15 +142,17 @@ public class YieldController {
 	 */
 	@RequestMapping("/import")
 	@ResponseBody
-	public Map<String, Object> findDetailed(@RequestParam("file") MultipartFile file,@RequestParam("yieldCode") String yieldCode,
-											@RequestParam("yieldDate") String yieldDate,@RequestParam("auditor") String auditor,@RequestParam("auditDate") String auditDate) {
+	public Map<String, Object> findDetailed(@RequestParam("file") MultipartFile file, @RequestParam("yieldCode") String yieldCode,
+											@RequestParam("yieldDate") String yieldDate, @RequestParam("auditor") String auditor,
+											@RequestParam("auditDate") String auditDate, @RequestParam("mode") String mode) {
 		Map<String, Object> map = new HashMap<>();
-		YieldHeaderDO yieldHeaderDO = new YieldHeaderDO();
-		yieldHeaderDO.setYieldCode("666");
+		YieldHeaderDO yieldHeaderDO =yieldHeaderData(yieldDate,auditDate);//核算区间、审核时间
+		yieldHeaderDO.setYieldCode(yieldCode);//单据编号
+        yieldHeaderDO.setAuditor(auditor);//审核人
 		try{
 			InputStream inputStream=file.getInputStream();
 			XSSFWorkbook workbook = new XSSFWorkbook(inputStream);
-//			yieldService.importTable(workbook,yieldHeaderDO);
+			yieldService.importTable(workbook,yieldHeaderDO,mode);
 			System.out.println("结束");
 			map.put("code", 0);
 			map.put("msg", "表格导入成功！");
@@ -153,6 +164,25 @@ public class YieldController {
 
 		return map;
 	}
+
+
+    //时间处理
+    private YieldHeaderDO yieldHeaderData(String yieldDate, String auditDate){
+        SimpleDateFormat sdf =new SimpleDateFormat("yyyy-MM-dd" );
+        YieldHeaderDO yieldHeaderDO=new YieldHeaderDO();
+        try {
+            yieldDate=yieldDate+"-01";
+//            String f = new Date(String.valueOf(sdf.parse(yieldDate)));
+            yieldHeaderDO.setYieldDate(yieldDate);
+//            auditDate=auditDate+"-01";
+            Date f2 = new Date(String.valueOf(sdf.parse(auditDate)));
+            yieldHeaderDO.setAuditDate(f2);
+        } catch (Exception e) {
+            System.out.println("时间格式错误！");
+            e.printStackTrace();
+        }
+        return yieldHeaderDO;
+    }
 
 }
 

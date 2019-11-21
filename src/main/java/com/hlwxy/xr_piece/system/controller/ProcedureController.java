@@ -105,16 +105,6 @@ public class ProcedureController {
 		return R.ok();
 	}
 
-	@ResponseBody
-	@PostMapping("/validateByCard")
-	public String validateByCard(ProcedureDO procedureDO) {
-		Map<String,Object> map=new HashMap<>(1);
-		map.put("proCode",procedureDO.getProCode());
-		List<ProcedureDO> list = procedureService.list(map);
-		if(list.size()>0){
-			return "false";
-		}
-		return "true";
-	}
+
 	
 }

@@ -1,5 +1,6 @@
-layui.use('element', function () {
-    var element = layui.element; //加载Tab的element模块
+layui.use(['element','layer'], function () {
+    var element = layui.element,
+        layer = layui.layer;   //加载模块
 
     //触发事件
     var active = {
@@ -38,30 +39,93 @@ layui.use('element', function () {
         var othis = $(this);
         active[type] ? active[type].call(this, othis) : '';
     });
+
+    /**
+     * 退出操作
+     */
+    $("#logout").click(function () {
+
+        layer.confirm("确定要退出吗？", function (index) {
+            window.location = "login.html";
+        });
+    });
+
+    /**
+     * 左侧菜单展开动画
+     */
+    $("#navBar").on("click", ".layui-nav-item a", function () {
+        if (!$(this).attr("lay-id")) {
+            var superEle = $(this).parent();
+            var ele = $(this).next('.layui-nav-child');
+            var height = ele.height();
+            ele.css({"display": "block"});
+            // 是否是展开状态
+            if (superEle.is(".layui-nav-itemed")) {
+                ele.height(0);
+                ele.animate({height: height + "px"}, function () {
+                    ele.css({height: "auto"});
+                });
+            } else {
+                ele.animate({height: 0}, function () {
+                    ele.removeAttr("style");
+                });
+            }
+        }
+    });
+
+    /**
+     * 左边菜单显隐功能
+     */
+    $(".ok-menu").click(function () {
+        $(".layui-layout-admin").toggleClass("ok-left-hide");
+        $(this).find("i").toggleClass("ok-menu-hide");
+        localStorage.setItem("isResize", false);
+        setTimeout(function () {
+            localStorage.setItem("isResize", true);
+        }, 1200);
+    });
 });
 
 
 
 
 
-layui.use(['layer', 'form'], function () {
-    var form = layui.form;
-    var layer = layui.layer;
-    $ = layui.jquery;
+layui.use('layer', function(){
+    var $ = layui.jquery, layer = layui.layer;
 
+    //触发事件
     var active = {
         setTop: function(){
-//多窗口模式，层叠置顶
+
+            //多窗口模式，层叠置顶
             layer.open({
-                type: 1 //此处以iframe举例
+                type: 1
                 ,title: '信息'
                 ,area: ['600px', '360px']
                 ,shade: 0.3
                 ,maxmin: true
                 ,offset: 'auto'
                 ,content: $("#signupForm")
-                ,zIndex: layer.zIndex
+
+                ,zIndex: layer.zIndex //重点1
+
             });
+        },
+        setbutton: function(){
+            var id = $("input[name='state']:checked").val();
+            var btn = document.getElementById("btnn");
+            btn.setAttribute('value', id);
+            var index = layer.open({
+                type: 2
+                ,title: '信息'
+                ,area: 'auto'
+                ,shade: 0
+                ,maxmin: true
+                ,offset: 'auto'
+                ,content: '/system/wages/toPage/'+id
+                ,zIndex: layer.zIndex //重点1
+            });
+            layer.full(index);
         }
     };
 
@@ -70,161 +134,24 @@ layui.use(['layer', 'form'], function () {
         active[method] ? active[method].call(this, othis) : '';
     });
 
-/**
-   * 左侧菜单展开动画
-   */
-  $("#navBar").on("click", ".layui-nav-item a", function () {
-    if (!$(this).attr("lay-id")) {
-      var superEle = $(this).parent();
-      var ele = $(this).next('.layui-nav-child');
-      var height = ele.height();
-      ele.css({"display": "block"});
-      // 是否是展开状态
-      if (superEle.is(".layui-nav-itemed")) {
-        ele.height(0);
-        ele.animate({height: height + "px"}, function () {
-          ele.css({height: "auto"});
-        });
-      } else {
-        ele.animate({height: 0}, function () {
-          ele.removeAttr("style");
-        });
-      }
-    }
-  });
-
-  /**
-   * 左边菜单显隐功能
-   */
-  $(".ok-menu").click(function () {
-    $(".layui-layout-admin").toggleClass("ok-left-hide");
-    $(this).find("i").toggleClass("ok-menu-hide");
-    localStorage.setItem("isResize", false);
-    setTimeout(function () {
-      localStorage.setItem("isResize", true);
-    }, 1200);
-  });
-
-  /**
-   * 移动端的处理事件
-   */
-  $("body").on("click", ".layui-layout-admin .ok-left a[data-url], .ok-make", function () {
-    if ($(".layui-layout-admin").hasClass("ok-left-hide")) {
-      $(".layui-layout-admin").removeClass("ok-left-hide");
-      $(".ok-menu").find('i').removeClass("ok-menu-hide");
-    }
-  });
-
-
-  /**
-   * 全屏/退出全屏
-   */
-  $("body").on("keydown", function (event) {
-    event = event || window.event || arguments.callee.caller.arguments[0];
-    // 按 Esc
-    if (event && event.keyCode === 27) {
-      console.log("Esc");
-      $("#fullScreen").children("i").eq(0).removeClass("okicon-screen-restore");
-    }
-    // 按 F11
-    if (event && event.keyCode == 122) {
-      $("#fullScreen").children("i").eq(0).addClass("okicon-screen-restore");
-    }
-  });
-
-  $("body").on("click", "#fullScreen", function () {
-    if ($(this).children("i").hasClass("okicon-screen-restore")) {
-      screenFun(2).then(function () {
-        $(this).children("i").eq(0).removeClass("okicon-screen-restore");
-      });
-    } else {
-      screenFun(1).then(function () {
-        $(this).children("i").eq(0).addClass("okicon-screen-restore");
-      });
-    }
-  });
-
-  /**
-   * 全屏和退出全屏的方法
-   * @param num 1代表全屏 2代表退出全屏
-   * @returns {Promise}
-   */
-  function screenFun(num) {
-    num = num || 1;
-    num = num * 1;
-    var docElm = document.documentElement;
-
-    switch (num) {
-      case 1:
-        if (docElm.requestFullscreen) {
-          docElm.requestFullscreen();
-        } else if (docElm.mozRequestFullScreen) {
-          docElm.mozRequestFullScreen();
-        } else if (docElm.webkitRequestFullScreen) {
-          docElm.webkitRequestFullScreen();
-        } else if (docElm.msRequestFullscreen) {
-          docElm.msRequestFullscreen();
-        }
-        break;
-      case 2:
-        if (document.exitFullscreen) {
-          document.exitFullscreen();
-        } else if (document.mozCancelFullScreen) {
-          document.mozCancelFullScreen();
-        } else if (document.webkitCancelFullScreen) {
-          document.webkitCancelFullScreen();
-        } else if (document.msExitFullscreen) {
-          document.msExitFullscreen();
-        }
-        break;
-    }
-
-    return new Promise(function (res, rej) {
-      res("返回值");
+    $('.layui-button').on('click', function(){
+        var othis = $(this), method = othis.data('method');
+        active[method] ? active[method].call(this, othis) : '';
     });
-  }
-
-  /**
-   * 系统公告
-   */
-
-
-  function noticeFun() {
-    var srcWidth = okUtils.getBodyWidth();
-    layer.open({
-      type: 0, title: "系统公告", btn: "我知道啦", btnAlign: 'c', content: getContent(),
-      yes: function (index) {
-        if (srcWidth > 800) {
-          layer.tips('公告跑到这里去啦', '#notice', {
-            tips: [1, '#000'],
-            time: 2000
-          });
-        }
-        sessionStorage.setItem("notice", "true");
-        layer.close(index);
-      },
-      cancel: function (index) {
-        if (srcWidth > 800) {
-          layer.tips('公告跑到这里去啦', '#notice', {
-            tips: [1, '#000'],
-            time: 2000
-          });
-        }
-      }
-    });
-  }
-
-
-
-  /**
-   * 退出操作
-   */
-  $("#logout").click(function () {
-
-      layer.confirm("确定要退出吗？", function (index) {
-      window.location = "login.html";
-    });
-  });
 });
 
+// //取消确认 按钮 弹窗消失
+function clonewindow() {
+    var index = parent.layer.getFrameIndex(window.name);
+    parent.layer.closeAll(index);
+}
 
+/**
+ * 移动端的处理事件
+ */
+$("body").on("click", ".layui-layout-admin .ok-left a[data-url], .ok-make", function () {
+    if ($(".layui-layout-admin").hasClass("ok-left-hide")) {
+        $(".layui-layout-admin").removeClass("ok-left-hide");
+        $(".ok-menu").find('i').removeClass("ok-menu-hide");
+    }
+});

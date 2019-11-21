@@ -1,5 +1,8 @@
 package com.hlwxy.xr_piece.system.controller;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -72,12 +75,15 @@ public class YieldHeaderController {
 	 */
 	@ResponseBody
 	@PostMapping("/saveTable")
-	public R save(YieldHeaderDO yieldHeader,Model model){
+	public R save(YieldHeaderDO yieldHeader){
+		yieldHeader.setYieldDate(yieldHeader.getYieldDate()+"-01");
 		if(yieldHeaderService.save(yieldHeader)>0){
 			return R.ok();
 		}
 		return R.error();
 	}
+
+
 	/**
 	 * 修改
 	 */

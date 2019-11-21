@@ -72,19 +72,9 @@ public class WagesHeaderController {
 	@ResponseBody
 	@PostMapping("/saveTable")
 	public R save(WagesHeaderDO wagesHeader){
-//        ArrayList<WagesHeaderDO> list = new ArrayList<>();
-////        WagesHeaderDO aDo = new WagesHeaderDO();
-////        if (list.size()>0){
-////          aDo.setBillCode()!=null;
-////        }
-
+	   wagesHeader.setBillDate(wagesHeader.getBillDate()+"-01");
+		wagesHeader.setAccountingDate(wagesHeader.getAccountingDate()+"-01");
         if(wagesHeaderService.save(wagesHeader)>0){
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy MM");
-            Date date = new Date();
-            String newDate = sdf.format(date);
-            WagesHeaderDO aDo = new WagesHeaderDO();
-            aDo.setBillDate(newDate);
-            aDo.setAccountingDate(newDate);
 			return R.ok();
 		}
 		return R.error();

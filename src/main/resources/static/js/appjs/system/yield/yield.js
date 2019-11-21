@@ -194,10 +194,10 @@ $("#btnImport").on("click", function(){
     formData.append("file",$('#exampleInputFile')[0].files[0]);//封装文件
 
 	//获取单据编号
-	var yieldCode = $("#exampleInputEmail").val();
-	var yieldDate = $("#exampleInputEmail2").val();
-	var auditor = $("#exampleInputEmail3").val();
-	var auditDate = $("#exampleInputEmail4").val();
+	var yieldCode = $("#yieldCode").val();
+	var yieldDate = $("#yieldDate").val();
+	var auditor = $("#auditor").val();
+	var auditDate = $("#auditDate").val();
 	//获取计价方式
     var mode = parent.$("input[name='state']:checked").val();
 

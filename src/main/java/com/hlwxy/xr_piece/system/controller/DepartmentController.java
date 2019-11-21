@@ -108,16 +108,6 @@ public class DepartmentController {
 		return R.ok();
 	}
 
-	@ResponseBody
-	@PostMapping("/validateByCard")
-	public String validateByCard(DepartmentDO departmentDO) {
-		Map<String,Object> map=new HashMap<>(1);
-		map.put("bmCode",departmentDO.getBmCode());
-		List<DepartmentDO> list = departmentService.list(map);
-		if(list.size()>0){
-			return "false";
-		}
-		return "true";
-	}
+
 	
 }

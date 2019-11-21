@@ -38,16 +38,7 @@ function validateRule() {
         rules: {
             proCode: {
                 required: true,
-                remote: {
-                    url: "/system/procedure/validateByCard",     //后台处理程序
-                    type: "post",               //数据发送方式
-                    dataType: "json",           //接受数据格式
-                    data: {                     //要传递的数据
-                        proCode: function () {
-                            return $("#proCode").val()
-                        }
-                    }
-                }
+
             },
             proName: {
                 required: true
@@ -59,8 +50,8 @@ function validateRule() {
 
         messages : {
             proCode : {
-                required : icon + "请输入工序编码",
-                remote:icon+"工序编码已存在"
+                required : icon + "请输入工序编码"
+
             },
             proName : {
                 required : icon + "请输入工序名称"

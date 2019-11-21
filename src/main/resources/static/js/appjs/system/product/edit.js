@@ -37,17 +37,8 @@ function validateRule() {
     $("#signupForm").validate({
         rules: {
             productCode: {
-                required: true,
-                remote: {
-                    url: "/system/product/validateByCard",     //后台处理程序
-                    type: "post",               //数据发送方式
-                    dataType: "json",           //接受数据格式
-                    data: {                     //要传递的数据
-                        productCode: function () {
-                            return $("#productCode").val()
-                        }
-                    }
-                }
+                required: true
+
             },
             productName: {
                 required: true
@@ -63,7 +54,7 @@ function validateRule() {
         messages : {
             productCode : {
                 required : icon + "请输入产品编码",
-                remote:icon+"产品编码已存在"
+
             },
             productName : {
                 required : icon + "请输入产品名称"

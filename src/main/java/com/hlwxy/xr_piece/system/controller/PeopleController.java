@@ -115,16 +115,5 @@ public class PeopleController {
 		peopleService.batchRemove(ids);
 		return R.ok();
 	}
-	@ResponseBody
-	@PostMapping("/validateByCard")
-	public String validateByCard(PeopleDO peopleDO) {
-		Map<String,Object> map=new HashMap<>(2);
-		map.put("peopleCode",peopleDO.getPeopleCode());
-		map.put("peopleName",peopleDO.getPeopleName());
-		List<PeopleDO> list = peopleService.list(map);
-		if(list.size()>0){
-			return "false";
-		}
-		return "true";
-	}
+
 }

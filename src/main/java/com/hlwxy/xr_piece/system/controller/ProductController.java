@@ -105,15 +105,5 @@ public class ProductController {
 		return R.ok();
 	}
 
-	@ResponseBody
-	@PostMapping("/validateByCard")
-	public String validateByCard(ProductDO productDO) {
-		Map<String,Object> map=new HashMap<>(1);
-		map.put("productCode",productDO.getProductCode());
-		List<ProductDO> list = productService.list(map);
-		if(list.size()>0){
-			return "false";
-		}
-		return "true";
-	}
+
 }

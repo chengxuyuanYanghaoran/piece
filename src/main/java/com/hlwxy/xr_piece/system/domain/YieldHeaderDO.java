@@ -23,9 +23,8 @@ public class YieldHeaderDO implements Serializable {
 	private String yieldCode;
 	//核算期间
 	//日期
-	@DateTimeFormat(pattern="yyyy-MM-dd")
-	@JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd")
-	private Date yieldDate;
+
+	private String yieldDate;
 	private java.sql.Date yieldDate2;
 	//审核人
 	private String auditor;
@@ -37,7 +36,7 @@ public class YieldHeaderDO implements Serializable {
 	public YieldHeaderDO() {
 	}
 
-	public YieldHeaderDO(Integer id, String yieldCode, Date yieldDate, java.sql.Date yieldDate2, String auditor, Date auditDate) {
+	public YieldHeaderDO(Integer id, String yieldCode, String yieldDate, java.sql.Date yieldDate2, String auditor, Date auditDate) {
 		this.id = id;
 		this.yieldCode = yieldCode;
 		this.yieldDate = yieldDate;
@@ -62,11 +61,11 @@ public class YieldHeaderDO implements Serializable {
 		this.yieldCode = yieldCode;
 	}
 
-	public Date getYieldDate() {
+	public String getYieldDate() {
 		return yieldDate;
 	}
 
-	public void setYieldDate(Date yieldDate) {
+	public void setYieldDate(String yieldDate) {
 		this.yieldDate = yieldDate;
 	}
 
