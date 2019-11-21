@@ -7,8 +7,9 @@
 /*display: none*/
 /*}*/
 .ddd_input {
+    overflow: hidden;
+    white-space: nowrap;
     display: inline-block;
-    z-index: 1;
     /*background-color: #99979c;*/
     width: 30%;
     /*position: fixed;*/
