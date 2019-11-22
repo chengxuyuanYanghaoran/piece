@@ -1,13 +1,14 @@
 package com.hlwxy.xr_piece.system.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import com.hlwxy.xr_piece.system.domain.UserDO;
+import com.hlwxy.xr_piece.system.domain.WagesDO;
 import com.hlwxy.xr_piece.system.service.UserService;
-import com.hlwxy.xr_piece.utils.PageUtils;
-import com.hlwxy.xr_piece.utils.Query;
-import com.hlwxy.xr_piece.utils.R;
+import com.hlwxy.xr_piece.utils.*;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.stereotype.Controller;
@@ -17,6 +18,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.servlet.http.HttpSession;
 
 
 /**
@@ -29,7 +32,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  
 @Controller
 @RequestMapping("/system/user")
-public class UserController {
+public class UserController{
 	@Autowired
 	private UserService userService;
 	
@@ -67,6 +70,7 @@ public class UserController {
 	@ResponseBody
 	@PostMapping("/save")
 	public R save(UserDO user){
+		user.setPassword(MD5Utils.encrypt(user.getUsername(), user.getPassword()));
 		if(userService.save(user)>0){
 			return R.ok();
 		}
@@ -103,5 +107,44 @@ public class UserController {
 		userService.batchRemove(ids);
 		return R.ok();
 	}
-	
+
+
+	@RequiresPermissions("sys:user:resetPwd")
+	@GetMapping("/resetPwd/{id}")
+	String resetPwd(@PathVariable("id") Integer id, Model model, HttpSession session) {
+		UserDO user = (UserDO)session.getAttribute("user");
+		if(user.getId().equals(id)){
+			UserDO userDO = new UserDO();
+			userDO.setId(id);
+			model.addAttribute("user", userDO);
+			return "system/user/reset_pwd";
+		}else{
+			return "system/error/error";
+		}
+	}
+
+
+	@PostMapping("/adminResetPwd")
+	@ResponseBody
+	R adminResetPwd(UserVO userVO) {
+
+		try{
+			userService.adminResetPwd(userVO);
+			return R.ok();
+		}catch (Exception e){
+			return R.error(1,e.getMessage());
+		}
+
+	}
+
+	@RequestMapping("/userLogin")
+	@ResponseBody
+	public String userLogin(String username,UserDO userDO){//验证用户是否存在
+		userDO.setUsername(username);
+		if(username.equals(userDO.getUsername())){
+			return "true";
+		}
+		return "false";
+	}
+
 }

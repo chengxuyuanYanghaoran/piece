@@ -2,7 +2,7 @@ package com.hlwxy.xr_piece.system.service;
 
 
 import com.hlwxy.xr_piece.system.domain.UserDO;
-import org.apache.ibatis.annotations.Param;
+import com.hlwxy.xr_piece.utils.UserVO;
 
 import java.util.List;
 import java.util.Map;
@@ -31,4 +31,7 @@ public interface UserService {
 	int batchRemove(Integer[] ids);
 
 	UserDO findByUsername(UserDO userDO);
+
+
+	int adminResetPwd(UserVO userVO);
 }

@@ -2,6 +2,7 @@ package com.hlwxy.xr_piece.system.controller;
 
 import com.hlwxy.xr_piece.system.domain.UserDO;
 import com.hlwxy.xr_piece.system.service.UserService;
+import com.hlwxy.xr_piece.utils.MD5Utils;
 import com.hlwxy.xr_piece.utils.R;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.server.Session;
@@ -41,6 +42,7 @@ public class LoginController {
     public R findByUsername(String username, String password, HttpSession session, UserDO userDO) {
         userDO.setUsername(username);
         userDO.setPassword(password);
+        userDO.setPassword(MD5Utils.encrypt(userDO.getUsername(), userDO.getPassword()));
         userDO = this.userService.findByUsername(userDO);
         if (userDO != null) {
             session.setAttribute("user", userDO);
