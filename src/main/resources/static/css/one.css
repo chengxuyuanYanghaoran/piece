@@ -11,7 +11,7 @@
     white-space: nowrap;
     display: inline-block;
     /*background-color: #99979c;*/
-    width: 30%;
+    width: 80%;
     /*position: fixed;*/
     /*border: solid 1px red;*/
     border-bottom: solid 1.5px #99979c;
@@ -22,10 +22,17 @@
 }
 
 .dec_ddd {
+    width: 30%;
     margin-left: 60px;
     margin-top: 20px;
 }
 
+.dec_ddd i{
+    display: none;
+}
+.dec_ddd:hover i{
+    display: inline;
+}
 .daaa{
     position: fixed;
     display: none;
