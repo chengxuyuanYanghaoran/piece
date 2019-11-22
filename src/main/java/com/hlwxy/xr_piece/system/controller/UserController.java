@@ -137,14 +137,16 @@ public class UserController{
 
 	}
 
-	@RequestMapping("/userLogin")
 	@ResponseBody
-	public String userLogin(String username,UserDO userDO){//验证用户是否存在
-		userDO.setUsername(username);
-		if(username.equals(userDO.getUsername())){
-			return "true";
+	@PostMapping("/validateByCard")
+	public String validateByCard(UserDO userDO) {
+		Map<String,Object> map=new HashMap<>(1);
+		map.put("username",userDO.getUsername());
+		List<UserDO> list = userService.list(map);
+		if(list.size()>0){
+			return "false";
 		}
-		return "false";
+		return "true";
 	}
 
 }

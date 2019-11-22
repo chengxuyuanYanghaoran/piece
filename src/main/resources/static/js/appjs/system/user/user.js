@@ -133,6 +133,8 @@ function resetPwd(id) {
             content : prefix + '/resetPwd/' + id // iframe的url
         });
 }
+
+
 function batchRemove() {
 	var rows = $('#exampleTable').bootstrapTable('getSelections'); // 返回所有选择的行，当没有选择的记录时，返回一个空数组
 	if (rows.length == 0) {

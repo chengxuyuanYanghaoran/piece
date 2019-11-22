@@ -31,19 +31,8 @@ function validateRule() {
     $("#signupForm").validate({
         rules : {
             username : {
-                required : true,
-                remote:{
-                    url: "/system/user/userLogin",     //后台处理程序
-                    type: "post",               //数据发送方式
-                    dataType: "json",           //接受数据格式
-                    data: {                     //要传递的数据
-                        username: function() {
-                            return $("#username").val();
-                        }
-                    }
-                }
+                required : true
             },
-
             password : {
                 required : true,
                 minlength: 5
@@ -51,10 +40,8 @@ function validateRule() {
         },
 
         messages : {
-            username : {
-                required : icon + "请输入您的用户名",
-                remote:icon + "用户不存在"
-
+            username:{
+                required : icon + "请输入您的用户名"
             },
             password:{
                 required: icon +"请输入密码",
