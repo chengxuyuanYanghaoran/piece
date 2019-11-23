@@ -57,7 +57,6 @@ public class reportFormController {
                     wagesDO.setProductPrice(wagesDO.getProPrice());
                 }
             }
-            System.out.println("结束");
             map.put("data", list);
             map.put("count",pp);
             map.put("code",0);
@@ -83,7 +82,6 @@ public class reportFormController {
             List<ReturnDO> list=reportFormService.findStatistics(conditionDo);
             list=uodateDccDatas(list);
             Integer pp=reportFormService.countFindStatistics(conditionDo).size();
-            System.out.println("结束");
             map.put("data",list);
             map.put("count",pp);
             map.put("code",0);
@@ -107,7 +105,6 @@ public class reportFormController {
             List<ReturnDO> list=reportFormService.findStatisticsTable(conditionDo);
             list=uodateDccDatas(list);
             Integer pp=reportFormService.countStatisticsTable(conditionDo).size();
-            System.out.println("结束");
             map.put("data",list);
             map.put("count",pp);
             map.put("code",0);
