@@ -91,13 +91,20 @@ public class UserController{
 	 */
 	@PostMapping( "/remove")
 	@ResponseBody
-	public R remove( Integer id){
-		if(userService.remove(id)>0){
-		return R.ok();
-		}
-		return R.error();
-	}
-	
+	public R remove(Integer id, Model model, HttpSession session ,String username) {
+        UserDO user = (UserDO)session.getAttribute("user");
+        if(user.getUsername().equals("admin")) {
+            UserDO userDO = new UserDO();
+            userDO.setUsername(username);
+            model.addAttribute("user", userDO);
+            if (userService.remove(id) > 0) {
+                return R.ok();
+            }
+        }
+        return R.error();
+        }
+
+
 	/**
 	 * 删除
 	 */

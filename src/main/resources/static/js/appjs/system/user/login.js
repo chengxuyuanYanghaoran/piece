@@ -4,10 +4,10 @@ $().ready(function() {
 
 $.validator.setDefaults({
     submitHandler : function() {
-        login();
+        login1();
     }
 });
-function login(){
+function login1(){
     $.ajax({
         cache : true,
         type : "POST",

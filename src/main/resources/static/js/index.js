@@ -49,41 +49,6 @@ layui.use(['element','layer'], function () {
             window.location = "login.html";
         });
     });
-
-    /**
-     * 左侧菜单展开动画
-     */
-    $("#navBar").on("click", ".layui-nav-item a", function () {
-        if (!$(this).attr("lay-id")) {
-            var superEle = $(this).parent();
-            var ele = $(this).next('.layui-nav-child');
-            var height = ele.height();
-            ele.css({"display": "block"});
-            // 是否是展开状态
-            if (superEle.is(".layui-nav-itemed")) {
-                ele.height(0);
-                ele.animate({height: height + "px"}, function () {
-                    ele.css({height: "auto"});
-                });
-            } else {
-                ele.animate({height: 0}, function () {
-                    ele.removeAttr("style");
-                });
-            }
-        }
-    });
-
-    /**
-     * 左边菜单显隐功能
-     */
-    $(".ok-menu").click(function () {
-        $(".layui-layout-admin").toggleClass("ok-left-hide");
-        $(this).find("i").toggleClass("ok-menu-hide");
-        localStorage.setItem("isResize", false);
-        setTimeout(function () {
-            localStorage.setItem("isResize", true);
-        }, 1200);
-    });
 });
 
 
@@ -155,3 +120,5 @@ $("body").on("click", ".layui-layout-admin .ok-left a[data-url], .ok-make", func
         $(".ok-menu").find('i').removeClass("ok-menu-hide");
     }
 });
+
+

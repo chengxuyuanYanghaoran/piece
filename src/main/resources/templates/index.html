@@ -181,5 +181,12 @@
         </div>
     </div>
 </form>
+
+<script>
+    $('#navBar').find('.layui-nav-item>a').on('click',function() {
+        $(this).parent().find('.layui-nav-child').stop().slideDown(400);
+        $(this).parent().siblings().find('.layui-nav-child').stop().slideUp(400);
+    })
+</script>
 </body>
 </html>
