@@ -42,7 +42,7 @@ public class WagesController {
 	}
 	
 	@ResponseBody
-	@GetMapping("/list")
+	@RequestMapping("/list")
 	public PageUtils list(@RequestParam Map<String, Object> params){
 		//查询列表数据
         Query query = new Query(params);

@@ -17,10 +17,14 @@ import org.apache.ibatis.annotations.Mapper;
 public interface WagesDao {
 
 	WagesDO get(Integer id);
-	
+	//产品
 	List<WagesDO> list(Map<String, Object> map);
-	
+	//工序
+	List<WagesDO> list2(Map<String, Object> map);
+	//产品
 	int count(Map<String, Object> map);
+	//工序
+	int count2(Map<String, Object> map);
 	
 	int save(WagesDO wages);
 	

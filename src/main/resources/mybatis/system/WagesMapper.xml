@@ -7,16 +7,16 @@
 		select `id`,`bill_code`,`date_mark`,`people_code`,`name`,`pro_code`,`pro_name`,`product_code`,`product_name`,`harvest`,`pro_price`,`product_price`,`money` from wages where id = #{value}
 	</select>
 
+	<!--产品-->
 	<select id="list" resultType="com.hlwxy.xr_piece.system.domain.WagesDO">
-		select `id`,`bill_code`,`date_mark`,`people_code`,`name`,`pro_code`,`pro_name`,`product_code`,`product_name`,`harvest`,`pro_price`,`product_price`,`money` from wages
-        <where>  
+		select `id`,`bill_code`,`date_mark`,`people_code`,`name`,`product_code`,`product_name`,`harvest`,`pro_price`,`product_price`,`money` from wages
+        <where>
+				  product_code is NOT NULL AND product_code!=''
 		  		  <if test="id != null and id != ''"> and id = #{id} </if>
 		  		  <if test="billCode != null and billCode != ''"> and bill_code = #{billCode} </if>
 		  		  <if test="dateMark != null and dateMark != ''"> and date_mark = #{dateMark} </if>
 		  		  <if test="peopleCode != null and peopleCode != ''"> and people_code = #{peopleCode} </if>
 		  		  <if test="name != null and name != ''"> and name = #{name} </if>
-		  		  <if test="proCode != null and proCode != ''"> and pro_code = #{proCode} </if>
-		  		  <if test="proName != null and proName != ''"> and pro_name = #{proName} </if>
 		  		  <if test="productCode != null and productCode != ''"> and product_code = #{productCode} </if>
 		  		  <if test="productName != null and productName != ''"> and product_name = #{productName} </if>
 		  		  <if test="harvest != null and harvest != ''"> and harvest = #{harvest} </if>
@@ -36,17 +36,46 @@
 			limit #{offset}, #{limit}
 		</if>
 	</select>
-	
+	<!--工序-->
+	<select id="list2" resultType="com.hlwxy.xr_piece.system.domain.WagesDO">
+		select `id`,`bill_code`,`date_mark`,`people_code`,`name`,`pro_code`,`pro_name`,`harvest`,`pro_price`,`product_price`,`money` from wages
+		<where>
+			pro_code is NOT NULL AND pro_code!=''
+			<if test="id != null and id != ''"> and id = #{id} </if>
+			<if test="billCode != null and billCode != ''"> and bill_code = #{billCode} </if>
+			<if test="dateMark != null and dateMark != ''"> and date_mark = #{dateMark} </if>
+			<if test="peopleCode != null and peopleCode != ''"> and people_code = #{peopleCode} </if>
+			<if test="name != null and name != ''"> and name = #{name} </if>
+			<if test="proCode != null and proCode != ''"> and pro_code = #{proCode} </if>
+			<if test="proName != null and proName != ''"> and pro_name = #{proName} </if>
+			<if test="harvest != null and harvest != ''"> and harvest = #{harvest} </if>
+			<if test="proPrice != null and proPrice != ''"> and pro_price = #{proPrice} </if>
+			<if test="productPrice != null and productPrice != ''"> and product_price = #{productPrice} </if>
+			<if test="money != null and money != ''"> and money = #{money} </if>
+		</where>
+		<choose>
+			<when test="sort != null and sort.trim() != ''">
+				order by ${sort} ${order}
+			</when>
+			<otherwise>
+				order by id ASC
+			</otherwise>
+		</choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+
+	<!--产品-->
  	<select id="count" resultType="int">
 		select count(*) from wages
-		 <where>  
+		 <where>
+			 	  product_code is NOT NULL AND product_code!=''
 		  		  <if test="id != null and id != ''"> and id = #{id} </if>
 		  		  <if test="billCode != null and billCode != ''"> and bill_code = #{billCode} </if>
 		  		  <if test="dateMark != null and dateMark != ''"> and date_mark = #{dateMark} </if>
 		  		  <if test="peopleCode != null and peopleCode != ''"> and people_code = #{peopleCode} </if>
 		  		  <if test="name != null and name != ''"> and name = #{name} </if>
-		  		  <if test="proCode != null and proCode != ''"> and pro_code = #{proCode} </if>
-		  		  <if test="proName != null and proName != ''"> and pro_name = #{proName} </if>
 		  		  <if test="productCode != null and productCode != ''"> and product_code = #{productCode} </if>
 		  		  <if test="productName != null and productName != ''"> and product_name = #{productName} </if>
 		  		  <if test="harvest != null and harvest != ''"> and harvest = #{harvest} </if>
@@ -54,6 +83,25 @@
 			      <if test="productPrice != null and productPrice != ''"> and product_price = #{productPrice} </if>
 		  		  <if test="money != null and money != ''"> and money = #{money} </if>
 		  		</where>
+	</select>
+
+	<!--工序-->
+	<select id="count2" resultType="int">
+		select count(*) from wages
+		<where>
+			pro_code is NOT NULL AND pro_code!=''
+			<if test="id != null and id != ''"> and id = #{id} </if>
+			<if test="billCode != null and billCode != ''"> and bill_code = #{billCode} </if>
+			<if test="dateMark != null and dateMark != ''"> and date_mark = #{dateMark} </if>
+			<if test="peopleCode != null and peopleCode != ''"> and people_code = #{peopleCode} </if>
+			<if test="name != null and name != ''"> and name = #{name} </if>
+			<if test="proCode != null and proCode != ''"> and pro_code = #{proCode} </if>
+			<if test="proName != null and proName != ''"> and pro_name = #{proName} </if>
+			<if test="harvest != null and harvest != ''"> and harvest = #{harvest} </if>
+			<if test="proPrice != null and proPrice != ''"> and pro_price = #{proPrice} </if>
+			<if test="productPrice != null and productPrice != ''"> and product_price = #{productPrice} </if>
+			<if test="money != null and money != ''"> and money = #{money} </if>
+		</where>
 	</select>
 	 
 	<insert id="save" parameterType="com.hlwxy.xr_piece.system.domain.WagesDO" useGeneratedKeys="true" keyProperty="id">

@@ -16,9 +16,9 @@ import java.util.Map;
 public interface WagesService {
 	
 	WagesDO get(Integer id);
-	
+
 	List<WagesDO> list(Map<String, Object> map);
-	
+
 	int count(Map<String, Object> map);
 	
 	int save(WagesDO wages);
