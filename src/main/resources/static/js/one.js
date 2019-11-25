@@ -318,11 +318,13 @@ function ddd(){
             }
             , cols: [[
                 {type: 'checkbox'}
-                , {field: 'accDataStr', title: '日期', sort: true}
+                , {field: 'id', title: 'ID',hide:true}
+                , {field: 'accDataStr', title: '日期', sort: true,totalRowText:'合计：'}
                 , {field: 'peoples', title: '人员'}
-                , {field: 'moneys', title: '金额', sort: true}
+                , {field: 'moneys', title: '金额', sort: true,totalRow: true}
             ]]
             , page: true,
+            totalRow: true,
             limits : [ 5, 10, 15 ], //控制多少行一页（默认五条一页）
             limit : 5 //每页默认显示的数量
         });

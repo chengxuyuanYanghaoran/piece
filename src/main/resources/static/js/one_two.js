@@ -372,15 +372,17 @@ function ddd(){
             }
             , cols: [[
                 {type: 'checkbox'}
-                , {field: 'dateMark2', title: '日期', sort: true}
+                , {field: 'id', title: 'ID',hide:true}
+                , {field: 'dateMark2',title: '日期', sort: true,totalRowText:'合计：'}
                 , {field: 'name', title: '人员'}
                 , {field: 'proName', title: '工序名称', sort: true}
                 , {field: 'productName', title: '产品名称', sort: true}
-                , {field: 'harvest', title: '产量', sort: true}
+                , {field: 'harvest', title: '产量', sort: true,totalRow: true}
                 , {field: 'productPrice', title: '单价', sort: true}
-                , {field: 'money', title: '金额', sort: true}
+                , {field: 'money', title: '金额', sort: true,totalRow: true}
             ]]
             , page: true,
+            totalRow: true,
             limits : [ 5, 10, 15 ], //控制多少行一页（默认五条一页）
             limit : 5 //每页默认显示的数量
         });
