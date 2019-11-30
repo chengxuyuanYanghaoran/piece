@@ -38,7 +38,7 @@ function load() {
                         limit: params.limit,
                         offset:params.offset,
                         name:$('#searchName').val(),
-                        state:parent.$("input[name='state']:checked").val()
+                        state:parent.$("input[name='state']:checked").val()//获取选择的计价方式
                         // username:$('#searchName').val()
                     };
                 },
@@ -162,7 +162,7 @@ function load1() {
 								limit: params.limit,
 								offset:params.offset,
                                 name:$('#searchName').val(),
-                                state:parent.$("input[name='state']:checked").val()
+                                state:parent.$("input[name='state']:checked").val()//获取选择的计价方式
 					           // username:$('#searchName').val()
 							};
 						},

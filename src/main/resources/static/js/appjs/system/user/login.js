@@ -20,6 +20,7 @@ function login1(){
         success: function (data) {
             if (data.code == 0) {
                 window.location.href = '/toPageMain';
+
             }
 
         }
