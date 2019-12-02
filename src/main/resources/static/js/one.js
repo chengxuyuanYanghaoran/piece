@@ -1,4 +1,3 @@
-
 //年范围
 layui.use(['form', 'layedit', 'laydate', "jquery"], function () {
     var form = layui.form
@@ -9,15 +8,14 @@ layui.use(['form', 'layedit', 'laydate', "jquery"], function () {
     //开始月份
     var start = laydate.render({
         elem: '#start_timer', //指定元素
-        // value:new Date(),
+        value: new Date(),
         //进入页面显示当前月份
-        // value: new Date().getMonth() + 1,
         type: 'month',
         format: 'y-MM',
         done: function (value, date) {
             endMax = end.config.max;
             end.config.min = date;
-            end.config.min.month = date.month -1;
+            end.config.min.month = date.month - 1;
         }
     });
     //结束月份
@@ -25,6 +23,7 @@ layui.use(['form', 'layedit', 'laydate', "jquery"], function () {
         elem: '#end_timer', //指定元素
         type: 'month',
         format: 'y-MM',
+        value: new Date(),
         min: new Date().getMonth(),
         done: function (value, date) {
             if ($.trim(value) == '') {
@@ -39,23 +38,23 @@ layui.use(['form', 'layedit', 'laydate', "jquery"], function () {
 
 //弹框
 
-window.onload=function () {
+window.onload = function () {
     //产品
     $("#depection_four").click(function () {
         $("#daaa_four div").each(function (index) {
             // alert(index)
-            if (index>0){
+            if (index > 0) {
                 $(this).remove();
             }
         });
         $.ajax({
-            url:"/system/reportSelection/findProductName",
+            url: "/system/reportSelection/findProductName",
             async: true,
-            type:"GET",
-            datatype:"json",
-            success:function (res) {
-                $.each(res.productDOS,function (index,obj) {
-                    $("#daaa_four").append("<div style='display: inline-block;margin-left: 10px;margin-top: 15px'><input type='checkbox' name=\"check-4\" style='margin-right: 10px;margin-top: 10px' value='"+obj["productName"]+"'/> "+ obj["productName"]+ "</div>"
+            type: "GET",
+            datatype: "json",
+            success: function (res) {
+                $.each(res.productDOS, function (index, obj) {
+                    $("#daaa_four").append("<div style='display: inline-block;margin-left: 10px;margin-top: 15px'><input type='checkbox' name=\"check-4\" style='margin-right: 10px;margin-top: 10px' value='" + obj["productName"] + "'/> " + obj["productName"] + "</div>"
                     )
                 });
                 var obox = document.getElementById("working");
@@ -86,14 +85,14 @@ window.onload=function () {
                     };
                 }
             },
-            error:function () {
+            error: function () {
                 alert("失败");
             }
         });
         //获取所有复选框
         $("#true_four").unbind("click");
-        $("#true_four").bind('click',function() {
-            text = $("input:checkbox[name='check-4']:checked").map(function() {
+        $("#true_four").bind('click', function () {
+            text = $("input:checkbox[name='check-4']:checked").map(function () {
                 return $(this).val();
             }).get();
             alert("选中的checkbox的值为：" + text);
@@ -107,18 +106,18 @@ window.onload=function () {
     $("#depection_three").click(function () {
         $("#daaa_three div").each(function (index) {
             // alert(index)
-            if (index>0){
+            if (index > 0) {
                 $(this).remove();
             }
         })
         $.ajax({
-            url:"/system/reportSelection/findProcedureName",
+            url: "/system/reportSelection/findProcedureName",
             async: true,
-            type:"GET",
-            datatype:"json",
-            success:function (res) {
-                $.each(res.procedureDOS,function (index,obj) {
-                    $("#daaa_three").append("<div style='display: inline-block;margin-left: 10px;margin-top: 15px'><input type='checkbox' name=\"check-3\" value='"+obj["proName"]+"'/> "+ obj["proName"]+ "</div>"
+            type: "GET",
+            datatype: "json",
+            success: function (res) {
+                $.each(res.procedureDOS, function (index, obj) {
+                    $("#daaa_three").append("<div style='display: inline-block;margin-left: 10px;margin-top: 15px'><input type='checkbox' name=\"check-3\" value='" + obj["proName"] + "'/> " + obj["proName"] + "</div>"
                     )
                 });
                 var obox = document.getElementById("product");
@@ -149,14 +148,14 @@ window.onload=function () {
                     };
                 }
             },
-            error:function () {
+            error: function () {
                 alert("失败");
             }
         });
         //获取所有复选框
         $("#true_three").unbind("click");
-        $("#true_three").bind('click',function() {
-            text = $("input:checkbox[name='check-3']:checked").map(function() {
+        $("#true_three").bind('click', function () {
+            text = $("input:checkbox[name='check-3']:checked").map(function () {
                 return $(this).val();
             }).get();
             alert("选中的checkbox的值为：" + text);
@@ -170,18 +169,18 @@ window.onload=function () {
     $("#depection_two").click(function () {
         $("#daaa_two div").each(function (index) {
             // alert(index)
-            if (index>0){
+            if (index > 0) {
                 $(this).remove();
             }
         })
         $.ajax({
-            url:"/system/reportSelection/findPeopleName",
+            url: "/system/reportSelection/findPeopleName",
             async: true,
-            type:"GET",
-            datatype:"json",
-            success:function (res) {
-                $.each(res.peopleDOS,function (index,obj) {
-                    $("#daaa_two").append("<div style='display: inline-block;margin-left: 10px;margin-top: 15px'><input type='checkbox' name=\"check-2\" value='"+obj["peopleName"]+"'/> "+ obj["peopleName"]+ "</div>"
+            type: "GET",
+            datatype: "json",
+            success: function (res) {
+                $.each(res.peopleDOS, function (index, obj) {
+                    $("#daaa_two").append("<div style='display: inline-block;margin-left: 10px;margin-top: 15px'><input type='checkbox' name=\"check-2\" value='" + obj["peopleName"] + "'/> " + obj["peopleName"] + "</div>"
                     )
                 })
                 var obox = document.getElementById("everything");
@@ -212,14 +211,14 @@ window.onload=function () {
                     };
                 }
             },
-            error:function () {
+            error: function () {
                 alert("失败");
             }
         });
         //获取所有复选框
         $("#true_one").unbind("click");
-        $("#true_one").bind('click',function() {
-            text = $("input:checkbox[name='check-2']:checked").map(function() {
+        $("#true_one").bind('click', function () {
+            text = $("input:checkbox[name='check-2']:checked").map(function () {
                 return $(this).val();
             }).get();
             alert("选中的checkbox的值为：" + text);
@@ -233,20 +232,20 @@ window.onload=function () {
     $("#depection").click(function () {
         $("#daaa div").each(function (index) {
             // alert(index)
-            if (index>0){
+            if (index > 0) {
                 $(this).remove();
             }
         })
         $.ajax({
-            url:"/system/reportSelection/findDepartmentName",
+            url: "/system/reportSelection/findDepartmentName",
             async: true,
-            type:"GET",
-            datatype:"json",
-            success:function (res) {
-                $.each(res.departmentDOS,function (index,obj) {
+            type: "GET",
+            datatype: "json",
+            success: function (res) {
+                $.each(res.departmentDOS, function (index, obj) {
                     $("#daaa").append(
-                        "<div style='display: inline-block;margin-left: 10px;margin-top: 15px'><input type='checkbox' name=\"check-1\" value='"+obj["bmName"]+"'/> "
-                        + obj["bmName"]+ "</div>");
+                        "<div style='display: inline-block;margin-left: 10px;margin-top: 15px'><input type='checkbox' name=\"check-1\" value='" + obj["bmName"] + "'/> "
+                        + obj["bmName"] + "</div>");
                 });
                 var obox = document.getElementById("department");
                 var odiv = document.getElementById("daaa");
@@ -276,14 +275,14 @@ window.onload=function () {
                     };
                 }
             },
-            error:function () {
+            error: function () {
                 alert("失败");
             }
         });
-       // 防止重复点击
-       $("#true").unbind("click");
-        $("#true").bind('click',function(res) {
-            text = $("input:checkbox[name='check-1']:checked").map(function() {
+        // 防止重复点击
+        $("#true").unbind("click");
+        $("#true").bind('click', function (res) {
+            text = $("input:checkbox[name='check-1']:checked").map(function () {
                 return $(this).val();
             }).get();
             alert("选中的checkbox的值为：" + text);
@@ -295,7 +294,8 @@ window.onload=function () {
     });
 };
 
-function ddd(){
+
+function ddd() {
     var a = parent.$("input[name='state']:checked").val();
     var Get_start_time = $("#start_timer").val();
     var Get_end_time = $("#end_timer").val();
@@ -303,18 +303,20 @@ function ddd(){
     var Get_dec_input_three = $("#dec_input_three").text();
     var Get_dec_input_two = $("#dec_input_two").text();
     var Get_dec_input = $("#dec_input").text();
+
     layui.use('table', function () {
         var table = layui.table;
         table.render({
             elem: '#test'
             , url: '/system/reportForm/statisticsTable'
-            ,method:'post'
-            ,where:{"product":Get_dec_input_four,
-                    "procedure":Get_dec_input_three,
-                    "people":Get_dec_input_two,
-                    "department":Get_dec_input,
-                    "accountingOff":Get_start_time,
-                    "accountingOn":Get_end_time
+            , method: 'post'
+            , where: {
+                "product": Get_dec_input_four,
+                "procedure": Get_dec_input_three,
+                "people": Get_dec_input_two,
+                "department": Get_dec_input,
+                "accountingOff": Get_start_time,
+                "accountingOn": Get_end_time
             }
             , cols: [[
                 {type: 'checkbox'}
@@ -329,37 +331,68 @@ function ddd(){
             limit : 5 //每页默认显示的数量
         });
     });
-
     //点击关闭弹框
     $(".layui-layer-close1").trigger('click');
+    //按钮
+    $("#butt").html("<button type=\"button\" class=\"layui-btn layui-btn-warm\" id='butt_one' data-method=\"setTop\">查询条件</button>");
+
+    layui.use('layer', function () { //独立版的layer无需执行这一句
+        var $ = layui.jquery, layer = layui.layer; //独立版的layer无需执行这一句
+        //触发事件
+        var active = {
+            setTop: function () {
+                var that = this;
+                //多窗口模式，层叠置顶
+                layer.open({
+                    type: 1 //此处以iframe举例
+                    , title: '当你选择该窗体时，即会在最顶端'
+                    , area: ['65%', '80%']
+                    , offset: ['50px', '140px']
+                    , shade: 0
+                    , maxmin: true
+                    , content: $("#ddd")
+                    , zIndex: layer.zIndex //重点1
+                    , success: function (layero) {
+                        layer.setTop(layero); //重点2
+                    }
+                });
+            }
+        };
+        $('#butt_one').on('click', function () {
+            var othis = $(this), method = othis.data('method');
+            active[method] ? active[method].call(this, othis) : '';
+        });
+
+    });
+}
 
 //    出现layui弹框
 //     $("#test_div").fadeIn();
-}
-    //删除
-    // $("#ddd p").each(function(index) {
-    //     if(index > 0) {
-    //         $(this).remove();
-    //     }
-    // });
 
-layui.use('layer',function(){
+//删除
+// $("#ddd p").each(function(index) {
+//     if(index > 0) {
+//         $(this).remove();
+//     }
+// });
+
+layui.use('layer', function () {
     var layer = layui.layer;
 
     layer.open({
         type: 1
         , content: $("#ddd")
-        , title:  ['查询条件！', 'font-size:18px;color:red']
+        , title: ['查询条件！', 'font-size:18px;color:red']
         , area: ['65%', '80%']
         , shade: 0
-        , offset:['50px','140px']
+        , offset: ['50px', '140px']
         , tipsMore: true
         , maxmin: true//这里content是一个普通的String
-        , success:function (res) {
-            if(parent.$("input[name='state']:checked").val() == 0 ) {
+        , success: function (res) {
+            if (parent.$("input[name='state']:checked").val() == 0) {
                 $("#dec_ddd_two").show();
                 $("#dec_ddd").hide();
-            } else if(parent.$("input[name='state']:checked").val() == 1 ) {
+            } else if (parent.$("input[name='state']:checked").val() == 1) {
                 $("#dec_ddd").show();
                 $("#dec_ddd_two").hide();
             } else {
@@ -367,6 +400,4 @@ layui.use('layer',function(){
             }
         }
     });
-
 });
-
