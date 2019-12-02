@@ -9,7 +9,7 @@ layui.use(['form', 'layedit', 'laydate', "jquery"], function () {
     //开始月份
     var start = laydate.render({
         elem: '#start_timer', //指定元素
-        // value:new Date(),
+        value:new Date(),
         //进入页面显示当前月份
         // value: new Date().getMonth() + 1,
         type: 'month',
@@ -24,6 +24,7 @@ layui.use(['form', 'layedit', 'laydate', "jquery"], function () {
     var end = laydate.render({
         elem: '#end_timer', //指定元素
         type: 'month',
+        value:new Date(),
         format: 'y-MM',
         min: new Date().getMonth(),
         done: function (value, date) {
@@ -50,15 +51,17 @@ layui.use(['form', 'layedit', 'laydate',"jquery"], function(){
     var start = laydate.render({ //投票开始
         elem: '#start',
         // min:nowTime,
+        value:new Date(),
         done:function(value,date){
             endMax = end.config.max;
             end.config.min = date;
             end.config.min.month = date.month -1;
         }
     });
-    var end = laydate.render({ //投票结束
+    var end = laydate.render({
         elem: '#end',
         // min : nowTime,
+        value:new Date(),
         done:function(value,date){
             if($.trim(value) == ''){
                 var curDate = new Date();
@@ -387,10 +390,39 @@ function ddd(){
             limit : 5 //每页默认显示的数量
         });
     });
-
-
     //点击关闭弹框
     $(".layui-layer-close1").trigger('click');
+    //按钮
+    $("#butt").html("<button type=\"button\" class=\"layui-btn layui-btn-warm\" id='butt_one' data-method=\"setTop\">查询条件</button>");
+
+    layui.use('layer', function () { //独立版的layer无需执行这一句
+        var $ = layui.jquery, layer = layui.layer; //独立版的layer无需执行这一句
+        //触发事件
+        var active = {
+            setTop: function () {
+                var that = this;
+                //多窗口模式，层叠置顶
+                layer.open({
+                    type: 1 //此处以iframe举例
+                    , title: '当你选择该窗体时，即会在最顶端'
+                    , area: ['65%', '80%']
+                    , offset: ['50px', '140px']
+                    , shade: 0
+                    , maxmin: true
+                    , content: $("#ddd")
+                    , zIndex: layer.zIndex //重点1
+                    , success: function (layero) {
+                        layer.setTop(layero); //重点2
+                    }
+                });
+            }
+        };
+        $('#butt_one').on('click', function () {
+            var othis = $(this), method = othis.data('method');
+            active[method] ? active[method].call(this, othis) : '';
+        });
+
+    });
 
 //    出现layui弹框
 //     $("#test_div").fadeIn();

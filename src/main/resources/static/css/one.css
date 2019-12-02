@@ -1,11 +1,4 @@
-/*.decson {*/
-/*width: 500px;*/
-/*height: 500px;*/
-/*background-color: whitesmoke;*/
-/*margin-left: 225px;*/
-/*margin-top: 190px;*/
-/*display: none*/
-/*}*/
+
 .ddd_input {
     overflow: hidden;
     white-space: nowrap;
@@ -15,31 +8,37 @@
     /*position: fixed;*/
     /*border: solid 1px red;*/
     border-bottom: solid 1.5px #99979c;
-    /*border-bottom-color: #99979c;*/
-    /*border-right: none;*/
-    /*border-top: none;*/
-    /*border-left: none;*/
 }
 
 .dec_ddd {
+    display: flex;
+    flex-direction: row;
     width: 30%;
     margin-left: 60px;
-    margin-top: 20px;
+    margin-top: 40px;
 }
 
-.dec_ddd i{
-    display: none;
-}
-.dec_ddd:hover i{
-    display: inline;
-}
 .daaa{
     position: fixed;
     display: none;
     width: 400px;
     height: 250px;
     background-color: #c7ddef;
-    margin-left: 430px;
+    margin-left: 390px;
     margin-top: -80px;
     color: whitesmoke;
+}
+.data {
+    border-top: none;
+    border-right: none;
+    border-left: none;
+    border-bottom: solid 1px black;
+    padding-left: 15px;
+    width: 160px;
+}
+.dec_ddd i{
+    display: none;
+}
+.dec_ddd:hover i{
+    display: inline;
 }

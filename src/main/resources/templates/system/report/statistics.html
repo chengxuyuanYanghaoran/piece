@@ -13,29 +13,31 @@
 <body>
 <div id="ddd" style="display: none">
     <!--日期区间-->
-    <div class="layui-row" style="margin-left: -520px;padding-top: 20px">
-        <div class="layui-col-md8 layui-col-md-offset3 bo ttt">
-            <label class="layui-form-label" style="width:30%;">年月开始时间:</label>
-            <input id="start_timer" class="layui-input" style="width: 30%" type="text" name="stateDate" autocomplete="off" placeholder="搜索开始时间">
+    <div style="padding-top: 20px;padding-left:60px;display: flex;flex-direction: row;">
+        <div class="" style="">
+            <label class="" style="">查询日期:</label>
+            <i class="fa fa-calendar" aria-hidden="true" style="margin-left: 15px"></i>
+            <input id="start_timer" class="data" type="text" name="stateDate"
+                   autocomplete="off" placeholder="开始时间">
         </div>
-    </div>
-
-    <div class="layui-row" style="margin-left: -520px">
-        <div class="layui-col-md8 layui-col-md-offset3 bo" style="margin-top:15px;">
-            <label class="layui-form-label" style="width:30%;">年月结束时间:</label>
-            <input id="end_timer" class="layui-input" style="width: 30%" type="text" autocomplete="off" placeholder="搜索结束时间" name="endDate">
+        <span style="padding: 0 15px"> ~~~ </span>
+        <!--结束-->
+        <div class="" style="">
+            <i class="fa fa-calendar" aria-hidden="true"></i>
+            <input id="end_timer" class="data" type="text" autocomplete="off"
+                   placeholder="结束时间" name="endDate">
         </div>
     </div>
 
     <!--部门-->
     <div class="dec_ddd" style="margin-top: 50px">
-        <p style="display: inline-block">部门</p>
+        <p style="display: inline-block">部门：</p>
         <!--<input type="text" class="ddd_input" id="dec_input">-->
         <p id="dec_input" class="ddd_input" style="" contenteditable="true"></p>
-        <i class="fa fa-user-circle-o fa-lg" id="depection" aria-hidden="true" style="cursor: pointer;margin-left: -20px;"></i>
+        <i class="fa fa-user-circle-o fa-lg" id="depection" aria-hidden="true" style="cursor: pointer;padding-top: 2px"></i>
     </div>
     <!--部门ajax渲染内容-->
-    <div class="daaa" id="daaa_son" style="margin-top: -50px">
+    <div class="daaa" id="daaa_son" style="margin-top: -30px">
         <div id="daaa"></div>
         <div style="margin-top: 140px;margin-left: 220px">
             <button type="button" id='true' class="layui-btn layui-btn-sm layui-btn-warm" style="float: left;margin-left: 30px">确定</button>
@@ -47,12 +49,12 @@
     </div>
     <!--人员-->
     <div class="dec_ddd">
-        <p style="display: inline-block">人员</p>
+        <p style="display: inline-block">人员：</p>
         <p id="dec_input_two" class="ddd_input" style="" contenteditable="true"></p>
-        <i class="fa fa-user-circle-o fa-lg" id="depection_two" aria-hidden="true" style="cursor: pointer;margin-left: -20px;"></i>
+        <i class="fa fa-user-circle-o fa-lg" id="depection_two" aria-hidden="true" style="cursor: pointer;padding-top: 2px;"></i>
     </div>
     <!--人员ajax渲染内容-->
-    <div class="daaa" id="daaa_two_son" style="margin-top: -100px">
+    <div class="daaa" id="daaa_two_son" >
         <div id="daaa_two"></div>
         <div style="margin-top: 140px;margin-left: 220px">
             <button type="button" id='true_one' class="layui-btn layui-btn-sm layui-btn-warm" style="float: left;margin-left: 30px">确定</button>
@@ -64,9 +66,9 @@
     </div>
     <!--工序-->
     <div class="dec_ddd" id="dec_ddd">
-        <p style="display: inline-block">工序</p>
+        <p style="display: inline-block">工序：</p>
         <p id="dec_input_three" class="ddd_input" style="" contenteditable="true"></p>
-        <i class="fa fa-user-circle-o fa-lg" id="depection_three" aria-hidden="true" style="cursor: pointer;margin-left: -20px;"></i>
+        <i class="fa fa-user-circle-o fa-lg" id="depection_three" aria-hidden="true" style="cursor: pointer;padding-top: 2px"></i>
     </div>
     <!--工序ajax渲染内容-->
     <div class="daaa" id="daaa_three_son" style="margin-top: -140px">
@@ -81,9 +83,9 @@
     </div>
     <!--产品-->
     <div class="dec_ddd" id="dec_ddd_two">
-        <p style="display: inline-block">产品</p>
+        <p style="display: inline-block">产品：</p>
         <p id="dec_input_four" class="ddd_input" style="" contenteditable="true"></p>
-        <i class="fa fa-user-circle-o fa-lg" id="depection_four" aria-hidden="true" style="cursor: pointer;margin-left: -20px;"></i>
+        <i class="fa fa-user-circle-o fa-lg" id="depection_four" aria-hidden="true" style="cursor: pointer;padding-top: 2px;"></i>
     </div>
     <!--产品ajax渲染内容-->
     <div class="daaa" id="daaa_four_son" style="margin-top: -130px">
@@ -101,6 +103,10 @@
     <button type="button" class="layui-btn layui-btn-danger" onclick="ddd()" style="margin-left: 240px;margin-top: 110px">确认选择</button>
 </div>
 
+<!--按钮-->
+<div id="butt" style="padding:20px 0 0 15px">
+
+</div>
 <!--表格-->
 <div id="test_div">
     <table class="layui-hide" id="test"></table>
