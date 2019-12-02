@@ -345,7 +345,7 @@ function ddd() {
                 //多窗口模式，层叠置顶
                 layer.open({
                     type: 1 //此处以iframe举例
-                    , title: '当你选择该窗体时，即会在最顶端'
+                    , title: '再次查询'
                     , area: ['65%', '80%']
                     , offset: ['50px', '140px']
                     , shade: 0
@@ -359,6 +359,7 @@ function ddd() {
             }
         };
         $('#butt_one').on('click', function () {
+            $(".dec_ddd .ddd_input").text("");
             var othis = $(this), method = othis.data('method');
             active[method] ? active[method].call(this, othis) : '';
         });
