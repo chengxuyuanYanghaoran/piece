@@ -7,9 +7,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import com.hlwxy.xr_piece.system.dao.ExamineWagesDao;
-import com.hlwxy.xr_piece.system.domain.ExamineWagesDO;
-import com.hlwxy.xr_piece.system.domain.ExamineYieDO;
 import com.hlwxy.xr_piece.system.domain.WagesHeaderDO;
 import com.hlwxy.xr_piece.system.service.WagesHeaderService;
 import com.hlwxy.xr_piece.utils.PageUtils;
@@ -41,8 +38,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class WagesHeaderController {
 	@Autowired
 	private WagesHeaderService wagesHeaderService;
-	@Autowired
-	private ExamineWagesDao examineWagesDao;
 	
 	@GetMapping()
 	String WagesHeader(){
@@ -77,13 +72,10 @@ public class WagesHeaderController {
 	 */
 	@ResponseBody
 	@PostMapping("/saveTable")
-	public R save(WagesHeaderDO wagesHeader,Integer[] ids) throws ParseException {
+	public R save(WagesHeaderDO wagesHeader) throws ParseException {
 		SimpleDateFormat sfd = new SimpleDateFormat("yyyy-MM-dd");
 		Date date = sfd.parse(wagesHeader.getAccountingDate());
 		if(wagesHeaderService.save(wagesHeader)>0){
-			for (int i:ids){
-				examineWagesDao.save(new ExamineWagesDO(i,wagesHeader.getId()));
-			}
 			return R.ok();
 		}
 		return R.error();

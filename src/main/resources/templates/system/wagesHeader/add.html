@@ -13,9 +13,9 @@
 						<div class="form-group">
 							<label>单据编号:</label> <input name="billCode" type="text" class="form-control" id="mydate" ></div>
 						<div class="form-group">
-							<label>单据日期:</label><input name="billDate" type="date" class="form-control" id="billDate" ></div>
+							<label>单据日期:</label><input name="billDate" type="month" class="form-control" id="billDate" ></div>
 						<div class="form-group">
-							<label>核算期间:</label><input name="accountingDate" type="date" class="form-control" id="accountingDate" ></div>
+							<label>核算期间:</label><input name="accountingDate" type="month" class="form-control" id="accountingDate" ></div>
 					</div>
 					<hr style="margin: 0"/>
 
@@ -37,21 +37,7 @@
 								   placeholder="姓名">
 						</div>
 					</div>
-					<table id="exampleTable" class="table table-striped table-bordered table-condensed" data-mobile-responsive="true">
-						<tr>
-							<th> </th>
-							<th>单据编号</th>
-							<th>日期</th>
-							<th>人员编码</th>
-							<th>姓名</th>
-							<th>产品编码</th>
-							<th>产品名称</th>
-							<th>产量</th>
-							<th>产品单价</th>
-							<th>金额</th>
-						</tr>
-
-					</table>
+					<table id="exampleTable" data-mobile-responsive="true"></table>
 
 					<hr style="margin-top: 0; margin-bottom: 10px"/>
 					<div class="form-footer" style="display: flex; justify-content: space-around">
@@ -71,51 +57,9 @@
 </div>
 
 <div th:include="include :: footer"></div>
-<!--<script type="text/javascript"  src="/static/js/appjs/system/wages/wages.js"></script>-->
+<script type="text/javascript"  src="/static/js/appjs/system/wages/wages.js"></script>
 
 <script type="text/javascript">
-    var prefix = "/system/wages";
-    function add() {
-        layer.open({
-            type : 2,
-            title : '增加',
-            maxmin : true,
-            shadeClose : false, // 点击遮罩关闭层
-            area : [ '800px', '520px' ],
-            content : prefix + '/add' // iframe的url
-        });
-    }
-    function loadTable(msg) {
-        $.ajax({
-            cache : false,
-            type : "GET",
-            url : "/system/wages/get/"+msg,
-            async : false,
-            success : function(data) {
-                var html='<tr><td><input  name="ids" checked="checked"   type="checkbox" value="'+data.id+'"></td><td>'+data[i].billCode+'</td><td>'+data[i].dateMark+'</td><td>'+data[i].peopleCode+'</td><td>'+data[i].name+'</td><td>'+data[i].productCode+'</td><td>'+data[i].productName+'</td><td>'+data[i].harvest+'</td><td>'+data[i].productPrice+'</td><td>'+data[i].money+'</td></tr>';
-                $("#exampleTable").append(html);
-            }
-        });
-    }
-    function loadTableIds(ids) {
-        $.ajax({
-            cache : false,
-            type : "POST",
-            url : "/system/wages/getByIds",
-            data: {
-                "ids": ids
-            },
-            async : false,
-            success : function(data) {
-                var html='';
-                for(var i=0;i<data.length;i++){
-                    html+='<tr><td><input name="ids" checked="checked" type="checkbox" value="'+data[i].id+'"></td><td>'+data[i].billCode+'</td><td>'+data[i].dateMark+'</td><td>'+data[i].peopleCode+'</td><td>'+data[i].name+'</td><td>'+data[i].productCode+'</td><td>'+data[i].productName+'</td><td>'+data[i].harvest+'</td><td>'+data[i].productPrice+'</td><td>'+data[i].money+'</td></tr>';
-                }
-                $("#exampleTable").append(html);
-            }
-        });
-    }
-
     function saveTable(){
         $.ajax({
             cache : true,
@@ -129,7 +73,7 @@
             success : function(data) {
                 if (data.code == 0) {
                     parent.layer.msg("操作成功");
-                    parent.reLoad();
+                    // parent.reLoad();
                     var index = parent.layer.getFrameIndex(window.name); // 获取窗口索引
                     parent.layer.close(index);
 

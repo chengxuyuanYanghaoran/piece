@@ -92,7 +92,7 @@ function load() {
                             var f = '<a class="btn btn-success btn-sm" href="#" title="查看"  mce_href="#" onclick="resetPwd(\''
                                 + row.id
                                 + '\')"><i class="">查看</i></a> ';
-                            return e ;
+                            return e+f ;
                         }
                     }]
             });

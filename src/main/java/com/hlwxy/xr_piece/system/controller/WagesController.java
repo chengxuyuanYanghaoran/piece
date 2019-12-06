@@ -1,7 +1,6 @@
 package com.hlwxy.xr_piece.system.controller;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -96,13 +95,6 @@ public class WagesController {
 		return "system/wages/edit1";
 	}
 
-	@ResponseBody
-	@GetMapping("/get/{id}")
-	WagesDO get(@PathVariable("id") Integer id) {
-		WagesDO wagesDO = wagesService.get(id);
-		return wagesDO;
-	}
-
 	/**s
 	 * 保存
 	 */
@@ -114,14 +106,7 @@ public class WagesController {
 		}
 		return R.error();
 	}
-	/**
-	 * 判断
-	 */
-	@GetMapping("/toPage/{id}")
-	public String  toPage(@PathVariable("id") Integer id,Model model){
-		model.addAttribute("index",id);
-		return "/system/wages/wages";
-	}
+
 	/**
 	 * 修改
 	 */
@@ -152,17 +137,6 @@ public class WagesController {
 	public R remove(@RequestParam("ids[]") Integer[] ids){
 		wagesService.batchRemove(ids);
 		return R.ok();
-	}
-
-	@PostMapping("/getByIds")
-	@ResponseBody
-	public List<WagesDO> getByIds(@RequestParam("ids[]") Integer[] ids) {
-		List<WagesDO> list=new ArrayList<>();
-		for (int i:ids){
-			WagesDO wagesDO = wagesService.get(i);
-			list.add(wagesDO);
-		}
-		return list;
 	}
 
 	@ResponseBody
