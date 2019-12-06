@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <meta charset="utf-8">
 <head th:include="include :: header"></head>
 <body class="gray-bg">
@@ -9,12 +9,20 @@
 				<div class="ibox-body">
 					<div class="fixed-table-toolbar">
 						<div class="columns pull-left">
-							<button shiro:hasPermission="xr_piece:yieldHeader:add" type="button" class="btn  btn-primary" onclick="add()">
-								<i class="fa fa-plus" aria-hidden="true"></i>添加
+							<button  type="button" class="btn  btn-primary" onclick="add()">
+								<i class="" aria-hidden="true"></i>添加
 							</button>
-							<button shiro:hasPermission="xr_piece:yieldHeader:batchRemove" type="button" class="btn  btn-danger"
+							<button  type="button" class="btn  btn-danger"
 								onclick="batchRemove()">
-								<i class="fa fa-trash" aria-hidden="true"></i>删除
+								<i class="" aria-hidden="true"></i>删除
+							</button>
+							<button  type="button" id="static" class="btn btn-warning"
+									 onclick="examine()">
+								<i class="" aria-hidden="true"></i>审核
+							</button>
+							<button  type="button" id="static" class="btn btn-warning"
+									 onclick="examine2()">
+								<i class="" aria-hidden="true"></i>弃审
 							</button>
 						</div>
 						<div class="columns pull-right">
@@ -22,7 +30,7 @@
 						</div>
 						<div class="columns pull-right col-md-2 nopadding">
 							<input id="searchName" type="text" class="form-control"
-								placeholder="">
+								placeholder="审核人">
 						</div>
 					</div>
 					<table id="exampleTable" data-mobile-responsive="true">
@@ -34,5 +42,84 @@
 
 	<div th:include="include :: footer"></div>
 	<script type="text/javascript" src="/static/js/appjs/system/yieldHeader/yieldHeader.js"></script>
+
+<script type="text/javascript">
+    function examine() {
+        var rows = $('#exampleTable').bootstrapTable('getSelections'); // 返回所有选择的行，当没有选择的记录时，返回一个空数组
+        if (rows.length == 0) {
+            layer.msg("请选择要审核的表单");
+            return;
+        }
+        layer.confirm("确认要审核选中的'" + rows.length + "'条表单吗?", {
+            btn: ['确定', '取消']
+            // 按钮
+        }, function () {
+            var ids = new Array();
+            // 遍历所有选择的行数据，取每条数据对应的ID
+            $.each(rows, function (i, row) {
+                ids[i] = row['id'];
+            });
+            $.ajax({
+                type: 'POST',
+                data: {
+                    "ids": ids
+                },
+                url: '/system/yieldHeader/examine',
+                error : function(request) {
+                    parent.layer.alert("此表单已经审核");
+                },
+                success: function (r) {
+                    if (r.code == 0) {
+                        layer.msg(r.msg);
+                        reLoad();
+                    } else {
+                        layer.msg(r.msg);
+                    }
+                }
+            });
+        }, function () {
+
+        });
+    }
+
+
+    function examine2() {
+        var rows = $('#exampleTable').bootstrapTable('getSelections'); // 返回所有选择的行，当没有选择的记录时，返回一个空数组
+        if (rows.length == 0) {
+            layer.msg("请选择要审核的表单");
+            return;
+        }
+        layer.confirm("确认要审核选中的'" + rows.length + "'条表单吗?", {
+            btn: ['确定', '取消']
+            // 按钮
+        }, function () {
+            var ids = new Array();
+            // 遍历所有选择的行数据，取每条数据对应的ID
+            $.each(rows, function (i, row) {
+                ids[i] = row['id'];
+            });
+            $.ajax({
+                type: 'POST',
+                data: {
+                    "ids": ids
+                },
+                url: '/system/yieldHeader/examine2',
+                error : function(request) {
+                    parent.layer.alert("此表单已经审核");
+                },
+                success: function (r) {
+                    if (r.code == 0) {
+                        layer.msg(r.msg);
+                        reLoad();
+                    } else {
+                        layer.msg(r.msg);
+                    }
+                }
+            });
+        }, function () {
+
+        });
+    }
+</script>
 </body>
 </html>

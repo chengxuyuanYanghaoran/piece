@@ -47,10 +47,10 @@ function load() {
 								{
 									checkbox : true
 								},
-																{
-									field : 'id', 
-									title : '工资核算表id' 
-								},
+								// 								{
+								// 	field : 'id',
+								// 	title : '工资核算表id'
+								// },
 																{
 									field : 'billCode', 
 									title : '单据编号' 
@@ -76,16 +76,16 @@ function load() {
 									field : 'id',
 									align : 'center',
 									formatter : function(value, row, index) {
-										var e = '<a class="btn btn-primary btn-sm " href="#" mce_href="#" title="编辑" onclick="edit(\''
-												+ row.id
-												+ '\')"><i class="fa fa-edit"></i></a> ';
-										var d = '<a class="btn btn-warning btn-sm " href="#" title="删除"  mce_href="#" onclick="remove(\''
-												+ row.id
-												+ '\')"><i class="fa fa-remove"></i></a> ';
-										var f = '<a class="btn btn-success btn-sm" href="#" title="备用"  mce_href="#" onclick="resetPwd(\''
-												+ row.id
-												+ '\')"><i class="fa fa-key"></i></a> ';
-										return e + d ;
+                                        var e = '<a class="btn btn-primary btn-sm " href="#" mce_href="#" title="编辑" onclick="edit(\''
+                                            + row.id
+                                            + '\')"><i class="fa fa-edit">编辑</i></a> ';
+                                        var d = '<a class="btn btn-warning btn-sm " href="#" title="删除"  mce_href="#" onclick="remove(\''
+                                            + row.id
+                                            + '\')"><i class="fa fa-remove"></i></a> ';
+                                        var f = '<a class="btn btn-success btn-sm" href="#" title="查看"  mce_href="#" onclick="resetPwd(\''
+                                            + row.id
+                                            + '\')"><i class="">查看</i></a> ';
+                                        return e ;
 									}
 								} ]
 					});
@@ -94,24 +94,28 @@ function reLoad() {
 	$('#exampleTable').bootstrapTable('refresh');
 }
 function add() {
-	layer.open({
+    var index = layer.open({
 		type : 2,
 		title : '增加',
 		maxmin : true,
 		shadeClose : false, // 点击遮罩关闭层
-		area : [ '800px', '520px' ],
+		// area : [ '800px', '520px' ],
+        area:'auto',
 		content : prefix + '/add' // iframe的url
 	});
+    layer.full(index);
 }
 function edit(id) {
-	layer.open({
+    var index = layer.open({
 		type : 2,
 		title : '编辑',
 		maxmin : true,
 		shadeClose : false, // 点击遮罩关闭层
-		area : [ '800px', '520px' ],
+		// area : [ '800px', '520px' ],
+        area:'auto',
 		content : prefix + '/edit/' + id // iframe的url
 	});
+    layer.full(index);
 }
 function remove(id) {
 	layer.confirm('确定要删除选中的记录？', {

@@ -2,11 +2,9 @@ package com.hlwxy.xr_piece.system.controller;
 
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
+import com.hlwxy.xr_piece.system.dao.ExamineYieDao;
 import com.hlwxy.xr_piece.system.domain.ConditionDo;
 import com.hlwxy.xr_piece.system.domain.WagesDO;
 import com.hlwxy.xr_piece.system.domain.YieldDO;
@@ -47,6 +45,8 @@ import org.springframework.web.multipart.MultipartFile;
 public class YieldController {
 	@Autowired
 	private YieldService yieldService;
+	@Autowired
+	private ExamineYieDao examineYieDao;
 
 	@GetMapping()
 	String Yield() {
@@ -92,6 +92,15 @@ public class YieldController {
 		return "system/yield/edit";
 	}
 
+
+
+	@ResponseBody
+	@GetMapping("/get/{id}")
+	YieldDO get(@PathVariable("id") Integer id) {
+		YieldDO yieldDO = yieldService.get(id);
+		return yieldDO;
+	}
+
 	/**
 	 * 保存
 	 */
@@ -99,7 +108,7 @@ public class YieldController {
 	@PostMapping("/save")
 	public R save(YieldDO yield) {
 		if (yieldService.save(yield) > 0) {
-			return R.ok();
+			return R.ok(yield.getId().toString());
 		}
 		return R.error();
 	}
@@ -134,6 +143,17 @@ public class YieldController {
 	public R remove(@RequestParam("ids[]") Integer[] ids) {
 		yieldService.batchRemove(ids);
 		return R.ok();
+	}
+
+	@PostMapping("/getByIds")
+	@ResponseBody
+	public List<YieldDO> getByIds(@RequestParam("ids[]") Integer[] ids) {
+		List<YieldDO> list=new ArrayList<>();
+		for (int i:ids){
+			YieldDO yieldDO = yieldService.get(i);
+			list.add(yieldDO);
+		}
+		return list;
 	}
 
 

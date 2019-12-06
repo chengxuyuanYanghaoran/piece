@@ -29,4 +29,6 @@ public interface YieldHeaderDao {
 	int remove(Integer id);
 
 	int batchRemove(Integer[] ids);
+
+	List<YieldHeaderDO> findByUsername(YieldHeaderDO YieldHeaderDO);
 }

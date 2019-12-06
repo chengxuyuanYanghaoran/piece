@@ -1,54 +1,4 @@
-<!--<!DOCTYPE html>-->
-<!--<html>-->
-<!--<meta charset="utf-8">-->
-<!--<head th:include="include :: header"></head>-->
-<!--<body class="gray-bg">-->
-	<!--<div class="wrapper wrapper-content ">-->
-		<!--<div class="row">-->
-			<!--<div class="col-sm-12">-->
-				<!--<div class="ibox float-e-margins">-->
-					<!--<div class="ibox-content">-->
-						<!--<form class="form-horizontal m-t" id="signupForm">-->
-							<!--<div class="form-group">	-->
-								<!--<label class="col-sm-3 control-label">单据编号：</label>-->
-								<!--<div class="col-sm-8">-->
-									<!--<input id="yieldCode" name="yieldCode" class="form-control" type="text">-->
-								<!--</div>-->
-							<!--</div>-->
-														<!--<div class="form-group">	-->
-								<!--<label class="col-sm-3 control-label">单据日期：</label>-->
-								<!--<div class="col-sm-8">-->
-									<!--<input id="yieldDate" name="yieldDate" class="form-control" type="text">-->
-								<!--</div>-->
-							<!--</div>-->
-														<!--<div class="form-group">	-->
-								<!--<label class="col-sm-3 control-label">审核人：</label>-->
-								<!--<div class="col-sm-8">-->
-									<!--<input id="auditor" name="auditor" class="form-control" type="text">-->
-								<!--</div>-->
-							<!--</div>-->
-														<!--<div class="form-group">	-->
-								<!--<label class="col-sm-3 control-label">审核日期：</label>-->
-								<!--<div class="col-sm-8">-->
-									<!--<input id="auditDate" name="auditDate" class="form-control" type="text">-->
-								<!--</div>-->
-							<!--</div>-->
-																					<!--<div class="form-group">-->
-								<!--<div class="col-sm-8 col-sm-offset-3">-->
-									<!--<button type="submit" class="btn btn-primary">提交</button>-->
-								<!--</div>-->
-							<!--</div>-->
-						<!--</form>-->
-					<!--</div>-->
-				<!--</div>-->
-			<!--</div>-->
-	<!--</div>-->
-	<!--</div>-->
-	<!--<div th:include="include::footer"></div>-->
-	<!--<script type="text/javascript" src="/static/js/appjs/system/yieldHeader/add.js">-->
-	<!--</script>-->
-<!--</body>-->
-<!--</html>-->
+
 <!DOCTYPE html>
 <html>
 <meta charset="utf-8">
@@ -60,14 +10,13 @@
 	<div class="col-sm-12">
 		<div class="ibox">
 			<div class="ibox-body">
-
-				   <form id="signupForm" method="post" enctype="multipart/form-data">
+               <form id="signupForm" method="post" enctype="multipart/form-data">
 				<div class="form-head" style="display: flex; justify-content: space-around">
 				<div class="form-group">
 				<label>单据编号:</label><input id="yieldCode" name="yieldCode"  type="text">
 				</div>
 				<div class="form-group">
-				<label>核算期间:</label><input id="yieldDate" name="yieldDate"  type="month">
+				<label>核算期间:</label><input id="yieldDate" name="yieldDate"  type="date">
 				</div>
 
 				<!--<div class="form-main">-->
@@ -91,23 +40,27 @@
 					<button type="button" class="btn  btn-primary" onclick="add()">
 						<i class="fa fa-plus" aria-hidden="true"></i>添加
 					</button>
-					<button type="button" class="btn  btn-danger"
-							onclick="batchRemove()">
-						<i class="fa fa-trash" aria-hidden="true"></i>删除
-					</button>
-				</div>
-				<div class="columns pull-right">
-					<button class="btn btn-success" onclick="reLoad()">查询</button>
-				</div>
-				<div class="columns pull-right col-md-2 nopadding">
-					<input id="searchName" type="text" class="form-control"
-						   placeholder="姓名">
+					<!--<button type="button" class="btn  btn-danger"-->
+							<!--onclick="batchRemove()">-->
+						<!--<i class="fa fa-trash" aria-hidden="true"></i>删除-->
+					<!--</button>-->
 				</div>
 			</div>
-			                
-			<table id="exampleTable" data-mobile-responsive="true"></table>
-			  
-			 
+			<table id="exampleTable" class="table table-striped table-bordered table-condensed" data-mobile-responsive="true">
+				<tr>
+					<th> </th>
+					<th>单据编号</th>
+					<th>日期</th>
+					<th>人员编码</th>
+					<th>姓名</th>
+					<th>工序编码</th>
+					<th>工序名称</th>
+					<th>产品编码</th>
+					<th>产品名称</th>
+					<th>产量</th>
+
+				</tr>
+			</table>
 			<hr style="margin-top: 0; margin-bottom: 10px"/>
 			<div class="form-footer" style="display: flex; justify-content: space-around">
 			<div class="form-group">
@@ -116,25 +69,65 @@
 			<div class="form-group">
 			<label>审核日期:</label><input id="auditDate" name="auditDate"  type="date">
 			</div>
+				<div class="form-group" hidden>
+					<label>审核状态:</label><input id="stats" name="stats"  type="text" value="0">
+				</div>
 			<div class="layui-upload layui-inline layui-show-xs-block">
 			<button onclick="saveTable()"  class="btn btn-primary radius" type="button">提交</button>
 			</div>
 			</div>
 			</form>
-			   
-
-			             
-
 		</div>
 	</div>
 </div>
 </div>
 
 <div th:include="include :: footer"></div>
-<script type="text/javascript" src="/static/js/appjs/system/yield/yield.js"></script>
+<!--<script type="text/javascript" src="/static/js/appjs/system/yield/yield.js"></script>-->
 
 <script type="text/javascript">
     // var date1 = date.slice(0,date.lastIndexOf('-'))
+    var prefix = "/system/yield";
+    function add() {
+        layer.open({
+            type : 2,
+            title : '增加',
+            maxmin : true,
+            shadeClose : false, // 点击遮罩关闭层
+            area : [ '800px', '520px' ],
+            content : prefix + '/add' // iframe的url
+        });
+    }
+    function loadTable(msg) {
+        $.ajax({
+            cache : false,
+            type : "GET",
+            url : "/system/yield/get/"+msg,
+            async : false,
+            success : function(data) {
+				 var html='<tr><td><input  name="ids" checked="checked"   type="checkbox" value="'+data.id+'"></td><td>'+data.yieldCode+'</td><td>'+data.dateMark+'</td><td>'+data.peopleCode+'</td><td>'+data.name+'</td><td>'+data.proCode+'</td><td>'+data.proName+'</td>><td>'+data.productCode+'</td>><td>'+data.productName+'</td>><td>'+data.harvest+'</td></tr>';
+                $("#exampleTable").append(html);
+            }
+        });
+    }
+    function loadTableIds(ids) {
+        $.ajax({
+            cache : false,
+            type : "POST",
+            url : "/system/yield/getByIds",
+            data: {
+                "ids": ids
+            },
+            async : false,
+            success : function(data) {
+                var html='';
+                for(var i=0;i<data.length;i++){
+                    html+='<tr><td><input name="ids" checked="checked" type="checkbox" value="'+data[i].id+'"></td><td>'+data[i].yieldCode+'</td><td>'+data[i].dateMark+'</td><td>'+data[i].peopleCode+'</td><td>'+data[i].name+'</td><td>'+data[i].proCode+'</td><td>'+data[i].proName+'</td><td>'+data[i].productCode+'</td><td>'+data[i].productName+'</td><td>'+data[i].harvest+'</td></tr>';
+				}
+                $("#exampleTable").append(html);
+            }
+        });
+    }
     function saveTable() {
         $.ajax({
             cache : true,
@@ -148,7 +141,7 @@
             success : function(data) {
                 if (data.code == 0) {
                     parent.layer.msg("操作成功");
-                    // parent.reLoad();
+                    parent.reLoad();
                     var index = parent.layer.getFrameIndex(window.name); // 获取窗口索引
                     parent.layer.close(index);
 
@@ -160,6 +153,7 @@
         });
 
     }
+
 
 </script>
 </body>

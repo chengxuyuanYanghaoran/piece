@@ -1,58 +1,96 @@
+
 <!DOCTYPE html>
-<html>
+<html lang="en" >
 <meta charset="utf-8">
 <head th:include="include :: header"></head>
 <body class="gray-bg">
-	<div class="wrapper wrapper-content ">
-		<div class="row">
-			<div class="col-sm-12">
-				<div class="ibox float-e-margins">
-					<div class="ibox-content">
-						<form class="form-horizontal m-t" id="signupForm">
-						<input id="id" name="id" th:value="${wagesHeader.id}"  type="hidden">
-							<div class="form-group">	
-								<label class="col-sm-3 control-label">单据编号：</label>
-								<div class="col-sm-8">
-									<input id="billCode" name="billCode" th:value="${wagesHeader.billCode}" class="form-control" type="text">
-								</div>
-							</div>
-														<div class="form-group">	
-								<label class="col-sm-3 control-label">单据日期：</label>
-								<div class="col-sm-8">
-									<input id="billDate" name="billDate" th:value="${wagesHeader.billDate}" class="form-control" type="text">
-								</div>
-							</div>
-														<div class="form-group">	
-								<label class="col-sm-3 control-label">核算期间：</label>
-								<div class="col-sm-8">
-									<input id="accountingDate" name="accountingDate" th:value="${wagesHeader.accountingDate}" class="form-control" type="text">
-								</div>
-							</div>
-														<div class="form-group">	
-								<label class="col-sm-3 control-label">审核人：</label>
-								<div class="col-sm-8">
-									<input id="auditor" name="auditor" th:value="${wagesHeader.auditor}" class="form-control" type="text">
-								</div>
-							</div>
-														<div class="form-group">	
-								<label class="col-sm-3 control-label">审核日期：</label>
-								<div class="col-sm-8">
-									<input id="auditDate" name="auditDate" th:value="${wagesHeader.auditDate}" class="form-control" type="text">
-								</div>
-							</div>
-																					<div class="form-group">
-								<div class="col-sm-8 col-sm-offset-3">
-									<button type="submit" class="btn btn-primary">提交</button>
-								</div>
-							</div>
-						</form>
+<div class="wrapper wrapper-content ">
+	<div class="col-sm-12">
+		<div class="ibox">
+			<div class="ibox-body">
+
+				<form class="form-horizontal m-t" id="signupForm">
+					<div class="form-head" style="display: flex; justify-content: space-around">
+						<div class="form-group">
+							<input  id="id"  name="id"
+									th:value="${wagesHeader.id}" type="text" hidden>
+							<label>单据编号:</label> <input name="billCode" th:value="${wagesHeader.billCode}" type="text" class="form-control" id="billCode" ></div>
+						<div class="form-group">
+							<label>单据日期:</label><input name="billDate" th:value="${wagesHeader.billDate}" type="date" class="form-control" id="billDate" ></div>
+						<div class="form-group">
+							<label>核算期间:</label><input name="accountingDate" th:value="${wagesHeader.accountingDate}" type="date" class="form-control" id="accountingDate" ></div>
 					</div>
-				</div>
+					<hr style="margin: 0"/>
+
+					<div class="fixed-table-toolbar">
+						<div class="columns pull-left">
+							<button type="button" class="btn  btn-primary" onclick="add()">
+								<i class="fa fa-plus" aria-hidden="true"></i>添加
+							</button>
+							<button type="button" class="btn  btn-danger"
+									onclick="batchRemove()">
+								<i class="fa fa-trash" aria-hidden="true"></i>删除
+							</button>
+						</div>
+						<div class="columns pull-right">
+							<button class="btn btn-success" onclick="reLoad()">查询</button>
+						</div>
+						<div class="columns pull-right col-md-2 nopadding">
+							<input id="searchName" type="text" class="form-control"
+								   placeholder="姓名">
+						</div>
+					</div>
+					<table id="exampleTable" data-mobile-responsive="true"></table>
+
+					<hr style="margin-top: 0; margin-bottom: 10px"/>
+					<div class="form-footer" style="display: flex; justify-content: space-around">
+						<div class="form-group">
+							<label>审核人:</label><input name="auditor" th:value="${wagesHeader.auditor}" type="text" class="form-control" id="auditor" ></div>
+						<div class="form-group">
+							<label>审核日期:</label><input name="auditDate" th:value="${#dates.format(wagesHeader.auditDate,'yyyy-MM-dd')}" type="date" class="form-control" id="auditDate"></div>
+						<div class="layui-upload layui-inline layui-show-xs-block">
+							<button onclick="saveTable()"  class="btn btn-primary radius" type="button">提交</button>
+						</div>
+					</div>
+				</form>   
+
 			</div>
+		</div>
 	</div>
-	</div>
-	<div th:include="include::footer"></div>
-	<script type="text/javascript" src="/static/js/appjs/system/wagesHeader/edit.js">
-	</script>
+</div>
+
+<div th:include="include :: footer"></div>
+<script type="text/javascript"  src="/static/js/appjs/system/wages/wages.js"></script>
+
+
+<script type="text/javascript">
+
+    function saveTable(){
+        $.ajax({
+            cache : true,
+            type : "POST",
+            url : "/system/wagesHeader/saveTable",
+            data : $('#signupForm').serialize(),// 你的formid
+            async : false,
+            error : function(request) {
+                parent.layer.alert("Connection error");
+            },
+            success : function(data) {
+                if (data.code == 0) {
+                    parent.layer.msg("操作成功");
+                    parent.reLoad();
+                    var index = parent.layer.getFrameIndex(window.name); // 获取窗口索引
+                    parent.layer.close(index);
+
+                } else {
+                    parent.layer.alert(data.msg)
+                }
+
+            }
+        });
+
+    }
+
+</script>
 </body>
 </html>

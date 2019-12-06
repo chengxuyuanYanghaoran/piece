@@ -2,10 +2,10 @@ package com.hlwxy.xr_piece.system.controller;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
+import com.hlwxy.xr_piece.system.dao.ExamineYieDao;
+import com.hlwxy.xr_piece.system.domain.ExamineYieDO;
 import com.hlwxy.xr_piece.system.domain.YieldDO;
 import com.hlwxy.xr_piece.system.domain.YieldHeaderDO;
 import com.hlwxy.xr_piece.system.service.YieldHeaderService;
@@ -13,6 +13,7 @@ import com.hlwxy.xr_piece.system.service.YieldService;
 import com.hlwxy.xr_piece.utils.PageUtils;
 import com.hlwxy.xr_piece.utils.Query;
 import com.hlwxy.xr_piece.utils.R;
+import com.sun.org.glassfish.external.statistics.Stats;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.stereotype.Controller;
@@ -41,12 +42,15 @@ public class YieldHeaderController {
 
 	@Autowired
 	private YieldService yieldService;
-	
+
+	@Autowired
+	private ExamineYieDao examineYieDao;
+
 	@GetMapping()
 	String YieldHeader(){
 	    return "system/yieldHeader/yieldHeader";
 	}
-	
+
 	@ResponseBody
 	@GetMapping("/list")
 	public PageUtils list(@RequestParam Map<String, Object> params){
@@ -57,7 +61,7 @@ public class YieldHeaderController {
 		PageUtils pageUtils = new PageUtils(yieldHeaderList, total);
 		return pageUtils;
 	}
-	
+
 	@GetMapping("/add")
 	String add(){
 	    return "system/yieldHeader/add";
@@ -65,19 +69,45 @@ public class YieldHeaderController {
 
 	@GetMapping("/edit/{id}")
 	String edit(@PathVariable("id") Integer id,Model model){
+
 		YieldHeaderDO yieldHeader = yieldHeaderService.get(id);
-		model.addAttribute("yieldHeader", yieldHeader);
-	    return "system/yieldHeader/edit";
+		if (0==yieldHeader.getStats()){
+			model.addAttribute("yieldHeader", yieldHeader);
+     //		知道了审核人id，查询关联的产品
+			Map<String,Object> map=new HashMap<>(1);
+			map.put("headerId",id);
+			List<ExamineYieDO> list = examineYieDao.list(map);
+			Integer [] ids=new Integer[list.size()];
+			for(int i=0;i<list.size();i++){
+				ids[i]=list.get(i).getYieId();
+			}
+			model.addAttribute("ids", ids);
+			return "system/yieldHeader/edit";
+		}else {
+			return "system/error/error2";
+		}
+
 	}
-	
+
+    @GetMapping("/resetPwd/{id}")
+    String resetPwd(@PathVariable("id") Integer id,Model model){
+        YieldHeaderDO yieldHeader = yieldHeaderService.get(id);
+        model.addAttribute("yieldHeader", yieldHeader);
+        return "system/yieldHeader/resetPwd";
+    }
+
 	/**
 	 * 保存
 	 */
 	@ResponseBody
 	@PostMapping("/saveTable")
-	public R save(YieldHeaderDO yieldHeader){
-		yieldHeader.setYieldDate(yieldHeader.getYieldDate()+"-01");
+	public R save(YieldHeaderDO yieldHeader,Integer[] ids) throws ParseException {
+		SimpleDateFormat sfd = new SimpleDateFormat("yyyy-MM-dd");
+		Date date = sfd.parse(yieldHeader.getYieldDate());
 		if(yieldHeaderService.save(yieldHeader)>0){
+			for (int i:ids){
+				examineYieDao.save(new ExamineYieDO(i,yieldHeader.getId()));
+			}
 			return R.ok();
 		}
 		return R.error();
@@ -89,11 +119,61 @@ public class YieldHeaderController {
 	 */
 	@ResponseBody
 	@RequestMapping("/update")
-	public R update( YieldHeaderDO yieldHeader){
-		yieldHeaderService.update(yieldHeader);
+	public R update( YieldHeaderDO yieldHeader,Integer[] ids){
+		if(yieldHeaderService.update(yieldHeader)>0) {
+			examineYieDao.removeById(yieldHeader.getId());
+			for (int i : ids) {
+				examineYieDao.save(new ExamineYieDO(i, yieldHeader.getId()));
+			}
+		}
+
 		return R.ok();
 	}
-	
+	/**
+	 * 删除
+	 */
+	@PostMapping( "/remove")
+	@ResponseBody
+	public R remove( Integer id){
+		if(yieldHeaderService.remove(id)>0){
+			return R.ok();
+		}
+		return R.error();
+	}
 
-	
+	/**
+	 * 删除
+	 */
+	@PostMapping( "/batchRemove")
+	@ResponseBody
+	public R remove(@RequestParam("ids[]") Integer[] ids) {
+		yieldHeaderService.batchRemove(ids);
+		return R.ok();
+	}
+
+	@PostMapping( "/examine")
+	@ResponseBody
+	public R examine(@RequestParam("ids[]") Integer[] ids) {
+			for (Integer o :ids) {
+				YieldHeaderDO yieldHeaderDO = yieldHeaderService.get(o);
+				if (0==yieldHeaderDO.getStats()){
+					yieldHeaderDO.setStats(1);
+					yieldHeaderService.update(yieldHeaderDO);
+				}
+            }
+		return R.ok();
+	}
+
+	@PostMapping( "/examine2")
+	@ResponseBody
+	public R examine2(@RequestParam("ids[]") Integer[] ids) {
+		for (Integer o :ids) {
+			YieldHeaderDO yieldHeaderDO = yieldHeaderService.get(o);
+			if (1==yieldHeaderDO.getStats()){
+				yieldHeaderDO.setStats(0);
+				yieldHeaderService.update(yieldHeaderDO);
+			}
+		}
+		return R.ok();
+	}
 }

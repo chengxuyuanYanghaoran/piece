@@ -5,7 +5,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.util.Date;
-
+import java.util.HashSet;
+import java.util.Set;
 
 
 /**
@@ -14,7 +15,7 @@ import java.util.Date;
  * @date 2019-11-19 09:49:10
  */
 
-public class YieldHeaderDO implements Serializable {
+public class YieldHeaderDO  implements Serializable  {
 	private static final long serialVersionUID = 1L;
 
 	//id
@@ -33,17 +34,36 @@ public class YieldHeaderDO implements Serializable {
 	@JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd")
 	private Date auditDate;
 
+	private Integer stats;
+
+
+	private Set<YieldDO> roles = new HashSet<>();
+
+
+
 	public YieldHeaderDO() {
 	}
 
-	public YieldHeaderDO(Integer id, String yieldCode, String yieldDate, java.sql.Date yieldDate2, String auditor, Date auditDate) {
+	public YieldHeaderDO(Integer id, String yieldCode, String yieldDate, java.sql.Date yieldDate2, String auditor, Date auditDate, Integer stats) {
 		this.id = id;
 		this.yieldCode = yieldCode;
 		this.yieldDate = yieldDate;
 		this.yieldDate2 = yieldDate2;
 		this.auditor = auditor;
 		this.auditDate = auditDate;
+		this.stats = stats;
 	}
+
+
+	public Set<YieldDO> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(Set<YieldDO> roles) {
+		this.roles = roles;
+	}
+
+
 
 	public Integer getId() {
 		return id;
@@ -91,5 +111,13 @@ public class YieldHeaderDO implements Serializable {
 
 	public void setAuditDate(Date auditDate) {
 		this.auditDate = auditDate;
+	}
+
+	public Integer getStats() {
+		return stats;
+	}
+
+	public void setStats(Integer stats) {
+		this.stats = stats;
 	}
 }

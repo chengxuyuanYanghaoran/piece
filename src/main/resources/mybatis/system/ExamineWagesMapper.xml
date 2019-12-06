@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hlwxy.xr_piece.system.dao.ExamineWagesDao">
+
+	<select id="get" resultType="com.hlwxy.xr_piece.system.domain.ExamineWagesDO">
+		select `id`,`wages_id`,`header_id` from examine_wages where id = #{value}
+	</select>
+
+	<select id="list" resultType="com.hlwxy.xr_piece.system.domain.ExamineWagesDO">
+		select `id`,`wages_id`,`header_id` from examine_wages
+        <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="wagesId != null and wagesId != ''"> and wages_id = #{wagesId} </if>
+		  		  <if test="headerId != null and headerId != ''"> and header_id = #{headerId} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from examine_wages
+		 <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="wagesId != null and wagesId != ''"> and wages_id = #{wagesId} </if>
+		  		  <if test="headerId != null and headerId != ''"> and header_id = #{headerId} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.hlwxy.xr_piece.system.domain.ExamineWagesDO" useGeneratedKeys="true" keyProperty="id">
+		insert into examine_wages
+		(
+			`wages_id`, 
+			`header_id`
+		)
+		values
+		(
+			#{wagesId}, 
+			#{headerId}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.hlwxy.xr_piece.system.domain.ExamineWagesDO">
+		update examine_wages 
+		<set>
+			<if test="wagesId != null">`wages_id` = #{wagesId}, </if>
+			<if test="headerId != null">`header_id` = #{headerId}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="remove">
+		delete from examine_wages where id = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from examine_wages where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

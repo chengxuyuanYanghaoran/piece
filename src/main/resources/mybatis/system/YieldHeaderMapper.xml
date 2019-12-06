@@ -3,80 +3,88 @@
 
 <mapper namespace="com.hlwxy.xr_piece.system.dao.YieldHeaderDao">
 
-	<select id="get" resultType="com.hlwxy.xr_piece.system.domain.YieldHeaderDO">
-		select `id`,`yield_code`,`yield_date`,`auditor`,`audit_date` from yield_header where id = #{value}
+    <select id="get" resultType="com.hlwxy.xr_piece.system.domain.YieldHeaderDO">
+		select `id`,`yield_code`,`yield_date`,`auditor`,`audit_date`,`stats` from yield_header where id = #{value}
 	</select>
 
-	<select id="list" resultType="com.hlwxy.xr_piece.system.domain.YieldHeaderDO">
-		select `id`,`yield_code`,`yield_date`,`auditor`,`audit_date` from yield_header
-        <where>  
-		  		  <if test="id != null and id != ''"> and id = #{id} </if>
-		  		  <if test="yieldCode != null and yieldCode != ''"> and yield_code = #{yieldCode} </if>
-		  		  <if test="yieldDate != null and yieldDate != ''"> and yield_date = #{yieldDate} </if>
-		  		  <if test="auditor != null and auditor != ''"> and auditor = #{auditor} </if>
-		  		  <if test="auditDate != null and auditDate != ''"> and audit_date = #{auditDate} </if>
-		  		</where>
+    <select id="list" resultType="com.hlwxy.xr_piece.system.domain.YieldHeaderDO">
+        select `id`,`yield_code`,`yield_date`,`auditor`,`audit_date`,`stats` from yield_header
+        <where>
+            <if test="id != null and id != ''">and id = #{id}</if>
+            <if test="yieldCode != null and yieldCode != ''">and yield_code = #{yieldCode}</if>
+            <if test="yieldDate != null and yieldDate != ''">and yield_date = #{yieldDate}</if>
+            <if test="auditor != null and auditor != ''">and auditor = #{auditor}</if>
+            <if test="auditDate != null and auditDate != ''">and audit_date = #{auditDate}</if>
+
+        </where>
         <choose>
             <when test="sort != null and sort.trim() != ''">
                 order by ${sort} ${order}
             </when>
-			<otherwise>
-                order by id desc
-			</otherwise>
+            <otherwise>
+                order by id ASC
+            </otherwise>
         </choose>
-		<if test="offset != null and limit != null">
-			limit #{offset}, #{limit}
-		</if>
-	</select>
-	
- 	<select id="count" resultType="int">
-		select count(*) from yield_header
-		 <where>  
-		  		  <if test="id != null and id != ''"> and id = #{id} </if>
-		  		  <if test="yieldCode != null and yieldCode != ''"> and yield_code = #{yieldCode} </if>
-		  		  <if test="yieldDate != null and yieldDate != ''"> and yield_date = #{yieldDate} </if>
-		  		  <if test="auditor != null and auditor != ''"> and auditor = #{auditor} </if>
-		  		  <if test="auditDate != null and auditDate != ''"> and audit_date = #{auditDate} </if>
-		  		</where>
-	</select>
-	 
-	<insert id="save" parameterType="com.hlwxy.xr_piece.system.domain.YieldHeaderDO" useGeneratedKeys="true" keyProperty="id">
+        <if test="offset != null and limit != null">
+            limit #{offset}, #{limit}
+        </if>
+    </select>
+
+    <select id="count" resultType="int">
+        select count(*) from yield_header
+        <where>
+            <if test="id != null and id != ''">and id = #{id}</if>
+            <if test="yieldCode != null and yieldCode != ''">and yield_code = #{yieldCode}</if>
+            <if test="yieldDate != null and yieldDate != ''">and yield_date = #{yieldDate}</if>
+            <if test="auditor != null and auditor != ''">and auditor = #{auditor}</if>
+            <if test="auditDate != null and auditDate != ''">and audit_date = #{auditDate}</if>
+            <if test="stats != null and stats != ''">and stats = #{stats}</if>
+        </where>
+    </select>
+
+    <insert id="save" parameterType="com.hlwxy.xr_piece.system.domain.YieldHeaderDO" useGeneratedKeys="true"
+            keyProperty="id">
 		insert into yield_header
 		(
 			`yield_code`, 
 			`yield_date`, 
 			`auditor`, 
-			`audit_date`
+			`audit_date`,
+			`stats`
 		)
 		values
 		(
 			#{yieldCode}, 
 			#{yieldDate}, 
 			#{auditor}, 
-			#{auditDate}
+			#{auditDate},
+			#{stats}
+
 		)
 	</insert>
-	 
-	<update id="update" parameterType="com.hlwxy.xr_piece.system.domain.YieldHeaderDO">
-		update yield_header 
-		<set>
-			<if test="yieldCode != null">`yield_code` = #{yieldCode}, </if>
-			<if test="yieldDate != null">`yield_date` = #{yieldDate}, </if>
-			<if test="auditor != null">`auditor` = #{auditor}, </if>
-			<if test="auditDate != null">`audit_date` = #{auditDate}</if>
-		</set>
-		where id = #{id}
-	</update>
-	
-	<delete id="remove">
+
+    <update id="update" parameterType="com.hlwxy.xr_piece.system.domain.YieldHeaderDO">
+        update yield_header
+        <set>
+            <if test="yieldCode != null">`yield_code` = #{yieldCode},</if>
+            <if test="yieldDate != null">`yield_date` = #{yieldDate},</if>
+            <if test="auditor != null">`auditor` = #{auditor},</if>
+            <if test="auditDate != null">`audit_date` = #{auditDate},</if>
+            <if test="stats != null">`stats` = #{stats}</if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <delete id="remove">
 		delete from yield_header where id = #{value}
 	</delete>
-	
-	<delete id="batchRemove">
-		delete from yield_header where id in 
-		<foreach item="id" collection="array" open="(" separator="," close=")">
-			#{id}
-		</foreach>
-	</delete>
+
+    <delete id="batchRemove">
+        delete from yield_header where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
 
 </mapper>

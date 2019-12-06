@@ -83,10 +83,10 @@ function load() {
 									field : 'productName', 
 									title : '产品名称' 
 								},
-								// 								{
-								// 	field : 'harvest',
-								// 	title : '产量'
-								// },
+																{
+									field : 'harvest',
+									title : '产量'
+								},
 																{
 									title : '操作',
 									field : 'id',
@@ -98,13 +98,14 @@ function load() {
 										var d = '<a class="btn btn-warning btn-sm " href="#" title="删除"  mce_href="#" onclick="remove(\''
 												+ row.id
 												+ '\')"><i class="fa fa-remove"></i></a> ';
-										var f = '<a class="btn btn-success btn-sm" href="#" title="备用"  mce_href="#" onclick="resetPwd(\''
+										var f = '<a class="btn btn-success btn-sm" href="#" title="查看"  mce_href="#" onclick="resetPwd(\''
 												+ row.id
-												+ '\')"><i class="fa fa-key"></i></a> ';
+												+ '\')"><i class="fa fa-key">查看</i></a> ';
 
 										return e + d ;
 									}
-								} ]
+								}
+								]
 					});
 }
 function reLoad() {
@@ -153,6 +154,16 @@ function remove(id) {
 }
 
 function resetPwd(id) {
+    var index = layer.open({
+        type: 2,
+        title: '查看',
+        maxmin: true,
+        shadeClose: false, // 点击遮罩关闭层
+        area: 'auto',
+        // area : [ '800px', '520px' ],
+        content: prefix + '/resetPwd'+ id // iframe的url
+    });
+    layer.full(index);
 }
 function batchRemove() {
 	var rows = $('#exampleTable').bootstrapTable('getSelections'); // 返回所有选择的行，当没有选择的记录时，返回一个空数组

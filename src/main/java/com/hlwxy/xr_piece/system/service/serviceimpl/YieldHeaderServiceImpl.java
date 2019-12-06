@@ -50,5 +50,11 @@ public class YieldHeaderServiceImpl implements YieldHeaderService {
 	public int batchRemove(Integer[] ids){
 		return yieldHeaderDao.batchRemove(ids);
 	}
-	
+
+	@Override
+	public List<YieldHeaderDO> findByUsername(YieldHeaderDO YieldHeaderDO) {
+		return yieldHeaderDao.findByUsername(YieldHeaderDO);
+	}
+
+
 }

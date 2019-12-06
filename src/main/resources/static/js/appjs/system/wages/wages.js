@@ -1,7 +1,9 @@
 
 var prefix = "/system/wages";
 $(function() {
-    if(index=='1'){
+    var item = localStorage.getItem("selectIndex");
+    console.log(item);
+    if(item=='1'){
         load1();//工序
     }else{
     	load();
@@ -38,8 +40,8 @@ function load() {
                         limit: params.limit,
                         offset:params.offset,
                         name:$('#searchName').val(),
-                        state:index,
-                        state:parent.$("input[name='state']:checked").val()//获取选择的计价方式
+                        state:localStorage.getItem("selectIndex")
+                          // state:parent.$("input[name='state']:checked").val()//获取选择的计价方式
                         // username:$('#searchName').val()
                     };
                 },
@@ -163,7 +165,8 @@ function load1() {
 								limit: params.limit,
 								offset:params.offset,
                                 name:$('#searchName').val(),
-                                state:parent.$("input[name='state']:checked").val()//获取选择的计价方式
+                                state:localStorage.getItem("selectIndex")
+                                // state:parent.$("input[name='state']:checked").val()//获取选择的计价方式
 					           // username:$('#searchName').val()
 							};
 						},
@@ -261,7 +264,9 @@ function reLoad() {
 	$('#exampleTable').bootstrapTable('refresh');
 }
 function add() {
-    if(index=='1'){
+    var item = localStorage.getItem("selectIndex");
+     console.log(item);
+    if(item=='1'){
         layer.open({
             type : 2,
             title : '增加',

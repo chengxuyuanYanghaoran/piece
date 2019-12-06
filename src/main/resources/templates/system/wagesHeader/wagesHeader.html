@@ -31,30 +31,7 @@
 			</div>
 		</div>
 	</div>
-	<!--shiro控制bootstraptable行内按钮看见性 来自bootdo的创新方案 -->
-		<div>
-			<script type="text/javascript">
-				var s_edit_h = 'hidden';
-				var s_remove_h = 'hidden';
-				var s_resetPwd_h = 'hidden';
-			</script>
-		</div>
-		<div shiro:hasPermission="xr_piece:wagesHeader:edit">
-			<script type="text/javascript">
-				s_edit_h = '';
-			</script>
-		</div>
-		<div shiro:hasPermission="xr_piece:wagesHeader:remove">
-			<script type="text/javascript">
-				var s_remove_h = '';
-			</script>
-		</div>
-		<div shiro:hasPermission="xr_piece:wagesHeader:resetPwd">
-			<script type="text/javascript">
-				var s_resetPwd_h = '';
-			</script>
-		</div>
-	</div>
+
 	<div th:include="include :: footer"></div>
 	<script type="text/javascript" src="/static/js/appjs/system/wagesHeader/wagesHeader.js"></script>
 </body>

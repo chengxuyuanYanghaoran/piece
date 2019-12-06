@@ -15,6 +15,35 @@
  *
  *
 */
+/*选项卡 start*/
+#navBox{
+    display: flex;
+    justify-content: flex-start;
+    list-style: none;
+    padding-left:0;
+    margin-bottom: 0;
+}
+
+#navBox li {
+    box-sizing: border-box;
+    /*margin-right: 15px;*/
+    padding: 0 10px;
+    line-height: 35px;
+    /*border: 1px solid #999;*/
+}
+
+hr{
+    margin: 10px;
+}
+
+#tabBox>div{
+    display: none;
+}
+#tabBox>div.active {
+    display: block;
+}
+/*选项卡 end*/
+
 h1, h2, h3, h4, h5, h6 {
     font-weight: 100;
 }

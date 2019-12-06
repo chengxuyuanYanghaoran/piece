@@ -5,7 +5,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.util.Date;
-
+import java.util.HashSet;
+import java.util.Set;
 
 
 /**
@@ -40,6 +41,16 @@ public class YieldDO implements Serializable {
 	private String productName;
 	//产量
 	private Integer harvest;
+
+	private Set<YieldHeaderDO> users = new HashSet<>();
+
+	public Set<YieldHeaderDO> getUsers() {
+		return users;
+	}
+
+	public void setUsers(Set<YieldHeaderDO> users) {
+		this.users = users;
+	}
 
 	/**
 	 * 设置：产量统计表  id
