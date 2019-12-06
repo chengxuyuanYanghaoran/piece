@@ -1,0 +1,166 @@
+<!--<!DOCTYPE html>-->
+<!--<html>-->
+<!--<meta charset="utf-8">-->
+<!--<head th:include="include :: header"></head>-->
+<!--<body class="gray-bg">-->
+	<!--<div class="wrapper wrapper-content ">-->
+		<!--<div class="row">-->
+			<!--<div class="col-sm-12">-->
+				<!--<div class="ibox float-e-margins">-->
+					<!--<div class="ibox-content">-->
+						<!--<form class="form-horizontal m-t" id="signupForm">-->
+							<!--<div class="form-group">	-->
+								<!--<label class="col-sm-3 control-label">单据编号：</label>-->
+								<!--<div class="col-sm-8">-->
+									<!--<input id="yieldCode" name="yieldCode" class="form-control" type="text">-->
+								<!--</div>-->
+							<!--</div>-->
+														<!--<div class="form-group">	-->
+								<!--<label class="col-sm-3 control-label">单据日期：</label>-->
+								<!--<div class="col-sm-8">-->
+									<!--<input id="yieldDate" name="yieldDate" class="form-control" type="text">-->
+								<!--</div>-->
+							<!--</div>-->
+														<!--<div class="form-group">	-->
+								<!--<label class="col-sm-3 control-label">审核人：</label>-->
+								<!--<div class="col-sm-8">-->
+									<!--<input id="auditor" name="auditor" class="form-control" type="text">-->
+								<!--</div>-->
+							<!--</div>-->
+														<!--<div class="form-group">	-->
+								<!--<label class="col-sm-3 control-label">审核日期：</label>-->
+								<!--<div class="col-sm-8">-->
+									<!--<input id="auditDate" name="auditDate" class="form-control" type="text">-->
+								<!--</div>-->
+							<!--</div>-->
+																					<!--<div class="form-group">-->
+								<!--<div class="col-sm-8 col-sm-offset-3">-->
+									<!--<button type="submit" class="btn btn-primary">提交</button>-->
+								<!--</div>-->
+							<!--</div>-->
+						<!--</form>-->
+					<!--</div>-->
+				<!--</div>-->
+			<!--</div>-->
+	<!--</div>-->
+	<!--</div>-->
+	<!--<div th:include="include::footer"></div>-->
+	<!--<script type="text/javascript" src="/static/js/appjs/system/yieldHeader/add.js">-->
+	<!--</script>-->
+<!--</body>-->
+<!--</html>-->
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head th:include="include :: header">
+</head>
+<body class="gray-bg">
+
+<div class="wrapper wrapper-content ">
+	<div class="col-sm-12">
+		<div class="ibox">
+			<div class="ibox-body">
+
+				   <form id="signupForm" method="post" enctype="multipart/form-data">
+				<div class="form-head" style="display: flex; justify-content: space-around">
+				<div class="form-group">
+				<label>单据编号:</label><input id="yieldCode" name="yieldCode"  type="text">
+				</div>
+				<div class="form-group">
+				<label>核算期间:</label><input id="yieldDate" name="yieldDate"  type="month">
+				</div>
+
+				<!--<div class="form-main">-->
+					<!--<div class="form-group" style="margin-bottom: 0">-->
+						<!--<input type="file" id="exampleInputFile" name="file" value="" style="width: 180px; margin-bottom: 2px">-->
+						<!--<span class="span" style="color: red;font-size: 14px;">-->
+                <!--*必须指定 Excel文件!-->
+            <!--</span>-->
+					<!--</div>-->
+					<!--<div class="form-group" style="margin-bottom: 2px;">-->
+						<!--<button type="button" id="btnImport">开始导入</button>-->
+					<!--</div>-->
+				<!--</div>-->
+
+			</div>
+			<hr style="margin: 0"/>
+
+			<hr style="margin: 0"/>
+			<div class="fixed-table-toolbar">
+				<div class="columns pull-left">
+					<button type="button" class="btn  btn-primary" onclick="add()">
+						<i class="fa fa-plus" aria-hidden="true"></i>添加
+					</button>
+					<button type="button" class="btn  btn-danger"
+							onclick="batchRemove()">
+						<i class="fa fa-trash" aria-hidden="true"></i>删除
+					</button>
+				</div>
+				<div class="columns pull-right">
+					<button class="btn btn-success" onclick="reLoad()">查询</button>
+				</div>
+				<div class="columns pull-right col-md-2 nopadding">
+					<input id="searchName" type="text" class="form-control"
+						   placeholder="姓名">
+				</div>
+			</div>
+			                
+			<table id="exampleTable" data-mobile-responsive="true"></table>
+			  
+			 
+			<hr style="margin-top: 0; margin-bottom: 10px"/>
+			<div class="form-footer" style="display: flex; justify-content: space-around">
+			<div class="form-group">
+			<label>审核人:</label><input id="auditor" name="auditor"  type="text">
+			</div>
+			<div class="form-group">
+			<label>审核日期:</label><input id="auditDate" name="auditDate"  type="date">
+			</div>
+			<div class="layui-upload layui-inline layui-show-xs-block">
+			<button onclick="saveTable()"  class="btn btn-primary radius" type="button">提交</button>
+			</div>
+			</div>
+			</form>
+			   
+
+			             
+
+		</div>
+	</div>
+</div>
+</div>
+
+<div th:include="include :: footer"></div>
+<script type="text/javascript" src="/static/js/appjs/system/yield/yield.js"></script>
+
+<script type="text/javascript">
+    // var date1 = date.slice(0,date.lastIndexOf('-'))
+    function saveTable() {
+        $.ajax({
+            cache : true,
+            type : "POST",
+            url : "/system/yieldHeader/saveTable",
+            data : $('#signupForm').serialize(),// 你的formid
+            async : false,
+            error : function(request) {
+                parent.layer.alert("Connection error");
+            },
+            success : function(data) {
+                if (data.code == 0) {
+                    parent.layer.msg("操作成功");
+                    // parent.reLoad();
+                    var index = parent.layer.getFrameIndex(window.name); // 获取窗口索引
+                    parent.layer.close(index);
+
+                } else {
+                    parent.layer.alert(data.msg)
+                }
+
+            }
+        });
+
+    }
+
+</script>
+</body>
+</html>

@@ -1,5 +1,6 @@
 package com.hlwxy.xr_piece.system.controller;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -46,7 +47,25 @@ public class WagesController {
 	public PageUtils list(@RequestParam Map<String, Object> params){
 		//查询列表数据
         Query query = new Query(params);
-		List<WagesDO> wagesList = wagesService.list(query);
+		String state = (String)query.get("state");
+		List<WagesDO> wagesList=wagesService.list(query);
+		if("0".equals(state)){
+			for (WagesDO d:wagesList){
+				BigDecimal productPrice = d.getProductPrice();
+				productPrice.setScale(2);
+				BigDecimal bigDecimal = new BigDecimal(d.getHarvest());
+				d.setMoney(productPrice.multiply(bigDecimal));
+				wagesService.update(d);
+			}
+		}else{
+			for (WagesDO d:wagesList){
+				BigDecimal productPrice = d.getProPrice();
+				productPrice.setScale(2);
+				BigDecimal bigDecimal = new BigDecimal(d.getHarvest());
+				d.setMoney(productPrice.multiply(bigDecimal));
+				wagesService.update(d);
+			}
+		}
 		int total = wagesService.count(query);
 		PageUtils pageUtils = new PageUtils(wagesList, total);
 		return pageUtils;
@@ -92,6 +111,7 @@ public class WagesController {
 	 */
 	@GetMapping("/toPage/{id}")
 	public String  toPage(@PathVariable("id") Integer id,Model model){
+//		for (){}
 		model.addAttribute("index",id);
 		return "/system/wages/wages";
 	}

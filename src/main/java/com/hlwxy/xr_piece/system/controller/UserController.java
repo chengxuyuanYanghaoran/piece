@@ -91,12 +91,9 @@ public class UserController{
 	 */
 	@PostMapping( "/remove")
 	@ResponseBody
-	public R remove(Integer id, Model model, HttpSession session ,String username) {
+	public R remove(Integer id, HttpSession session) {
         UserDO user = (UserDO)session.getAttribute("user");
         if(user.getUsername().equals("admin")) {
-            UserDO userDO = new UserDO();
-            userDO.setUsername(username);
-            model.addAttribute("user", userDO);
             if (userService.remove(id) > 0) {
                 return R.ok();
             }

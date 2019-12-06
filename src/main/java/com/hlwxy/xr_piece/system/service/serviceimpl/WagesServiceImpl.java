@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -59,7 +60,7 @@ public class WagesServiceImpl implements WagesService {
 	
 	@Override
 	public int update(WagesDO wages){
-		return wagesDao.update(wages);
+        return wagesDao.update(wages);
 	}
 	
 	@Override

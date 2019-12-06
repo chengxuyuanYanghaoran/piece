@@ -38,6 +38,7 @@ function load() {
                         limit: params.limit,
                         offset:params.offset,
                         name:$('#searchName').val(),
+                        state:index,
                         state:parent.$("input[name='state']:checked").val()//获取选择的计价方式
                         // username:$('#searchName').val()
                     };
@@ -100,18 +101,18 @@ function load() {
                         field : 'productPrice',
                         title : '产品单价'
                     },
-                    // 								{
-                    // 	field : 'money',
-                    // 	title : '金额',
-                    //
-                    // },
-                    {
-                        field:'money',
-                        title:'总金额',
-                        formatter : function(value, row, index) {
-                            return row.harvest*row.productPrice;
-                        }
+                    								{
+                    	field : 'money',
+                    	title : '金额'
+
                     },
+                    // {
+                    //     // field:'money',
+                    //     title:'总金额',
+                    //     formatter : function(value, row, index) {
+                    //         return row.harvest*row.productPrice;
+                    //     }
+                    // },
 
                     {
                         title : '操作',
@@ -224,19 +225,19 @@ function load1() {
                             //     field : 'productPrice',
                             //     title : '产品单价'
                             // },
-								// 								{
-								// 	field : 'money',
-								// 	title : '金额',
-                                //
-								// },
+																{
+									field : 'money',
+									title : '金额'
 
-							{
-                                field:'money',
-                                title:'总金额',
-                                formatter : function(value, row, index) {
-                                	return row.harvest*row.proPrice;
-								}
-							},
+								},
+
+							// {
+                             //    field:'money',
+                             //    title:'总金额',
+                             //    formatter : function(value, row, index) {
+                             //    	return row.harvest*row.proPrice;
+							// 	}
+							// },
 																{
 									title : '操作',
 									field : 'id',
