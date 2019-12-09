@@ -200,39 +200,39 @@ function batchRemove() {
 	});
 }
 
-$("#btnImport").on("click", function(){
-    var formData = new FormData();
-    formData.append("file",$('#exampleInputFile')[0].files[0]);//封装文件
-
-	//获取单据编号
-	var yieldCode = $("#yieldCode").val();
-	var yieldDate = $("#yieldDate").val();
-	var auditor = $("#auditor").val();
-	var auditDate = $("#auditDate").val();
-	//获取计价方式
-    var mode = parent.$("input[name='state']:checked").val();
-
-    formData.append("yieldCode",yieldCode);//封装单据编号
-    formData.append("yieldDate",yieldDate);//封装核算区间
-    formData.append("auditor",auditor);//封装审核人
-    formData.append("auditDate",auditDate);//封装审核时间
-    formData.append("mode",mode);//封装计价方式
-
-
-    $.ajax({
-        type:'POST',
-		url:"/system/yield/import",
-        data:formData,
-        processData:false,
-        contentType:false,
-        dataType:"json",
-        success:function(data){
-            if(data.code == 0){
-                layer.msg('导入成功', {icon: 1});
-            }else{
-                layer.msg('导入失败', {icon: 2});
-            }
-        }
-    });
-})
+// $("#btnImport").on("click", function(){
+//     var formData = new FormData();
+//     formData.append("file",$('#exampleInputFile')[0].files[0]);//封装文件
+//
+// 	//获取单据编号
+// 	var yieldCode = $("#yieldCode").val();
+// 	var yieldDate = $("#yieldDate").val();
+// 	var auditor = $("#auditor").val();
+// 	var auditDate = $("#auditDate").val();
+// 	//获取计价方式
+//     var mode = parent.$("input[name='state']:checked").val();
+//
+//     formData.append("yieldCode",yieldCode);//封装单据编号
+//     formData.append("yieldDate",yieldDate);//封装核算区间
+//     formData.append("auditor",auditor);//封装审核人
+//     formData.append("auditDate",auditDate);//封装审核时间
+//     formData.append("mode",mode);//封装计价方式
+//
+//
+//     $.ajax({
+//         type:'POST',
+// 		url:"/system/yield/import",
+//         data:formData,
+//         processData:false,
+//         contentType:false,
+//         dataType:"json",
+//         success:function(data){
+//             if(data.code == 0){
+//                 layer.msg('导入成功', {icon: 1});
+//             }else{
+//                 layer.msg('导入失败', {icon: 2});
+//             }
+//         }
+//     });
+// })
 

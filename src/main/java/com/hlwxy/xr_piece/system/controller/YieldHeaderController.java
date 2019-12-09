@@ -151,6 +151,7 @@ public class YieldHeaderController {
 		return R.ok();
 	}
 
+	//审核
 	@PostMapping( "/examine")
 	@ResponseBody
 	public R examine(@RequestParam("ids[]") Integer[] ids) {
@@ -164,6 +165,7 @@ public class YieldHeaderController {
 		return R.ok();
 	}
 
+	//弃审
 	@PostMapping( "/examine2")
 	@ResponseBody
 	public R examine2(@RequestParam("ids[]") Integer[] ids) {

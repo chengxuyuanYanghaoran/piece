@@ -31,7 +31,7 @@ public interface YieldService {
 	
 	int batchRemove(Integer[] ids);
 
-	//导入表格
-	void importTable(XSSFWorkbook hssfWorkbook, YieldHeaderDO yieldHeaderDO,String mode);
+	//导入表格  YieldHeaderDO yieldHeaderDO,
+	void importTable(XSSFWorkbook hssfWorkbook,String mode);
 
 }

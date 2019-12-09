@@ -65,8 +65,9 @@ public class YieldServiceImpl implements YieldService {
 		return yieldDao.batchRemove(ids);
 	}
 
+//	 YieldHeaderDO yieldHeaderDO,
 	@Override
-	public void importTable(XSSFWorkbook hssfWorkbook, YieldHeaderDO yieldHeaderDO,String mode) {
+	public void importTable(XSSFWorkbook hssfWorkbook,String mode) {
 		XSSFSheet sheet = hssfWorkbook.getSheetAt(0);
 		System.out.println("表格的最大行数："+sheet.getLastRowNum());
 		List<YieldDO> list = new ArrayList<>();
@@ -76,7 +77,7 @@ public class YieldServiceImpl implements YieldService {
 		for (int i=1;i<sheet.getLastRowNum()+1;i++){
 			Row row =sheet.getRow(i);
 			yieldDO = new YieldDO();
-			yieldDO.setYieldCode(yieldHeaderDO.getYieldCode());
+//			yieldDO.setYieldCode(yieldHeaderDO.getYieldCode());
 			if (row.getCell(0).toString()!=null&&!row.getCell(0).toString().equals("")){
 				System.out.println(row.getCell(0).toString());
 				String dataStr=row.getCell(0).toString();
@@ -121,7 +122,7 @@ public class YieldServiceImpl implements YieldService {
 			list.add(yieldDO);
 		}
 
-		yieldDao.addYieldHeaderDO(yieldHeaderDO);//插入表头
+//		yieldDao.addYieldHeaderDO(yieldHeaderDO);//插入表头
 		if (mode.equals("0")){
 			yieldDao.importTable(list);//插入表体（产品）
 		}

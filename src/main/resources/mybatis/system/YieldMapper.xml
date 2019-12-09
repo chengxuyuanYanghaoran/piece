@@ -104,12 +104,11 @@
 		</foreach>
 	</delete>
 
-	<!--导入表格(产品)-->
+	<!--导入表格(产品) yield_code -->
 	<insert id="importTable" parameterType="java.util.List">
-		INSERT INTO `yield` (yield_code,date_mark,people_code,`name`,product_code,product_name,harvest) VALUES
+		INSERT INTO `yield` (date_mark,people_code,`name`,product_code,product_name,harvest) VALUES
 		<foreach collection="list" item="yieldDOS" index="index" separator=",">
 			(
-				#{yieldDOS.yieldCode},
 				#{yieldDOS.dateMark},
 				#{yieldDOS.peopleCode},
 				#{yieldDOS.name},
@@ -120,12 +119,11 @@
 		</foreach>
 	</insert>
 
-	<!--导入表格(工序)-->
+	<!--导入表格(工序) yield_code -->
 	<insert id="importProTable" parameterType="java.util.List">
-		INSERT INTO `yield` (yield_code,date_mark,people_code,`name`,pro_code,pro_name,harvest) VALUES
+		INSERT INTO `yield` (date_mark,people_code,`name`,pro_code,pro_name,harvest) VALUES
 		<foreach collection="list" item="yieldDOS" index="index" separator=",">
 			(
-			#{yieldDOS.yieldCode},
 			#{yieldDOS.dateMark},
 			#{yieldDOS.peopleCode},
 			#{yieldDOS.name},

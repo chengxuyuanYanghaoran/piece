@@ -159,20 +159,23 @@ public class YieldController {
 
 	/**
 	 * 导入Exal表格，还需要传入计价方式的状态值
+	 *
+	 * , @RequestParam("yieldCode") String yieldCode,
+	 * @RequestParam("yieldDate") String yieldDate, @RequestParam("auditor") String auditor,
+	 * @RequestParam("auditDate") String auditDate, @RequestParam("mode") String mode
 	 */
 	@RequestMapping("/import")
 	@ResponseBody
-	public Map<String, Object> findDetailed(@RequestParam("file") MultipartFile file, @RequestParam("yieldCode") String yieldCode,
-											@RequestParam("yieldDate") String yieldDate, @RequestParam("auditor") String auditor,
-											@RequestParam("auditDate") String auditDate, @RequestParam("mode") String mode) {
+	public Map<String, Object> findDetailed(@RequestParam("file") MultipartFile file,@RequestParam("mode") String mode) {
 		Map<String, Object> map = new HashMap<>();
-		YieldHeaderDO yieldHeaderDO =yieldHeaderData(yieldDate,auditDate);//核算区间、审核时间
-		yieldHeaderDO.setYieldCode(yieldCode);//单据编号
-        yieldHeaderDO.setAuditor(auditor);//审核人
+//		YieldHeaderDO yieldHeaderDO =yieldHeaderData(yieldDate,auditDate);//核算区间、审核时间
+//		yieldHeaderDO.setYieldCode(yieldCode);//单据编号
+//        yieldHeaderDO.setAuditor(auditor);//审核人
 		try{
 			InputStream inputStream=file.getInputStream();
 			XSSFWorkbook workbook = new XSSFWorkbook(inputStream);
-			yieldService.importTable(workbook,yieldHeaderDO,mode);
+//			,yieldHeaderDO,mode
+			yieldService.importTable(workbook,mode);
 			System.out.println("结束");
 			map.put("code", 0);
 			map.put("msg", "表格导入成功！");
