@@ -34,264 +34,414 @@ layui.use(['form', 'layedit', 'laydate', "jquery"], function () {
             start.config.max.month = date.month - 1;
         }
     });
-})
+});
 
 //弹框
 
 window.onload = function () {
     //产品
-    $("#depection_four").click(function () {
-        $("#daaa_four div").each(function (index) {
-            // alert(index)
-            if (index > 0) {
-                $(this).remove();
-            }
-        });
-        $.ajax({
-            url: "/system/reportSelection/findProductName",
-            async: true,
-            type: "GET",
-            datatype: "json",
-            success: function (res) {
-                $.each(res.productDOS, function (index, obj) {
-                    $("#daaa_four").append("<div style='display: inline-block;margin-left: 10px;margin-top: 15px'><input type='checkbox' name=\"check-4\" style='margin-right: 10px;margin-top: 10px' value='" + obj["productName"] + "'/> " + obj["productName"] + "</div>"
-                    )
-                });
-                var obox = document.getElementById("working");
-                var odiv = document.getElementById("daaa_four");
-                var ach = odiv.getElementsByTagName("input");
-                obox.onclick = function () {
-                    for (var i = 0; i < ach.length; i++) {
-                        ach[i].checked = this.checked;
-                    }
-                };
-                // alert(ach.length);
-                for (var i = 0; i < ach.length; i++) {
-                    ach[i].onclick = function () {
-                        if (!this.checked) {
-                            obox.checked = false;
-                        }
+    (function() {
+        /*建立模态框对象*/
+        var modalBox = {};
+        /*获取模态框*/
+        modalBox.modal = document.getElementById("myModal_four");
+        /*获得trigger按钮*/
+        modalBox.depection = document.getElementById("depection_four");
+        /*获得关闭按钮*/
+        modalBox.closeBtn = document.getElementById("true_four");
+        /*模态框显示*/
+        modalBox.show = function() {
+            // console.log(this.modal);
+            this.modal.style.display = "block";
+            //清除重复遍历的数据
+            $("#myModal_four .modal-header div").each(function (index) {
+                // alert(1)
+                if (index >= 0) {
+                    $(this).remove();
+                }
+            });
+            $.ajax({
+                url: "/system/reportSelection/findProductName",
+                async: true,
+                type: "GET",
+                datatype: "json",
+                success: function (res) {
+                    // console.log(res)
+                    $.each(res.productDOS, function (index, obj) {
+                        $("#myModal_four .modal-header").append(
+                            "<div style='display: inline-block;padding-left: 10px;padding-top: 15px'><input type='checkbox' name=\"check-4\" value='" + obj["productName"] + "'/> "
+                            + obj["productName"] + "</div>"
+                        );
+                    });
+                    //获取所有复选框
+                    var obox = document.getElementById("working");
+                    var odiv = document.getElementById("daaa_four")
+                    var ach = odiv.getElementsByTagName("input");
 
-                        var flag = true;
+                    obox.onclick = function () {
+                        // alert(2)
                         for (var i = 0; i < ach.length; i++) {
-                            if (!ach[i].checked) {
-                                flag = false;
-                                break;
-                            }
-                        }
-                        if (flag) {
-                            obox.checked = true;
+                            ach[i].checked = this.checked;
                         }
                     };
+                    // alert(ach.length);
+                    for (var i = 0; i < ach.length; i++) {
+                        ach[i].onclick = function () {
+                            if (!this.checked) {
+                                obox.checked = false;
+                            }
+
+                            var flag = true;
+                            for (var i = 0; i < ach.length; i++) {
+                                if (!ach[i].checked) {
+                                    flag = false;
+                                    break;
+                                }
+                            }
+                            if (flag) {
+                                obox.checked = true;
+                            }
+                        };
+                    }
+                },
+                error: function () {
+                    alert("失败");
                 }
-            },
-            error: function () {
-                alert("失败");
-            }
-        });
-        //获取所有复选框
-        $("#true_four").unbind("click");
-        $("#true_four").bind('click', function () {
-            text = $("input:checkbox[name='check-4']:checked").map(function () {
-                return $(this).val();
-            }).get();
-            alert("选中的checkbox的值为：" + text);
-            //给p标签动态添加内容
-            $("#dec_input_four").append("<span>" + text + "," + "</span>");
-            $("#daaa_four_son").fadeOut();
-        })
-        $("#daaa_four_son").fadeToggle();
-    });
+            });
+            // 防止重复点击
+            $("#true_four").unbind("click");
+            $("#true_four").bind('click', function (res) {
+                text = $("input:checkbox[name='check-4']:checked").map(function () {
+                    return $(this).val();
+                }).get();
+                //给p标签动态添加内容
+                $("#dec_input_four").html("<span>" + text + "," + "</span>");
+            });
+            $("#four").click(function () {
+                $("#myModal_four").fadeOut();
+            })
+        };
+        /*模态框关闭*/
+        modalBox.close = function() {
+            this.modal.style.display = "none";
+        };
+
+        /*模态框初始化*/
+        modalBox.init = function() {
+            var that = this;
+            this.depection.onclick = function() {
+                that.show();
+            };
+            this.closeBtn.onclick = function() {
+                that.close();
+            };
+        };
+        modalBox.init();
+    })();
+
     //工序
-    $("#depection_three").click(function () {
-        $("#daaa_three div").each(function (index) {
-            // alert(index)
-            if (index > 0) {
-                $(this).remove();
-            }
-        })
-        $.ajax({
-            url: "/system/reportSelection/findProcedureName",
-            async: true,
-            type: "GET",
-            datatype: "json",
-            success: function (res) {
-                $.each(res.procedureDOS, function (index, obj) {
-                    $("#daaa_three").append("<div style='display: inline-block;margin-left: 10px;margin-top: 15px'><input type='checkbox' name=\"check-3\" value='" + obj["proName"] + "'/> " + obj["proName"] + "</div>"
-                    )
-                });
-                var obox = document.getElementById("product");
-                var odiv = document.getElementById("daaa_three");
-                var ach = odiv.getElementsByTagName("input");
-                obox.onclick = function () {
-                    for (var i = 0; i < ach.length; i++) {
-                        ach[i].checked = this.checked;
-                    }
-                };
-                // alert(ach.length);
-                for (var i = 0; i < ach.length; i++) {
-                    ach[i].onclick = function () {
-                        if (!this.checked) {
-                            obox.checked = false;
-                        }
+    (function() {
+        /*建立模态框对象*/
+        var modalBox = {};
+        /*获取模态框*/
+        modalBox.modal = document.getElementById("myModal_three");
+        /*获得trigger按钮*/
+        modalBox.depection = document.getElementById("depection_three");
+        /*获得关闭按钮*/
+        modalBox.closeBtn = document.getElementById("true_three");
 
-                        var flag = true;
+        /*模态框显示*/
+        modalBox.show = function() {
+            // console.log(this.modal);
+            this.modal.style.display = "block";
+            //清除重复遍历的数据
+            $("#myModal_three .modal-header div").each(function (index) {
+                // alert(1)
+                if (index >= 0) {
+                    $(this).remove();
+                }
+            });
+            $.ajax({
+                url: "/system/reportSelection/findProcedureName",
+                async: true,
+                type: "GET",
+                datatype: "json",
+                success: function (res) {
+                    // console.log(res)
+                    $.each(res.procedureDOS, function (index, obj) {
+                        $("#myModal_three .modal-header").append(
+                            "<div style='display: inline-block;padding-left: 10px;padding-top: 15px'><input type='checkbox' name=\"check-3\" value='" + obj["proName"] + "'/> "
+                            + obj["proName"] + "</div>"
+                        );
+                    });
+                    //获取所有复选框
+                    var obox = document.getElementById("product");
+                    var odiv = document.getElementById("daaa_three")
+                    var ach = odiv.getElementsByTagName("input");
+
+                    obox.onclick = function () {
                         for (var i = 0; i < ach.length; i++) {
-                            if (!ach[i].checked) {
-                                flag = false;
-                                break;
-                            }
-                        }
-                        if (flag) {
-                            obox.checked = true;
+                            ach[i].checked = this.checked;
                         }
                     };
+                    // alert(ach.length);
+                    for (var i = 0; i < ach.length; i++) {
+                        ach[i].onclick = function () {
+                            if (!this.checked) {
+                                obox.checked = false;
+                            }
+
+                            var flag = true;
+                            for (var i = 0; i < ach.length; i++) {
+                                if (!ach[i].checked) {
+                                    flag = false;
+                                    break;
+                                }
+                            }
+                            if (flag) {
+                                obox.checked = true;
+                            }
+                        };
+                    }
+                },
+                error: function () {
+                    alert("失败");
                 }
-            },
-            error: function () {
-                alert("失败");
-            }
-        });
-        //获取所有复选框
-        $("#true_three").unbind("click");
-        $("#true_three").bind('click', function () {
-            text = $("input:checkbox[name='check-3']:checked").map(function () {
-                return $(this).val();
-            }).get();
-            alert("选中的checkbox的值为：" + text);
-            //给p标签动态添加内容
-            $("#dec_input_three").append("<span>" + text + "," + "</span>");
-            $("#daaa_three_son").fadeOut();
-        })
-        $("#daaa_three_son").fadeToggle();
-    });
+            });
+            // 防止重复点击
+            $("#true_three").unbind("click");
+            $("#true_three").bind('click', function (res) {
+                text = $("input:checkbox[name='check-3']:checked").map(function () {
+                    return $(this).val();
+                }).get();
+                //给p标签动态添加内容
+                $("#dec_input_three").append("<span>" + text + "," + "</span>");
+            });
+            $("#three").click(function () {
+                $("#myModal_three").fadeOut();
+            })
+        };
+        /*模态框关闭*/
+        modalBox.close = function() {
+            this.modal.style.display = "none";
+        };
+
+        /*模态框初始化*/
+        modalBox.init = function() {
+            var that = this;
+            this.depection.onclick = function() {
+                that.show();
+            };
+            this.closeBtn.onclick = function() {
+                that.close();
+            };
+        };
+        modalBox.init();
+    })();
+
     //人员
-    $("#depection_two").click(function () {
-        $("#daaa_two div").each(function (index) {
-            // alert(index)
-            if (index > 0) {
-                $(this).remove();
-            }
-        })
-        $.ajax({
-            url: "/system/reportSelection/findPeopleName",
-            async: true,
-            type: "GET",
-            datatype: "json",
-            success: function (res) {
-                $.each(res.peopleDOS, function (index, obj) {
-                    $("#daaa_two").append("<div style='display: inline-block;margin-left: 10px;margin-top: 15px'><input type='checkbox' name=\"check-2\" value='" + obj["peopleName"] + "'/> " + obj["peopleName"] + "</div>"
-                    )
-                })
-                var obox = document.getElementById("everything");
-                var odiv = document.getElementById("daaa_two");
-                var ach = odiv.getElementsByTagName("input");
-                obox.onclick = function () {
-                    for (var i = 0; i < ach.length; i++) {
-                        ach[i].checked = this.checked;
-                    }
-                };
-                // alert(ach.length);
-                for (var i = 0; i < ach.length; i++) {
-                    ach[i].onclick = function () {
-                        if (!this.checked) {
-                            obox.checked = false;
-                        }
+    (function() {
+        /*建立模态框对象*/
+        var modalBox = {};
+        /*获取模态框*/
+        modalBox.modal = document.getElementById("myModal_two");
+        /*获得trigger按钮*/
+        modalBox.depection = document.getElementById("depection_two");
+        /*获得关闭按钮*/
+        modalBox.closeBtn = document.getElementById("true_one");
 
-                        var flag = true;
+        /*模态框显示*/
+        modalBox.show = function() {
+            // console.log(this.modal);
+            this.modal.style.display = "block";
+            //清除重复遍历的数据
+            $("#myModal_two .modal-header div").each(function (index) {
+                // alert(1)
+                if (index >= 0) {
+                    $(this).remove();
+                }
+            });
+            $.ajax({
+                url: "/system/reportSelection/findPeopleName",
+                async: true,
+                type: "GET",
+                datatype: "json",
+                success: function (res) {
+                    // console.log(res)
+                    $.each(res.peopleDOS, function (index, obj) {
+                        $("#myModal_two .modal-header").append(
+                            "<div style='display: inline-block;padding-left: 10px;padding-top: 15px'><input type='checkbox' name=\"check-2\" value='" + obj["peopleName"] + "'/> "
+                            + obj["peopleName"] + "</div>"
+                        );
+                    });
+                    //获取所有复选框
+                    var obox = document.getElementById("everything");
+                    var odiv = document.getElementById("daaa_two")
+                    var ach = odiv.getElementsByTagName("input");
+
+                    obox.onclick = function () {
                         for (var i = 0; i < ach.length; i++) {
-                            if (!ach[i].checked) {
-                                flag = false;
-                                break;
-                            }
-                        }
-                        if (flag) {
-                            obox.checked = true;
+                            ach[i].checked = this.checked;
                         }
                     };
+                    // alert(ach.length);
+                    for (var i = 0; i < ach.length; i++) {
+                        ach[i].onclick = function () {
+                            if (!this.checked) {
+                                obox.checked = false;
+                            }
+
+                            var flag = true;
+                            for (var i = 0; i < ach.length; i++) {
+                                if (!ach[i].checked) {
+                                    flag = false;
+                                    break;
+                                }
+                            }
+                            if (flag) {
+                                obox.checked = true;
+                            }
+                        };
+                    }
+                },
+                error: function () {
+                    alert("失败");
                 }
-            },
-            error: function () {
-                alert("失败");
-            }
-        });
-        //获取所有复选框
-        $("#true_one").unbind("click");
-        $("#true_one").bind('click', function () {
-            text = $("input:checkbox[name='check-2']:checked").map(function () {
-                return $(this).val();
-            }).get();
-            alert("选中的checkbox的值为：" + text);
-            //给p标签动态添加内容
-            $("#dec_input_two").append("<span>" + text + "," + "</span>");
-            $("#daaa_two_son").fadeOut();
-        })
-        $("#daaa_two_son").fadeToggle();
-    });
+            });
+            // 防止重复点击
+            $("#true_one").unbind("click");
+            $("#true_one").bind('click', function (res) {
+                text = $("input:checkbox[name='check-2']:checked").map(function () {
+                    return $(this).val();
+                }).get();
+                //给p标签动态添加内容
+                $("#dec_input_two").append("<span>" + text + "," + "</span>");
+                // $("#daaa").fadeOut();
+                // $("input:checkbox[id='everything']").removeAttr('checked');
+            });
+            $("#two").click(function () {
+                $("#myModal_two").fadeOut();
+            })
+        };
+        /*模态框关闭*/
+        modalBox.close = function() {
+            this.modal.style.display = "none";
+        };
+
+        /*模态框初始化*/
+        modalBox.init = function() {
+            var that = this;
+            this.depection.onclick = function() {
+                that.show();
+            };
+            this.closeBtn.onclick = function() {
+                that.close();
+            };
+        };
+        modalBox.init();
+    })();
+
     //部门
-    $("#depection").click(function () {
-        $("#daaa div").each(function (index) {
-            // alert(index)
-            if (index > 0) {
-                $(this).remove();
-            }
-        })
-        $.ajax({
-            url: "/system/reportSelection/findDepartmentName",
-            async: true,
-            type: "GET",
-            datatype: "json",
-            success: function (res) {
-                $.each(res.departmentDOS, function (index, obj) {
-                    $("#daaa").append(
-                        "<div style='display: inline-block;margin-left: 10px;margin-top: 15px'><input type='checkbox' name=\"check-1\" value='" + obj["bmName"] + "'/> "
-                        + obj["bmName"] + "</div>");
-                });
-                var obox = document.getElementById("department");
-                var odiv = document.getElementById("daaa");
-                var ach = odiv.getElementsByTagName("input");
-                obox.onclick = function () {
-                    for (var i = 0; i < ach.length; i++) {
-                        ach[i].checked = this.checked;
-                    }
-                };
-                // alert(ach.length);
-                for (var i = 0; i < ach.length; i++) {
-                    ach[i].onclick = function () {
-                        if (!this.checked) {
-                            obox.checked = false;
-                        }
+    (function() {
+        /*建立模态框对象*/
+        var modalBox = {};
+        /*获取模态框*/
+        modalBox.modal = document.getElementById("myModal_one");
+        /*获得trigger按钮*/
+        modalBox.depection = document.getElementById("depection");
+        /*获得关闭按钮*/
+        modalBox.closeBtn = document.getElementById("true");
 
-                        var flag = true;
+        /*模态框显示*/
+        modalBox.show = function() {
+            // console.log(this.modal);
+            this.modal.style.display = "block";
+            //清除重复遍历的数据
+            $("#myModal_one .modal-header div").each(function (index) {
+                // alert(1)
+                if (index >= 0 ) {
+                    // alert(1);
+                    $(this).remove();
+                }
+            });
+            $.ajax({
+                url: "/system/reportSelection/findDepartmentName",
+                async: true,
+                type: "GET",
+                datatype: "json",
+                success: function (res) {
+                    // console.log(res)
+                    $.each(res.departmentDOS, function (index, obj) {
+                        $("#myModal_one .modal-header").append(
+                            "<div style='display: inline-block;padding-left: 10px;padding-top: 15px'><input type='checkbox' name=\"check-1\" value='" + obj["bmName"] + "'/> "
+                            + obj["bmName"] + "</div>"
+                        );
+                    });
+                    //获取所有复选框
+                    var obox = document.getElementById("department");
+                    var odiv = document.getElementById("daaa")
+                    var ach = odiv.getElementsByTagName("input");
+
+                    obox.onclick = function () {
+                        // alert(2)
                         for (var i = 0; i < ach.length; i++) {
-                            if (!ach[i].checked) {
-                                flag = false;
-                                break;
-                            }
-                        }
-                        if (flag) {
-                            obox.checked = true;
+                            ach[i].checked = this.checked;
                         }
                     };
+                    // alert(ach.length);
+                    for (var i = 0; i < ach.length; i++) {
+                        ach[i].onclick = function () {
+                            if (!this.checked) {
+                                obox.checked = false;
+                            }
+
+                            var flag = true;
+                            for (var i = 0; i < ach.length; i++) {
+                                if (!ach[i].checked) {
+                                    flag = false;
+                                    break;
+                                }
+                            }
+                            if (flag) {
+                                obox.checked = true;
+                            }
+                        };
+                    }
+                },
+                error: function () {
+                    alert("失败");
                 }
-            },
-            error: function () {
-                alert("失败");
-            }
-        });
-        // 防止重复点击
-        $("#true").unbind("click");
-        $("#true").bind('click', function (res) {
-            text = $("input:checkbox[name='check-1']:checked").map(function () {
-                return $(this).val();
-            }).get();
-            alert("选中的checkbox的值为：" + text);
-            //给p标签动态添加内容
-            $("#dec_input").append("<span>" + text + "," + "</span>");
-            $("#daaa_son").fadeOut();
-        })
-        $("#daaa_son").fadeToggle();
-    });
+            });
+            // 防止重复点击
+            $("#true").unbind("click");
+            $("#true").bind('click', function (res) {
+                text = $("input:checkbox[name='check-1']:checked").map(function () {
+                    return $(this).val();
+                }).get();
+                //给p标签动态添加内容
+                $("#dec_input").append("<span>" + text + "," + "</span>");
+            });
+            $("#one").click(function () {
+                $("#myModal_one").fadeOut();
+            })
+        };
+        /*模态框关闭*/
+        modalBox.close = function() {
+            this.modal.style.display = "none";
+        };
+
+        /*模态框初始化*/
+        modalBox.init = function() {
+            var that = this;
+            this.depection.onclick = function() {
+                that.show();
+            };
+            this.closeBtn.onclick = function() {
+                that.close();
+            };
+        };
+        modalBox.init();
+    })();
 };
 
 
@@ -402,3 +552,4 @@ layui.use('layer', function () {
         }
     });
 });
+

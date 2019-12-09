@@ -52,14 +52,19 @@
         <p id="dec_input" class="ddd_input" style="top: 43%" contenteditable="true"></p>
         <i class="fa fa-user-circle-o fa-lg" id="depection" aria-hidden="true" style="cursor: pointer;padding-top: 2px;color: #5cb85c"></i>
     </div>
-    <!--部门ajax渲染内容-->
-    <div class="daaa" id="daaa_son" style="margin-top: -30px">
-        <div id="daaa"></div>
-        <div style="margin-top: 140px;margin-left: 220px">
-            <button type="button" id='true' class="layui-btn layui-btn-sm layui-btn-warm" style="float: left;margin-left: 30px">确定</button>
-            <div style="padding-top: 10px">
-                <input type="checkbox" id="department" style="float: left;margin-left: 30px">
-                <p style="float: left;margin-top: -5px">全选</p>
+    <!-- 部门模态框 -->
+    <div id="myModal_one" class="modal">
+        <div class="modal-content">
+            <!--渲染位置-->
+            <div class="modal-header" id="daaa"></div>
+            <div style="color: #00B83F;cursor: pointer;position: fixed;left: 64%" id="one">
+                <i class="fa fa-window-close" aria-hidden="true"></i>
+            </div>
+            <!--点击消失-->
+            <button type="button" id='true' class="layui-btn layui-btn-sm layui-btn-warm" style="margin-top: 250px;">确定</button>
+            <div style="margin-top: 255px;margin-left: 20px;">
+                <input type="checkbox" id="department">
+                <span>全选</span>
             </div>
         </div>
     </div>
@@ -70,13 +75,21 @@
         <i class="fa fa-user-circle-o fa-lg" id="depection_two" aria-hidden="true" style="cursor: pointer;padding-top: 2px;color: #5cb85c"></i>
     </div>
     <!--人员ajax渲染内容-->
-    <div class="daaa" id="daaa_two_son">
-        <div id="daaa_two"></div>
-        <div style="margin-top: 140px;margin-left: 220px">
-            <button type="button" id='true_one' class="layui-btn layui-btn-sm layui-btn-warm" style="float: left;margin-left: 30px">确定</button>
-            <div style="padding-top: 10px">
-                <input type="checkbox" id="everything" style="float: left;margin-left: 30px">
-                <p style="float: left;margin-top: -5px">全选</p>
+    <div id="myModal_two" class="modal">
+        <div class="modal-content">
+            <!--渲染位置-->
+            <div class="modal-header" id="daaa_two">
+
+            </div>
+            <div style="color: #00B83F;cursor: pointer;position: fixed;left: 64%" id="two">
+                <i class="fa fa-window-close" aria-hidden="true"></i>
+            </div>
+            <!--<span id="closeBtn_two" class="close">x</span>-->
+            <!--点击消失-->
+            <button type="button" id='true_one' class="layui-btn layui-btn-sm layui-btn-warm" style="margin-top: 250px;">确定</button>
+            <div style="margin-top: 255px;margin-left: 20px;">
+                <input type="checkbox" id="everything">
+                <span>全选</span>
             </div>
         </div>
     </div>
@@ -87,13 +100,18 @@
         <i class="fa fa-user-circle-o fa-lg" id="depection_three" aria-hidden="true" style="cursor: pointer;padding-top: 2px;color: #5cb85c"></i>
     </div>
     <!--工序ajax渲染内容-->
-    <div class="daaa" id="daaa_three_son" style="margin-top: -140px">
-        <div id="daaa_three"></div>
-        <div style="margin-top: 140px;margin-left: 220px">
-            <button type="button" id='true_three' class="layui-btn layui-btn-sm layui-btn-warm" style="float: left;margin-left: 30px">确定</button>
-            <div style="padding-top: 10px">
-                <input type="checkbox" id="product" style="float: left;margin-left: 30px">
-                <p style="float: left;margin-top: -5px">全选</p>
+    <div id="myModal_three" class="modal">
+        <div class="modal-content">
+            <!--渲染位置-->
+            <div class="modal-header" id="daaa_three"></div>
+            <div style="color: #00B83F;cursor: pointer;position: fixed;left: 64%" id="three">
+                <i class="fa fa-window-close" aria-hidden="true"></i>
+            </div>
+            <!--点击消失-->
+            <button type="button" id='true_three' class="layui-btn layui-btn-sm layui-btn-warm" style="margin-top: 250px;">确定</button>
+            <div style="margin-top: 255px;margin-left: 20px;">
+                <input type="checkbox" id="product">
+                <span>全选</span>
             </div>
         </div>
     </div>
@@ -104,13 +122,18 @@
         <i class="fa fa-user-circle-o fa-lg" id="depection_four" aria-hidden="true" style="cursor: pointer;padding-top: 2px;color: #5cb85c"></i>
     </div>
     <!--产品ajax渲染内容-->
-    <div class="daaa" id="daaa_four_son" style="margin-top: -130px">
-        <div id="daaa_four"></div>
-        <div style="margin-top: 140px;margin-left: 220px">
-            <button type="button" id='true_four' class="layui-btn layui-btn-sm layui-btn-warm" style="float: left;margin-left: 30px">确定</button>
-            <div style="padding-top: 10px">
-                <input type="checkbox" id="working" style="float: left;margin-left: 30px">
-                <p style="float: left;margin-top: -5px">全选</p>
+    <div id="myModal_four" class="modal">
+        <div class="modal-content">
+            <!--渲染位置-->
+            <div class="modal-header" id="daaa_four"></div>
+            <div style="color: #00B83F;cursor: pointer;position: fixed;left: 64%" id="four">
+                <i class="fa fa-window-close" aria-hidden="true"></i>
+            </div>
+            <!--点击消失-->
+            <button type="button" id='true_four' class="layui-btn layui-btn-sm layui-btn-warm" style="margin-top: 250px;">确定</button>
+            <div style="margin-top: 255px;margin-left: 20px;">
+                <input type="checkbox" id="working">
+                <span>全选</span>
             </div>
         </div>
     </div>
@@ -127,5 +150,25 @@
     <table class="layui-hide" id="test"></table>
 </div>
 </body>
-
+<script>
+    $(document).click(function(e) {
+        var size = 100//自定义大小
+        $('body').append("<div class='dianjixiaoguo'>")//创建一个div
+        $('.dianjixiaoguo').css({//设置初始样式
+            position: 'fixed',//使用相对于浏览器进行定位(必须)
+            left: e.clientX,
+            top: e.clientY,
+            borderRadius: size + 'px',
+            border: '1px solid black',
+        }).stop().animate({//设置最终样式，用动画来表现(当点击过快时需要用stop来终止上一次未进行完的动画)
+            width: size,
+            height: size,
+            left: e.clientX - size / 2,
+            top: e.clientY - size / 2,
+            opacity: '0'
+        }, function() {//动画运行完毕后删除此div
+            $('body .dianjixiaoguo').remove()
+        })
+    })
+</script>
 </html>
