@@ -20,6 +20,7 @@
 		  		  <if test="productCode != null and productCode != ''"> and product_code = #{productCode} </if>
 		  		  <if test="productName != null and productName != ''"> and product_name = #{productName} </if>
 			      <if test="harvest != null and harvest != ''"> and harvest = #{harvest} </if>
+				  yield.yield_code IS NULL
 		  		</where>
         <choose>
             <when test="sort != null and sort.trim() != ''">
@@ -47,6 +48,7 @@
 		  		  <if test="productCode != null and productCode != ''"> and product_code = #{productCode} </if>
 		  		  <if test="productName != null and productName != ''"> and product_name = #{productName} </if>
 			      <if test="harvest != null and harvest != ''"> and harvest = #{harvest} </if>
+			 	  yield.yield_code IS NULL
 		  		</where>
 	</select>
 	 

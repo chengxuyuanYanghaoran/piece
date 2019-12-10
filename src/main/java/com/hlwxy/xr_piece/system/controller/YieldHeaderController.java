@@ -104,8 +104,12 @@ public class YieldHeaderController {
 	public R save(YieldHeaderDO yieldHeader,Integer[] ids) throws ParseException {
 		SimpleDateFormat sfd = new SimpleDateFormat("yyyy-MM-dd");
 		Date date = sfd.parse(yieldHeader.getYieldDate());
+		YieldDO yieldDO=new YieldDO();
 		if(yieldHeaderService.save(yieldHeader)>0){
-			for (int i:ids){
+			for (int i:ids){ //遍历表体的id
+				yieldDO.setId(i);//设置id
+				yieldDO.setYieldCode(yieldHeader.getYieldCode());//设置表体的code
+				yieldService.update(yieldDO);//根据表体的id修改表体code值
 				examineYieDao.save(new ExamineYieDO(i,yieldHeader.getId()));
 			}
 			return R.ok();
