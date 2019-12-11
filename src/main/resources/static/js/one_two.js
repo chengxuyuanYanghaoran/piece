@@ -97,6 +97,12 @@ window.onload=function () {
                     $(this).remove();
                 }
             });
+            $("#myModal_four .pagination-container .pagination span").each(function (index) {
+                // alert(1)
+                if (index >= 0) {
+                    $(this).remove();
+                }
+            });
             $.ajax({
                 url: "/system/reportSelection/findProductName",
                 async: true,
@@ -104,12 +110,82 @@ window.onload=function () {
                 datatype: "json",
                 success: function (res) {
                     // console.log(res)
-                    $.each(res.productDOS, function (index, obj) {
-                        $("#myModal_four .modal-header").append(
-                            "<div style='display: inline-block;padding-left: 10px;padding-top: 15px'><input type='checkbox' name=\"check-4\" value='" + obj["productName"] + "'/> "
-                            + obj["productName"] + "</div>"
-                        );
+                    // $.each(res.productDOS, function (index, obj) {
+                    //     $("#myModal_four .modal-header").append(
+                    //         "<div style='display: inline-block;padding-left: 10px;padding-top: 15px'><input type='checkbox' name=\"check-4\" value='" + obj["productName"] + "'/> "
+                    //         + obj["productName"] + "</div>"
+                    //     );
+                    // });
+
+                    let a = res.productDOS;
+                    console.log(a);
+                    let newMain = document.querySelector("#daaa_four");
+                    let pagination = document.querySelector('#pagin_four');//分页容器
+                    let pageCount = Math.ceil(a.length / 3); //根据数据的长度计算总共几页
+                    let newsDataRender = [];//每页要显示的数据
+                    let p = 1;//根据p值显示每页的数据
+
+                    let render = function () {
+                        newMain.innerHTML = '';
+                        newsDataRender = a.slice((p - 1) * 3, 3 * p); //每页要显示的数据,一页显示5条
+                        newsDataRender.forEach((item ,index) => {
+                            newMain.innerHTML += `<div style='display: inline-block;padding-left: 10px;padding-top: 15px'>
+                                                  <div>
+                                                  <input type='checkbox' name=\"check-4\"  value='${item.productName}'/> ${item.productName}</div>
+                                                  </div>`;
+                        })
+                    };
+                    //初始化页面
+                    render();
+                    //渲染分页
+                    for (let i = 1; i <= pageCount; i++) {
+                        pagination.innerHTML += `<span>${i}</span>`;
+                    }
+                    // pagination.innerHTML += `<span class="skip">跳转至 <input type="text"> </span>页`;//获取页数
+                    let asAll = pagination.querySelectorAll('span');
+                    //页面刚进来时第一页高亮
+                    asAll[p - 1].classList.add('active');
+                    //遍历总页数
+                    asAll.forEach((item, index) => {
+//点击页数
+                        item.onclick = function () {
+                            for (let j = 0; j < asAll.length; j++) {
+                                asAll[j].classList.remove('active');
+                            }
+                            this.classList.add('active');
+                            p = index + 1; //点击页数，改变p的值，以改变这个页面要显示的数据，达到分页的效果
+                            render(); //重新渲染页面
+                        }
                     });
+                    //点击上一页下一页，改变高亮
+                    let changePageClass = () => {
+                        for (let j = 0; j < asAll.length; j++) {
+                            asAll[j].classList.remove('active');
+                        }
+                        asAll[p - 1].classList.add('active');
+                    };
+                    //上一页
+                    let prev = document.querySelector('.prev_four');
+                    prev.onclick = function (e) {
+                        if (p <= 1) {
+                            console.log(p);
+                            return;
+                        } else {
+                            p = p - 1;
+                            changePageClass();
+                            render();
+                        }
+                    };
+                    //下一页
+                    let next = document.querySelector('.next_four');
+                    next.onclick = function () {
+                        if (p >= asAll.length) {
+                            return;
+                        }
+                        p = p + 1;
+                        changePageClass();
+                        render();
+                    };
                     //获取所有复选框
                     var obox = document.getElementById("working");
                     var odiv = document.getElementById("daaa_four")
@@ -198,6 +274,12 @@ window.onload=function () {
                     $(this).remove();
                 }
             });
+            $("#myModal_three .pagination-container .pagination span").each(function (index) {
+                // alert(1)
+                if (index >= 0) {
+                    $(this).remove();
+                }
+            });
             $.ajax({
                 url: "/system/reportSelection/findProcedureName",
                 async: true,
@@ -205,12 +287,81 @@ window.onload=function () {
                 datatype: "json",
                 success: function (res) {
                     // console.log(res)
-                    $.each(res.procedureDOS, function (index, obj) {
-                        $("#myModal_three .modal-header").append(
-                            "<div style='display: inline-block;padding-left: 10px;padding-top: 15px'><input type='checkbox' name=\"check-3\" value='" + obj["proName"] + "'/> "
-                            + obj["proName"] + "</div>"
-                        );
+                    // $.each(res.procedureDOS, function (index, obj) {
+                    //     $("#myModal_three .modal-header").append(
+                    //         "<div style='display: inline-block;padding-left: 10px;padding-top: 15px'><input type='checkbox' name=\"check-3\" value='" + obj["proName"] + "'/> "
+                    //         + obj["proName"] + "</div>"
+                    //     );
+                    // });
+                    let a = res.procedureDOS;
+                    // console.log(a);
+                    let newMain = document.querySelector("#daaa_three");
+                    let pagination = document.querySelector('#pagin_three');//分页容器
+                    let pageCount = Math.ceil(a.length / 3); //根据数据的长度计算总共几页
+                    let newsDataRender = [];//每页要显示的数据
+                    let p = 1;//根据p值显示每页的数据
+
+                    let render = function () {
+                        newMain.innerHTML = '';
+                        newsDataRender = a.slice((p - 1) * 2, 2 * p); //每页要显示的数据,一页显示5条
+                        newsDataRender.forEach((item ,index) => {
+                            newMain.innerHTML += `<div style='display: inline-block;padding-left: 10px;padding-top: 15px'>
+                                                  <div>
+                                                  <input type='checkbox' name=\"check-3\"  value='${item.proName}'/> ${item.proName}</div>
+                                                  </div>`;
+                        })
+                    };
+                    //初始化页面
+                    render();
+                    //渲染分页
+                    for (let i = 1; i <= pageCount; i++) {
+                        pagination.innerHTML += `<span>${i}</span>`;
+                    }
+                    // pagination.innerHTML += `<span class="skip">跳转至 <input type="text"> </span>页`;//获取页数
+                    let asAll = pagination.querySelectorAll('span');
+                    //页面刚进来时第一页高亮
+                    asAll[p - 1].classList.add('active');
+                    //遍历总页数
+                    asAll.forEach((item, index) => {
+//点击页数
+                        item.onclick = function () {
+                            for (let j = 0; j < asAll.length; j++) {
+                                asAll[j].classList.remove('active');
+                            }
+                            this.classList.add('active');
+                            p = index + 1; //点击页数，改变p的值，以改变这个页面要显示的数据，达到分页的效果
+                            render(); //重新渲染页面
+                        }
                     });
+                    //点击上一页下一页，改变高亮
+                    let changePageClass = () => {
+                        for (let j = 0; j < asAll.length; j++) {
+                            asAll[j].classList.remove('active');
+                        }
+                        asAll[p - 1].classList.add('active');
+                    };
+                    //上一页
+                    let prev = document.querySelector('.prev_three');
+                    prev.onclick = function (e) {
+                        if (p <= 1) {
+                            console.log(p);
+                            return;
+                        } else {
+                            p = p - 1;
+                            changePageClass();
+                            render();
+                        }
+                    };
+                    //下一页
+                    let next = document.querySelector('.next_three');
+                    next.onclick = function () {
+                        if (p >= asAll.length) {
+                            return;
+                        }
+                        p = p + 1;
+                        changePageClass();
+                        render();
+                    };
                     //获取所有复选框
                     var obox = document.getElementById("product");
                     var odiv = document.getElementById("daaa_three")
@@ -297,6 +448,12 @@ window.onload=function () {
                     $(this).remove();
                 }
             });
+            $("#myModal_two .pagination-container .pagination span").each(function (index) {
+                // alert(1)
+                if (index >= 0) {
+                    $(this).remove();
+                }
+            });
             $.ajax({
                 url: "/system/reportSelection/findPeopleName",
                 async: true,
@@ -304,12 +461,81 @@ window.onload=function () {
                 datatype: "json",
                 success: function (res) {
                     // console.log(res)
-                    $.each(res.peopleDOS, function (index, obj) {
-                        $("#myModal_two .modal-header").append(
-                            "<div style='display: inline-block;padding-left: 10px;padding-top: 15px'><input type='checkbox' name=\"check-2\" value='" + obj["peopleName"] + "'/> "
-                            + obj["peopleName"] + "</div>"
-                        );
+                    // $.each(res.peopleDOS, function (index, obj) {
+                    //     $("#myModal_two .modal-header").append(
+                    //         "<div style='display: inline-block;padding-left: 10px;padding-top: 15px'><input type='checkbox' name=\"check-2\" value='" + obj["peopleName"] + "'/> "
+                    //         + obj["peopleName"] + "</div>"
+                    //     );
+                    // });
+                    let a = res.peopleDOS;
+                    // console.log(a);
+                    let newMain = document.querySelector("#daaa_two");
+                    let pagination = document.querySelector('#pagin_two');//分页容器
+                    let pageCount = Math.ceil(a.length / 3); //根据数据的长度计算总共几页
+                    let newsDataRender = [];//每页要显示的数据
+                    let p = 1;//根据p值显示每页的数据
+
+                    let render = function () {
+                        newMain.innerHTML = '';
+                        newsDataRender = a.slice((p - 1) * 3, 3 * p); //每页要显示的数据,一页显示5条
+                        newsDataRender.forEach((item ,index) => {
+                            newMain.innerHTML += `<div style='display: inline-block;padding-left: 10px;padding-top: 15px'>
+                                                  <div>
+                                                  <input type='checkbox' name=\"check-2\"  value='${item.peopleName}'/> ${item.peopleName}</div>
+                                                  </div>`;
+                        })
+                    };
+                    //初始化页面
+                    render();
+                    //渲染分页
+                    for (let i = 1; i <= pageCount; i++) {
+                        pagination.innerHTML += `<span>${i}</span>`;
+                    }
+                    // pagination.innerHTML += `<span class="skip">跳转至 <input type="text"> </span>页`;//获取页数
+                    let asAll = pagination.querySelectorAll('span');
+                    //页面刚进来时第一页高亮
+                    asAll[p - 1].classList.add('active');
+                    //遍历总页数
+                    asAll.forEach((item, index) => {
+//点击页数
+                        item.onclick = function () {
+                            for (let j = 0; j < asAll.length; j++) {
+                                asAll[j].classList.remove('active');
+                            }
+                            this.classList.add('active');
+                            p = index + 1; //点击页数，改变p的值，以改变这个页面要显示的数据，达到分页的效果
+                            render(); //重新渲染页面
+                        }
                     });
+                    //点击上一页下一页，改变高亮
+                    let changePageClass = () => {
+                        for (let j = 0; j < asAll.length; j++) {
+                            asAll[j].classList.remove('active');
+                        }
+                        asAll[p - 1].classList.add('active');
+                    };
+                    //上一页
+                    let prev = document.querySelector('.prev_two');
+                    prev.onclick = function (e) {
+                        if (p <= 1) {
+                            console.log(p);
+                            return;
+                        } else {
+                            p = p - 1;
+                            changePageClass();
+                            render();
+                        }
+                    };
+                    //下一页
+                    let next = document.querySelector('.next_two');
+                    next.onclick = function () {
+                        if (p >= asAll.length) {
+                            return;
+                        }
+                        p = p + 1;
+                        changePageClass();
+                        render();
+                    };
                     //获取所有复选框
                     var obox = document.getElementById("everything");
                     var odiv = document.getElementById("daaa_two")
@@ -398,6 +624,12 @@ window.onload=function () {
                     $(this).remove();
                 }
             });
+            $("#myModal_one .pagination-container .pagination span").each(function (index) {
+                // alert(1)
+                if (index >= 0) {
+                    $(this).remove();
+                }
+            });
             $.ajax({
                 url: "/system/reportSelection/findDepartmentName",
                 async: true,
@@ -405,12 +637,81 @@ window.onload=function () {
                 datatype: "json",
                 success: function (res) {
                     // console.log(res)
-                    $.each(res.departmentDOS, function (index, obj) {
-                        $("#myModal_one .modal-header").append(
-                            "<div style='display: inline-block;padding-left: 10px;padding-top: 15px'><input type='checkbox' name=\"check-1\" value='" + obj["bmName"] + "'/> "
-                            + obj["bmName"] + "</div>"
-                        );
+                    // $.each(res.departmentDOS, function (index, obj) {
+                    //     $("#myModal_one .modal-header").append(
+                    //         "<div style='display: inline-block;padding-left: 10px;padding-top: 15px'><input type='checkbox' name=\"check-1\" value='" + obj["bmName"] + "'/> "
+                    //         + obj["bmName"] + "</div>"
+                    //     );
+                    // });
+                    let a = res.departmentDOS;
+                    // console.log(a);
+                    let newMain = document.querySelector("#daaa");
+                    let pagination = document.querySelector('#pagin');//分页容器
+                    let pageCount = Math.ceil(a.length / 1); //根据数据的长度计算总共几页
+                    let newsDataRender = [];//每页要显示的数据
+                    let p = 1;//根据p值显示每页的数据
+
+                    let render = function () {
+                        newMain.innerHTML = '';
+                        newsDataRender = a.slice((p - 1) * 1, 1 * p); //每页要显示的数据,一页显示5条
+                        newsDataRender.forEach((item ,index) => {
+                            newMain.innerHTML += `<div style='display: inline-block;padding-left: 10px;padding-top: 15px'>
+                                                  <div>
+                                                  <input type='checkbox' name=\"check-1\"  value='${item.bmName}'/> ${item.bmName}</div>
+                                                  </div>`;
+                        })
+                    };
+                    //初始化页面
+                    render();
+                    //渲染分页
+                    for (let i = 1; i <= pageCount; i++) {
+                        pagination.innerHTML += `<span>${i}</span>`;
+                    }
+                    // pagination.innerHTML += `<span class="skip">跳转至 <input type="text"> </span>页`;//获取页数
+                    let asAll = pagination.querySelectorAll('span');
+                    //页面刚进来时第一页高亮
+                    asAll[p - 1].classList.add('active');
+                    //遍历总页数
+                    asAll.forEach((item, index) => {
+//点击页数
+                        item.onclick = function () {
+                            for (let j = 0; j < asAll.length; j++) {
+                                asAll[j].classList.remove('active');
+                            }
+                            this.classList.add('active');
+                            p = index + 1; //点击页数，改变p的值，以改变这个页面要显示的数据，达到分页的效果
+                            render(); //重新渲染页面
+                        }
                     });
+                    //点击上一页下一页，改变高亮
+                    let changePageClass = () => {
+                        for (let j = 0; j < asAll.length; j++) {
+                            asAll[j].classList.remove('active');
+                        }
+                        asAll[p - 1].classList.add('active');
+                    };
+                    //上一页
+                    let prev = document.querySelector('.prev');
+                    prev.onclick = function (e) {
+                        if (p <= 1) {
+                            console.log(p);
+                            return;
+                        } else {
+                            p = p - 1;
+                            changePageClass();
+                            render();
+                        }
+                    };
+                    //下一页
+                    let next = document.querySelector('.next');
+                    next.onclick = function () {
+                        if (p >= asAll.length) {
+                            return;
+                        }
+                        p = p + 1;
+                        changePageClass();
+                        render();
+                    }
                     //获取所有复选框
                     var obox = document.getElementById("department");
                     var odiv = document.getElementById("daaa")
