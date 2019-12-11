@@ -118,16 +118,24 @@ window.onload=function () {
                     // });
 
                     let a = res.productDOS;
-                    console.log(a);
+                    let p = 1;//根据p值显示每页的数据
+                    let d = 2;
+                    let b=(res.productDOS.length)%(a.slice((p - 1) * d, d * p)).length;
+                    let c=(res.productDOS.length)/(a.slice((p - 1) * d, d * p)).length;
+                    if (b!=0){
+                        b=c+1;
+                    }else {
+                        b=c;
+                    }
+                    // console.log(a);
                     let newMain = document.querySelector("#daaa_four");
                     let pagination = document.querySelector('#pagin_four');//分页容器
-                    let pageCount = Math.ceil(a.length / 3); //根据数据的长度计算总共几页
+                    let pageCount = b; //根据数据的长度计算总共几页
                     let newsDataRender = [];//每页要显示的数据
-                    let p = 1;//根据p值显示每页的数据
 
                     let render = function () {
                         newMain.innerHTML = '';
-                        newsDataRender = a.slice((p - 1) * 3, 3 * p); //每页要显示的数据,一页显示5条
+                        newsDataRender = a.slice((p - 1) * d, d * p); //每页要显示的数据,一页显示5条
                         newsDataRender.forEach((item ,index) => {
                             newMain.innerHTML += `<div style='display: inline-block;padding-left: 10px;padding-top: 15px'>
                                                   <div>
@@ -294,16 +302,24 @@ window.onload=function () {
                     //     );
                     // });
                     let a = res.procedureDOS;
+                    let p = 1;//根据p值显示每页的数据
+                    let d = 2;
+                    let b=(res.procedureDOS.length)%(a.slice((p - 1) * d, d * p)).length;
+                    let c=(res.procedureDOS.length)/(a.slice((p - 1) * d, d * p)).length;
+                    if (b!=0){
+                        b=c+1;
+                    }else {
+                        b=c;
+                    }
                     // console.log(a);
                     let newMain = document.querySelector("#daaa_three");
                     let pagination = document.querySelector('#pagin_three');//分页容器
-                    let pageCount = Math.ceil(a.length / 3); //根据数据的长度计算总共几页
+                    let pageCount = b; //根据数据的长度计算总共几页
                     let newsDataRender = [];//每页要显示的数据
-                    let p = 1;//根据p值显示每页的数据
 
                     let render = function () {
                         newMain.innerHTML = '';
-                        newsDataRender = a.slice((p - 1) * 2, 2 * p); //每页要显示的数据,一页显示5条
+                        newsDataRender = a.slice((p - 1) * d, d * p); //每页要显示的数据,一页显示5条
                         newsDataRender.forEach((item ,index) => {
                             newMain.innerHTML += `<div style='display: inline-block;padding-left: 10px;padding-top: 15px'>
                                                   <div>
@@ -468,16 +484,24 @@ window.onload=function () {
                     //     );
                     // });
                     let a = res.peopleDOS;
+                    let p = 1;//根据p值显示每页的数据
+                    let d = 5;
+                    let b=(res.peopleDOS.length)%(a.slice((p - 1) * d, d * p)).length;
+                    let c=(res.peopleDOS.length)/(a.slice((p - 1) * d, d * p)).length;
+                    if (b!=0){
+                        b=c+1;
+                    }else {
+                        b=c;
+                    }
                     // console.log(a);
                     let newMain = document.querySelector("#daaa_two");
                     let pagination = document.querySelector('#pagin_two');//分页容器
-                    let pageCount = Math.ceil(a.length / 3); //根据数据的长度计算总共几页
+                    let pageCount = b; //根据数据的长度计算总共几页
                     let newsDataRender = [];//每页要显示的数据
-                    let p = 1;//根据p值显示每页的数据
 
                     let render = function () {
                         newMain.innerHTML = '';
-                        newsDataRender = a.slice((p - 1) * 3, 3 * p); //每页要显示的数据,一页显示5条
+                        newsDataRender = a.slice((p - 1) * d, d * p); //每页要显示的数据,一页显示5条
                         newsDataRender.forEach((item ,index) => {
                             newMain.innerHTML += `<div style='display: inline-block;padding-left: 10px;padding-top: 15px'>
                                                   <div>
@@ -644,16 +668,23 @@ window.onload=function () {
                     //     );
                     // });
                     let a = res.departmentDOS;
+                    let p = 1;//根据p值显示每页的数据
+                    let d = 2;
+                    let b=(res.departmentDOS.length)%(a.slice((p - 1) * d, d * p)).length;
+                    let c=(res.departmentDOS.length)/(a.slice((p - 1) * d, d * p)).length;
+                    if (b!=0){
+                        b=c+1;
+                    }else {
+                        b=c;
+                    }
                     // console.log(a);
                     let newMain = document.querySelector("#daaa");
                     let pagination = document.querySelector('#pagin');//分页容器
-                    let pageCount = Math.ceil(a.length / 1); //根据数据的长度计算总共几页
+                    let pageCount = b; //根据数据的长度计算总共几页
                     let newsDataRender = [];//每页要显示的数据
-                    let p = 1;//根据p值显示每页的数据
-
                     let render = function () {
                         newMain.innerHTML = '';
-                        newsDataRender = a.slice((p - 1) * 1, 1 * p); //每页要显示的数据,一页显示5条
+                        newsDataRender = a.slice((p - 1) * d, d * p); //每页要显示的数据,一页显示5条
                         newsDataRender.forEach((item ,index) => {
                             newMain.innerHTML += `<div style='display: inline-block;padding-left: 10px;padding-top: 15px'>
                                                   <div>
