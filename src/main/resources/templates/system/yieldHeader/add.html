@@ -10,19 +10,19 @@
 	<div class="col-sm-12">
 		<div class="ibox">
 			<div class="ibox-body">
-               <form id="signupForm" method="post" enctype="multipart/form-data">
-				<div class="form-head" style="display: flex; justify-content: space-around">
-				<div class="form-group">
-				<label>单据编号:</label><input id="yieldCode" name="yieldCode"  type="text">
-				</div>
-				<div class="form-group">
-				<label>核算期间:</label><input id="yieldDate" name="yieldDate"  type="date">
-				</div>
+				<form id="signupForm" method="post" enctype="multipart/form-data">
+					<div class="form-head" style="display: flex; justify-content: space-around">
+						<div class="form-group">
+							<label>单据编号:</label><input id="yieldCode" name="yieldCode"  type="text">
+						</div>
+						<div class="form-group">
+							<label>核算期间:</label><input id="yieldDate" name="yieldDate"  type="date">
+						</div>
 
-				<div class="form-main">
-					<div class="form-group" style="margin-bottom: 0">
-						<input type="file" id="exampleInputFile" name="file" value="" style="width: 180px; margin-bottom: 2px">
-						<span class="span" style="color: red;font-size: 14px;">
+						<div class="form-main">
+							<div class="form-group" style="margin-bottom: 0">
+								<input type="file" id="exampleInputFile" name="file" value="" style="width: 180px; margin-bottom: 2px">
+								<span class="span" style="color: red;font-size: 14px;">
                 *必须指定 Excel文件!
             </span>
 					</div>
@@ -38,63 +38,66 @@
 						</div>
 					</div>
 				</div>
+							</div>
+							<div class="form-group" style="margin-bottom: 2px;">
+								<button type="button" id="btnImport">开始导入</button>
+							</div>
+						</div>
 
-			</div>
-			<hr style="margin: 0"/>
+					</div>
+					<hr style="margin: 0"/>
 
-			<hr style="margin: 0"/>
-			<div class="fixed-table-toolbar">
-				<div class="columns pull-left">
-					<button type="button" class="btn  btn-primary" onclick="add()">
-						<i class="fa fa-plus" aria-hidden="true"></i>添加
-					</button>
-					<!--<button type="button" class="btn  btn-danger"-->
+					<hr style="margin: 0"/>
+					<div class="fixed-table-toolbar">
+						<div class="columns pull-left">
+							<button type="button" class="btn  btn-primary" onclick="add()">
+								<i class="fa fa-plus" aria-hidden="true"></i>添加
+							</button>
+							<!--<button type="button" class="btn  btn-danger"-->
 							<!--onclick="batchRemove()">-->
-						<!--<i class="fa fa-trash" aria-hidden="true"></i>删除-->
-					<!--</button>-->
-				</div>
-			</div>
-			<table id="exampleTable" class="table table-striped table-bordered table-condensed" data-mobile-responsive="true">
-				<tr>
-					<th> </th>
-					<th>单据编号</th>
-					<th>日期</th>
-					<th>人员编码</th>
-					<th>姓名</th>
-					<th>工序编码</th>
-					<th>工序名称</th>
-					<th>产品编码</th>
-					<th>产品名称</th>
-					<th>产量</th>
+							<!--<i class="fa fa-trash" aria-hidden="true"></i>删除-->
+							<!--</button>-->
+						</div>
+					</div>
+					<table id="exampleTable" class="table table-striped table-bordered table-condensed" data-mobile-responsive="true">
+						<tr>
+							<th> </th>
+							<th>日期</th>
+							<th>人员编码</th>
+							<th>姓名</th>
+							<th>工序编码</th>
+							<th>工序名称</th>
+							<th>产品编码</th>
+							<th>产品名称</th>
+							<th>产量</th>
 
-				</tr>
-			</table>
-			<hr style="margin-top: 0; margin-bottom: 10px"/>
-			<div class="form-footer" style="display: flex; justify-content: space-around">
-			<div class="form-group">
-			<label>审核人:</label><input id="auditor" name="auditor"  type="text">
+						</tr>
+					</table>
+					<hr style="margin-top: 0; margin-bottom: 10px"/>
+					<div class="form-footer" style="display: flex; justify-content: space-around">
+						<div class="form-group">
+							<label>审核人:</label><input id="auditor" name="auditor"  type="text">
+						</div>
+						<div class="form-group">
+							<label>审核日期:</label><input id="auditDate" name="auditDate"  type="date">
+						</div>
+						<div class="form-group" hidden>
+							<label>审核状态:</label><input id="stats" name="stats"  type="text" value="0">
+						</div>
+						<div class="layui-upload layui-inline layui-show-xs-block">
+							<button onclick="saveTable()"  class="btn btn-primary radius" type="button">提交</button>
+						</div>
+					</div>
+				</form>
 			</div>
-			<div class="form-group">
-			<label>审核日期:</label><input id="auditDate" name="auditDate"  type="date">
-			</div>
-				<div class="form-group" hidden>
-					<label>审核状态:</label><input id="stats" name="stats"  type="text" value="0">
-				</div>
-			<div class="layui-upload layui-inline layui-show-xs-block">
-			<button onclick="saveTable()"  class="btn btn-primary radius" type="button">提交</button>
-			</div>
-			</div>
-			</form>
 		</div>
 	</div>
-</div>
 </div>
 
 <div th:include="include :: footer"></div>
 <!--<script type="text/javascript" src="/static/js/appjs/system/yield/yield.js"></script>-->
 
 <script type="text/javascript">
-    // var date1 = date.slice(0,date.lastIndexOf('-'))
     var prefix = "/system/yield";
     function add() {
         layer.open({
@@ -113,7 +116,7 @@
             url : "/system/yield/get/"+msg,
             async : false,
             success : function(data) {
-				 var html='<tr><td><input  name="ids" checked="checked"   type="checkbox" value="'+data.id+'"></td><td>'+data.yieldCode+'</td><td>'+data.dateMark+'</td><td>'+data.peopleCode+'</td><td>'+data.name+'</td><td>'+data.proCode+'</td><td>'+data.proName+'</td>><td>'+data.productCode+'</td>><td>'+data.productName+'</td>><td>'+data.harvest+'</td></tr>';
+                var html='<tr><td><input  name="ids" checked="checked"   type="checkbox" value="'+data.id+'"></td><td>'+data.dateMark+'</td><td>'+data.peopleCode+'</td><td>'+data.name+'</td><td>'+data.proCode+'</td><td>'+data.proName+'</td>><td>'+data.productCode+'</td>><td>'+data.productName+'</td>><td>'+data.harvest+'</td></tr>';
                 $("#exampleTable").append(html);
             }
         });
@@ -130,8 +133,8 @@
             success : function(data) {
                 var html='';
                 for(var i=0;i<data.length;i++){
-                    html+='<tr><td><input name="ids" checked="checked" type="checkbox" value="'+data[i].id+'"></td><td>'+data[i].yieldCode+'</td><td>'+data[i].dateMark+'</td><td>'+data[i].peopleCode+'</td><td>'+data[i].name+'</td><td>'+data[i].proCode+'</td><td>'+data[i].proName+'</td><td>'+data[i].productCode+'</td><td>'+data[i].productName+'</td><td>'+data[i].harvest+'</td></tr>';
-				}
+                    html+='<tr><td><input name="ids" checked="checked" type="checkbox" value="'+data[i].id+'"></td><td>'+data[i].dateMark+'</td><td>'+data[i].peopleCode+'</td><td>'+data[i].name+'</td><td>'+data[i].proCode+'</td><td>'+data[i].proName+'</td><td>'+data[i].productCode+'</td><td>'+data[i].productName+'</td><td>'+data[i].harvest+'</td></tr>';
+                }
                 $("#exampleTable").append(html);
             }
         });

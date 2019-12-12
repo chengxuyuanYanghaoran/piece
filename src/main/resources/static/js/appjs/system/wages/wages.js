@@ -41,7 +41,7 @@ function load() {
                         offset:params.offset,
                         name:$('#searchName').val(),
                         state:localStorage.getItem("selectIndex")
-                          // state:parent.$("input[name='state']:checked").val()//获取选择的计价方式
+                       // state1:parent.$("input[name='state']:checked").val()//获取选择的计价方式
                         // username:$('#searchName').val()
                     };
                 },
@@ -59,10 +59,10 @@ function load() {
                     // 	field : 'id',
                     // 	title : '工资核算表id'
                     // },
-                    {
-                        field : 'billCode',
-                        title : '单据编号'
-                    },
+                    // {
+                    //     field : 'billCode',
+                    //     title : '单据编号'
+                    // },
                     {
                         field : 'dateMark',
                         title : '日期'
@@ -92,6 +92,10 @@ function load() {
                         title : '产品名称'
                     },
                     {
+                        field : 'productPrice',
+                        title : '产品单价'
+                    },
+                    {
                         field : 'harvest',
                         title : '产量'
                     },
@@ -99,10 +103,7 @@ function load() {
                     //     field : 'proPrice',
                     //     title : '工序单价'
                     // },
-                    {
-                        field : 'productPrice',
-                        title : '产品单价'
-                    },
+
                     								{
                     	field : 'money',
                     	title : '金额'
@@ -166,7 +167,7 @@ function load1() {
 								offset:params.offset,
                                 name:$('#searchName').val(),
                                 state:localStorage.getItem("selectIndex")
-                                // state:parent.$("input[name='state']:checked").val()//获取选择的计价方式
+                                 // state1:parent.$("input[name='state']:checked").val()//获取选择的计价方式
 					           // username:$('#searchName').val()
 							};
 						},
@@ -184,10 +185,10 @@ function load1() {
 								// 	field : 'id',
 								// 	title : '工资核算表id'
 								// },
-																{
-									field : 'billCode',
-									title : '单据编号'
-								},
+								// 								{
+								// 	field : 'billCode',
+								// 	title : '单据编号'
+								// },
 																{
 									field : 'dateMark',
 									title : '日期'
@@ -216,14 +217,15 @@ function load1() {
 								// 	field : 'productName',
 								// 	title : '产品名称'
 								// },
+                            {
+                                field : 'proPrice',
+                                title : '工序单价'
+                            },
 																{
 									field : 'harvest',
 									title : '产量'
 								},
-																{
-									field : 'proPrice',
-									title : '工序单价'
-								},
+
                             // {
                             //     field : 'productPrice',
                             //     title : '产品单价'

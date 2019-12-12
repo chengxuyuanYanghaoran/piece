@@ -1,13 +1,15 @@
 package com.hlwxy.xr_piece.system.controller;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.hlwxy.xr_piece.system.domain.WagesDO;
-import com.hlwxy.xr_piece.system.domain.WagesHeaderDO;
-import com.hlwxy.xr_piece.system.domain.YieldDO;
+import com.hlwxy.xr_piece.system.domain.*;
+import com.hlwxy.xr_piece.system.service.PeopleService;
+import com.hlwxy.xr_piece.system.service.ProcedureService;
+import com.hlwxy.xr_piece.system.service.ProductService;
 import com.hlwxy.xr_piece.system.service.WagesService;
 import com.hlwxy.xr_piece.utils.PageUtils;
 import com.hlwxy.xr_piece.utils.Query;
@@ -36,6 +38,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class WagesController {
 	@Autowired
 	private WagesService wagesService;
+	@Autowired
+	private PeopleService peopleService;
+    @Autowired
+    private ProductService productService;
+    @Autowired
+    private ProcedureService procedureService;
 	
 	@GetMapping()
 	String Wages(){
@@ -72,12 +80,20 @@ public class WagesController {
 	}
 	
 	@GetMapping("/add")
-	String add(){
+	String add(Model model){
+        List<PeopleDO> peopleDOList = peopleService.list(null);
+        model.addAttribute("peopleDOList",peopleDOList);
+        List<ProductDO> productDOList = productService.list(null);
+        model.addAttribute("productDOList",productDOList);
 	    return "system/wages/add";
 	}
 
 	@GetMapping("/add1")
-	String add1(){
+	String add1(Model model){
+        List<PeopleDO> peopleDOList = peopleService.list(null);
+        model.addAttribute("peopleDOList",peopleDOList);
+        List<ProcedureDO> procedureDOList = procedureService.list(null);
+        model.addAttribute("procedureDOList",procedureDOList);
 		return "system/wages/add1";
 	}
 
@@ -102,7 +118,7 @@ public class WagesController {
 	@PostMapping("/save")
 	public R save(WagesDO wages){
 		if(wagesService.save(wages)>0){
-			return R.ok();
+			return R.ok(wages.getId().toString());
 		}
 		return R.error();
 	}
@@ -139,19 +155,23 @@ public class WagesController {
 		return R.ok();
 	}
 
-	@ResponseBody
-	@PostMapping("/validateByCard")
-	public String validateByCard(WagesDO wagesDO) {
-		Map<String,Object> map=new HashMap<>(4);
-		map.put("billCode",wagesDO.getBillCode());
-		map.put("proCode",wagesDO.getProCode());
-		map.put("productCode",wagesDO.getProductCode());
-		List<WagesDO> list = wagesService.list(map);
-		if(list.size()>0){
-			return "false";
-		}
-		return "true";
-	}
+    @ResponseBody
+    @GetMapping("/get/{id}")
+    WagesDO get(@PathVariable("id") Integer id) {
+        WagesDO wagesDO = wagesService.get(id);
+        return wagesDO;
+    }
+
+    @PostMapping("/getByIds")
+    @ResponseBody
+    public List<WagesDO> getByIds(@RequestParam("ids[]") Integer[] ids) {
+        List<WagesDO> list=new ArrayList<>();
+        for (int i:ids){
+            WagesDO wagesDO = wagesService.get(i);
+            list.add(wagesDO);
+        }
+        return list;
+    }
 
 
 }

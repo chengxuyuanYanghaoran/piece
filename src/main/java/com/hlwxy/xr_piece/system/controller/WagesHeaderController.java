@@ -2,12 +2,13 @@ package com.hlwxy.xr_piece.system.controller;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
+import com.hlwxy.xr_piece.system.dao.ExamineWagesDao;
+import com.hlwxy.xr_piece.system.domain.ExamineWagesDO;
+import com.hlwxy.xr_piece.system.domain.ExamineYieDO;
 import com.hlwxy.xr_piece.system.domain.WagesHeaderDO;
+import com.hlwxy.xr_piece.system.domain.YieldHeaderDO;
 import com.hlwxy.xr_piece.system.service.WagesHeaderService;
 import com.hlwxy.xr_piece.utils.PageUtils;
 import com.hlwxy.xr_piece.utils.Query;
@@ -38,7 +39,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class WagesHeaderController {
 	@Autowired
 	private WagesHeaderService wagesHeaderService;
-	
+	@Autowired
+	private ExamineWagesDao examineWagesDao;
 	@GetMapping()
 	String WagesHeader(){
 	    return "system/wagesHeader/wagesHeader";
@@ -72,13 +74,14 @@ public class WagesHeaderController {
 	 */
 	@ResponseBody
 	@PostMapping("/saveTable")
-	public R save(WagesHeaderDO wagesHeader) throws ParseException {
+	public R save(WagesHeaderDO wagesHeader,Integer[] ids) throws ParseException {
 		SimpleDateFormat sfd = new SimpleDateFormat("yyyy-MM-dd");
 		Date date = sfd.parse(wagesHeader.getAccountingDate());
+		wagesHeader.setBillDate(wagesHeader.getBillDate()+"-01");
 		if(wagesHeaderService.save(wagesHeader)>0){
 			return R.ok();
 		}
-		return R.error();
+           return R.error();
 	}
 	/**
 	 * 修改
@@ -87,9 +90,9 @@ public class WagesHeaderController {
 	@RequestMapping("/update")
 	public R update( WagesHeaderDO wagesHeader){
 		wagesHeaderService.update(wagesHeader);
+		examineWagesDao.removeById(wagesHeader.getId());
 		return R.ok();
-	}
-	
+}
 	/**
 	 * 删除
 	 */
@@ -110,6 +113,20 @@ public class WagesHeaderController {
 	public R remove(@RequestParam("ids[]") Integer[] ids){
 		wagesHeaderService.batchRemove(ids);
 		return R.ok();
+	}
+
+
+
+	@ResponseBody
+	@PostMapping("/validateByCard")
+	public String validateByCard(WagesHeaderDO wagesHeaderDO) {
+		Map<String,Object> map=new HashMap<>(1);
+		map.put("billCode",wagesHeaderDO.getBillCode());
+		List<WagesHeaderDO> list = wagesHeaderService.list(map);
+		if(list.size()>0){
+			return "false";
+		}
+		return "true";
 	}
 	
 }

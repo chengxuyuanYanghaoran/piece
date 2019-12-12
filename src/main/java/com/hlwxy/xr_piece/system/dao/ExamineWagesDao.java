@@ -29,4 +29,6 @@ public interface ExamineWagesDao {
 	int remove(Integer id);
 	
 	int batchRemove(Integer[] ids);
+
+	int removeById(Integer id);
 }

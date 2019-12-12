@@ -100,7 +100,7 @@
 	</delete>
 	
 	<delete id="batchRemove">
-		delete from yield where id in 
+		delete from yield where id  in
 		<foreach item="id" collection="array" open="(" separator="," close=")">
 			#{id}
 		</foreach>

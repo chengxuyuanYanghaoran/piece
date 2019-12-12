@@ -13,7 +13,7 @@
                     <div class="form-head" style="display: flex; justify-content: space-around">
                         <div class="form-group">
                             <input  id="id" hidden name="id"
-                                   th:value="${yieldHeader.id}" type="text">
+                                    th:value="${yieldHeader.id}" type="text">
                             <label>单据编号:</label><input id="yieldCode" name="yieldCode"
                                                        th:value="${yieldHeader.yieldCode}" type="text">
                         </div>
@@ -37,20 +37,21 @@
                     <hr style="margin: 0"/>
 
                     <hr style="margin: 0"/>
-                    <div class="fixed-table-toolbar">
+                    <div class="fixed-table-toolbar" hidden>
                         <div class="columns pull-left">
                             <button type="button" class="btn  btn-primary" onclick="add()">
                                 <i class="fa fa-plus" aria-hidden="true"></i>添加
                             </button>
                             <!--<button type="button" class="btn  btn-danger"-->
-                                    <!--onclick="batchRemove()">-->
-                                <!--<i class="fa fa-trash" aria-hidden="true"></i>删除-->
+                            <!--onclick="batchRemove()">-->
+                            <!--<i class="fa fa-trash" aria-hidden="true"></i>删除-->
                             <!--</button>-->
                         </div>
                     </div>
                     <table id="exampleTable" class="table table-striped table-bordered table-condensed" data-mobile-responsive="true">
                         <tr>
                             <th> </th>
+                            <th>单据编号</th>
                             <th>日期</th>
                             <th>人员编码</th>
                             <th>姓名</th>
@@ -72,8 +73,8 @@
                         <div class="form-group">
                             <label>审核日期:</label><input th:value="${#dates.format(yieldHeader.auditDate,'yyyy-MM-dd')}" id="auditDate" name="auditDate" type="date">
                         </div>
-                        <div class="layui-upload layui-inline layui-show-xs-block">
-                            <button onclick="saveTable()" class="btn btn-primary radius" type="button">提交</button>
+                        <div class="layui-upload layui-inline layui-show-xs-block" hidden>
+                            <button onclick="saveTable()" class="btn btn-primary radius" type="button" >提交</button>
                         </div>
                     </div>
                 </form>
@@ -113,11 +114,12 @@
             url : "/system/yield/get/"+msg,
             async : false,
             success : function(data) {
-                var html='<tr><td><input  name="ids" checked="checked"   type="checkbox" value="'+data.id+'"></td><td>'+data.dateMark+'</td><td>'+data.peopleCode+'</td><td>'+data.name+'</td><td>'+data.proCode+'</td><td>'+data.proName+'</td>><td>'+data.productCode+'</td>><td>'+data.productName+'</td>><td>'+data.harvest+'</td></tr>';
+                var html='<tr><td><input  name="ids" checked="checked"   type="checkbox" value="'+data.id+'"></td><td>'+data.yieldCode+'</td><td>'+data.dateMark+'</td><td>'+data.peopleCode+'</td><td>'+data.name+'</td><td>'+data.proCode+'</td><td>'+data.proName+'</td>><td>'+data.productCode+'</td>><td>'+data.productName+'</td>><td>'+data.harvest+'</td></tr>';
                 $("#exampleTable").append(html);
             }
         });
     }
+    // // var date1 = date.slice(0,date.lastIndexOf('-'))
     function saveTable() {
         $.ajax({
             cache: true,
@@ -156,7 +158,7 @@
             success : function(data) {
                 var html='';
                 for(var i=0;i<data.length;i++){
-                    html+='<tr><td><input name="ids" checked="checked" type="checkbox" value="'+data[i].id+'"></td><td>'+data[i].dateMark+'</td><td>'+data[i].peopleCode+'</td><td>'+data[i].name+'</td><td>'+data[i].proCode+'</td><td>'+data[i].proName+'</td><td>'+data[i].productCode+'</td><td>'+data[i].productName+'</td><td>'+data[i].harvest+'</td></tr>';
+                    html+='<tr><td><input name="ids" checked="checked" type="checkbox" value="'+data[i].id+'"></td><td>'+data[i].yieldCode+'</td><td>'+data[i].dateMark+'</td><td>'+data[i].peopleCode+'</td><td>'+data[i].name+'</td><td>'+data[i].proCode+'</td><td>'+data[i].proName+'</td><td>'+data[i].productCode+'</td><td>'+data[i].productName+'</td><td>'+data[i].harvest+'</td></tr>';
                 }
                 $("#exampleTable").append(html);
             }

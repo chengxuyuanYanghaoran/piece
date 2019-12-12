@@ -61,7 +61,11 @@
 	<delete id="remove">
 		delete from examine_wages where id = #{value}
 	</delete>
-	
+
+	<delete id="removeById">
+		delete from examine_wages where  header_id = #{value}
+	</delete>
+
 	<delete id="batchRemove">
 		delete from examine_wages where id in 
 		<foreach item="id" collection="array" open="(" separator="," close=")">
