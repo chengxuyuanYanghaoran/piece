@@ -39,9 +39,7 @@
 					</div>
 				</div>
 							</div>
-							<div class="form-group" style="margin-bottom: 2px;">
-								<button type="button" id="btnImport">开始导入</button>
-							</div>
+
 					<hr style="margin: 0"/>
 
 					<hr style="margin: 0"/>
@@ -62,10 +60,10 @@
 							<th>日期</th>
 							<th>人员编码</th>
 							<th>姓名</th>
-							<th>工序编码</th>
-							<th>工序名称</th>
-							<th>产品编码</th>
-							<th>产品名称</th>
+							<th id="proCode">工序编码</th>
+							<th id="proName">工序名称</th>
+							<th id="productCode">产品编码</th>
+							<th id="productName">产品名称</th>
 							<th>产量</th>
 						</tr>
 					</table>
@@ -94,6 +92,22 @@
 <!--<script type="text/javascript" src="/static/js/appjs/system/yield/yield.js"></script>-->
 
 <script type="text/javascript">
+	/*
+	* 进去页面自动加载该段js，调整显示的列
+	* */
+    window.onload = function(){
+        var choice=parent.parent.$("input[name='state']:checked").val();//获取计价的方式;
+		if (choice==0){ //按产品计价
+            $("#proCode").hide();
+            $("#proName").hide();
+		}else { //按工序计价
+            $("#productCode").hide();
+            $("#productName").hide();
+		}
+    }
+</script>
+
+<script type="text/javascript">
     var prefix = "/system/yield";
     function add() {
         layer.open({
@@ -106,18 +120,28 @@
         });
     }
     function loadTable(msg) {
+        var choice=parent.parent.$("input[name='state']:checked").val();//获取计价的方式;
         $.ajax({
             cache : false,
             type : "GET",
             url : "/system/yield/get/"+msg,
             async : false,
             success : function(data) {
-                var html='<tr><td><input  name="ids" checked="checked"   type="checkbox" value="'+data.id+'"></td><td>'+data.dateMark+'</td><td>'+data.peopleCode+'</td><td>'+data.name+'</td><td>'+data.proCode+'</td><td>'+data.proName+'</td>><td>'+data.productCode+'</td>><td>'+data.productName+'</td>><td>'+data.harvest+'</td></tr>';
-                $("#exampleTable").append(html);
+                if (choice==0){ //按照产品计价
+                    var html='<tr><td><input  name="ids" checked="checked"   type="checkbox" value="'+data.id+'"></td><td>'+data.dateMark+'</td><td>'+data.peopleCode+'</td><td>'+data.name+'</td>'+'<td>'+data.productCode+'</td>><td>'+data.productName+'</td>><td>'+data.harvest+'</td></tr>';
+                    $("#exampleTable").append(html);
+				}else { //按照工序计价
+                    var html='<tr><td><input  name="ids" checked="checked"   type="checkbox" value="'+data.id+'"></td><td>'+data.dateMark+'</td><td>'+data.peopleCode+'</td><td>'+data.name+'</td><td>'+data.proCode+'</td><td>'+data.proName+'</td>>'+'<td>'+data.harvest+'</td></tr>';
+                    $("#exampleTable").append(html);
+				}
             }
         });
     }
+    /*
+    * 根据传来的id来查询表体数据并显示
+    * */
     function loadTableIds(ids) {
+        var choice=parent.parent.$("input[name='state']:checked").val();//获取计价的方式;
         $.ajax({
             cache : false,
             type : "POST",
@@ -127,11 +151,24 @@
             },
             async : false,
             success : function(data) {
-                var html='';
-                for(var i=0;i<data.length;i++){
-                    html+='<tr><td><input name="ids" checked="checked" type="checkbox" value="'+data[i].id+'"></td><td>'+data[i].dateMark+'</td><td>'+data[i].peopleCode+'</td><td>'+data[i].name+'</td><td>'+data[i].proCode+'</td><td>'+data[i].proName+'</td><td>'+data[i].productCode+'</td><td>'+data[i].productName+'</td><td>'+data[i].harvest+'</td></tr>';
-                }
-                $("#exampleTable").append(html);
+                if (choice==0){ //按产品计价
+					$("#proCode").hide();
+                    $("#proName").hide();
+                    var html='';
+                    for(var i=0;i<data.length;i++){
+                        html+='<tr><td><input name="ids" checked="checked" type="checkbox" value="'+data[i].id+'"></td><td>'+data[i].dateMark+'</td><td>'+data[i].peopleCode+'</td><td>'+data[i].name+'</td>'+'<td>'+data[i].productCode+'</td><td>'+data[i].productName+'</td><td>'+data[i].harvest+'</td></tr>';
+                    }
+                    $("#exampleTable").append(html);
+				}else { //按工序计价
+                    $("#productCode").css("display","none");
+                    $("#productName").hide();
+                    var html='';
+                    for(var i=0;i<data.length;i++){
+                        html+='<tr><td><input name="ids" checked="checked" type="checkbox" value="'+data[i].id+'"></td><td>'+data[i].dateMark+'</td><td>'+data[i].peopleCode+'</td><td>'+data[i].name+'</td><td>'+data[i].proCode+'</td><td>'+data[i].proName+'</td>'+'<td>'+data[i].harvest+'</td></tr>';
+                    }
+                    $("#exampleTable").append(html);
+				}
+
             }
         });
     }

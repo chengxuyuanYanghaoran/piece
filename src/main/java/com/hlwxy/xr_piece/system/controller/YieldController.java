@@ -64,6 +64,12 @@ public class YieldController {
 	@PostMapping("/validateByCard")
 	public String validateByCard(YieldDO yieldDO) {
 		Map<String,Object> map=new HashMap<>(4);
+		if (yieldDO.getPeopleCode()!=null){
+			Integer integer= Integer.valueOf(yieldDO.getPeopleCode());
+			Object obj = peopleService.get(integer);
+		}
+
+
 		map.put("yieldCode",yieldDO.getYieldCode());
 		map.put("peopleCode",yieldDO.getPeopleCode());
 		map.put("proCode",yieldDO.getProCode());
@@ -118,7 +124,14 @@ public class YieldController {
 	 */
 	@ResponseBody
 	@PostMapping("/save")
-	public R save(YieldDO yield) {
+	public R save(YieldDO yield,@RequestParam("mode") String mode) {
+		if (mode.equals("0")){ //按产品计划
+			yield.setProCode(null);
+			yield.setProName(null);
+		}else { //按工序计价
+			yield.setProductCode(null);
+			yield.setProductName(null);
+		}
 		if (yieldService.save(yield) > 0) {
 			return R.ok(yield.getId().toString());
 		}

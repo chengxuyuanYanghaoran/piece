@@ -303,7 +303,7 @@ window.onload = function () {
                     asAll[p - 1].classList.add('active');
                     //遍历总页数
                     asAll.forEach((item, index) => {
-//点击页数
+                    //点击页数
                         item.onclick = function () {
                             for (let j = 0; j < asAll.length; j++) {
                                 asAll[j].classList.remove('active');
