@@ -26,134 +26,146 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
- * 
- * 
  * @author lu
  * @email 1992lcg@163.com
  * @date 2019-11-11 17:25:00
  */
- 
+
 @Controller
 @RequestMapping("/system/wages")
 public class WagesController {
-	@Autowired
-	private WagesService wagesService;
-	@Autowired
-	private PeopleService peopleService;
+    @Autowired
+    private WagesService wagesService;
+    @Autowired
+    private PeopleService peopleService;
     @Autowired
     private ProductService productService;
     @Autowired
     private ProcedureService procedureService;
-	
-	@GetMapping()
-	String Wages(){
-	    return "system/wages/wages";
-	}
-	
-	@ResponseBody
-	@RequestMapping("/list")
-	public PageUtils list(@RequestParam Map<String, Object> params){
-		//查询列表数据
+
+    @GetMapping()
+    String Wages() {
+        return "system/wages/wages";
+    }
+
+    @ResponseBody
+    @RequestMapping("/list")
+    public PageUtils list(@RequestParam Map<String, Object> params) {
+        //查询列表数据
         Query query = new Query(params);
-		String state = (String)query.get("state");
-		List<WagesDO> wagesList=wagesService.list(query);
-		if("0".equals(state)){
-			for (WagesDO d:wagesList){
-				BigDecimal productPrice = d.getProductPrice();
-				productPrice.setScale(2);
-				BigDecimal bigDecimal = new BigDecimal(d.getHarvest());
-				d.setMoney(productPrice.multiply(bigDecimal));
-				wagesService.update(d);
-			}
-		}else{
-			for (WagesDO d:wagesList){
-				BigDecimal productPrice = d.getProPrice();
-				productPrice.setScale(2);
-				BigDecimal bigDecimal = new BigDecimal(d.getHarvest());
-				d.setMoney(productPrice.multiply(bigDecimal));
-				wagesService.update(d);
-			}
-		}
-		int total = wagesService.count(query);
-		PageUtils pageUtils = new PageUtils(wagesList, total);
-		return pageUtils;
-	}
-	
-	@GetMapping("/add")
-	String add(Model model){
+        String state = (String) query.get("state");
+        List<WagesDO> wagesList = wagesService.list(query);
+        if ("0".equals(state)) {
+            for (WagesDO d : wagesList) {
+                BigDecimal productPrice = d.getProductPrice();
+                productPrice.setScale(2);
+                BigDecimal bigDecimal = new BigDecimal(d.getHarvest());
+                d.setMoney(productPrice.multiply(bigDecimal));
+                wagesService.update(d);
+            }
+        } else {
+            for (WagesDO d : wagesList) {
+                BigDecimal productPrice = d.getProPrice();
+                productPrice.setScale(2);
+                BigDecimal bigDecimal = new BigDecimal(d.getHarvest());
+                d.setMoney(productPrice.multiply(bigDecimal));
+                wagesService.update(d);
+            }
+        }
+        int total = wagesService.count(query);
+        PageUtils pageUtils = new PageUtils(wagesList, total);
+        return pageUtils;
+    }
+
+    @GetMapping("/add")
+    String add(Model model) {
         List<PeopleDO> peopleDOList = peopleService.list(null);
-        model.addAttribute("peopleDOList",peopleDOList);
+        model.addAttribute("peopleDOList", peopleDOList);
         List<ProductDO> productDOList = productService.list(null);
-        model.addAttribute("productDOList",productDOList);
-	    return "system/wages/add";
-	}
-
-	@GetMapping("/add1")
-	String add1(Model model){
-        List<PeopleDO> peopleDOList = peopleService.list(null);
-        model.addAttribute("peopleDOList",peopleDOList);
+        model.addAttribute("productDOList", productDOList);
         List<ProcedureDO> procedureDOList = procedureService.list(null);
-        model.addAttribute("procedureDOList",procedureDOList);
-		return "system/wages/add1";
-	}
+        model.addAttribute("procedureDOList", procedureDOList);
+        return "system/wages/add";
+    }
 
-	@GetMapping("/edit/{id}")
-	String edit(@PathVariable("id") Integer id,Model model){
-		WagesDO wages = wagesService.get(id);
-		model.addAttribute("wages", wages);
-	    return "system/wages/edit";
-	}
+    @GetMapping("/add1")
+    String add1(Model model) {
+        List<PeopleDO> peopleDOList = peopleService.list(null);
+        model.addAttribute("peopleDOList", peopleDOList);
+        List<ProcedureDO> procedureDOList = procedureService.list(null);
+        model.addAttribute("procedureDOList", procedureDOList);
+        return "system/wages/add1";
+    }
 
-	@GetMapping("/edit1/{id}")
-	String edit1(@PathVariable("id") Integer id,Model model){
-		WagesDO wages = wagesService.get(id);
-		model.addAttribute("wages",wages);
-		return "system/wages/edit1";
-	}
+    @GetMapping("/edit/{id}")
+    String edit(@PathVariable("id") Integer id, Model model) {
+        WagesDO wages = wagesService.get(id);
+        model.addAttribute("wages", wages);
+        return "system/wages/edit";
+    }
 
-	/**s
-	 * 保存
-	 */
-	@ResponseBody
-	@PostMapping("/save")
-	public R save(WagesDO wages){
-		if(wagesService.save(wages)>0){
-			return R.ok(wages.getId().toString());
-		}
-		return R.error();
-	}
+    @GetMapping("/edit1/{id}")
+    String edit1(@PathVariable("id") Integer id, Model model) {
+        WagesDO wages = wagesService.get(id);
+        model.addAttribute("wages", wages);
+        return "system/wages/edit1";
+    }
 
-	/**
-	 * 修改
-	 */
-	@ResponseBody
-	@RequestMapping("/update")
-	public R update( WagesDO wages){
-		wagesService.update(wages);
-		return R.ok();
-	}
-	
-	/**
-	 * 删除
-	 */
-	@PostMapping( "/remove")
-	@ResponseBody
-	public R remove( Integer id){
-		if(wagesService.remove(id)>0){
-		return R.ok();
-		}
-		return R.error();
-	}
-	
-	/**
-	 * 删除
-	 */
-	@PostMapping( "/batchRemove")
-	@ResponseBody
-	public R remove(@RequestParam("ids[]") Integer[] ids){
-		wagesService.batchRemove(ids);
-		return R.ok();
-	}
+    /**
+     * s
+     * 保存
+     */
+    @ResponseBody
+    @PostMapping("/save")
+    public R save(WagesDO wages, String item) {
+        if ("0".equals(item)) {
+            BigDecimal productPrice = wages.getProductPrice();
+            productPrice.setScale(2);
+            BigDecimal bigDecimal = new BigDecimal(wages.getHarvest());
+            wages.setMoney(productPrice.multiply(bigDecimal));
+        } else if ("1".equals(item)) {
+            BigDecimal productPrice = wages.getProPrice();
+				productPrice.setScale(2);
+				BigDecimal bigDecimal = new BigDecimal(wages.getHarvest());
+				wages.setMoney(productPrice.multiply(bigDecimal));
+        }
+        if (wagesService.save(wages) > 0) {
+            return R.ok(wages.getId().toString());
+        }
+        return R.error();
+    }
+
+    /**
+     * 修改
+     */
+    @ResponseBody
+    @RequestMapping("/update")
+    public R update(WagesDO wages) {
+        wagesService.update(wages);
+        return R.ok();
+    }
+
+    /**
+     * 删除
+     */
+    @PostMapping("/remove")
+    @ResponseBody
+    public R remove(Integer id) {
+        if (wagesService.remove(id) > 0) {
+            return R.ok();
+        }
+        return R.error();
+    }
+
+    /**
+     * 删除
+     */
+    @PostMapping("/batchRemove")
+    @ResponseBody
+    public R remove(@RequestParam("ids[]") Integer[] ids) {
+        wagesService.batchRemove(ids);
+        return R.ok();
+    }
 
     @ResponseBody
     @GetMapping("/get/{id}")
@@ -165,8 +177,8 @@ public class WagesController {
     @PostMapping("/getByIds")
     @ResponseBody
     public List<WagesDO> getByIds(@RequestParam("ids[]") Integer[] ids) {
-        List<WagesDO> list=new ArrayList<>();
-        for (int i:ids){
+        List<WagesDO> list = new ArrayList<>();
+        for (int i : ids) {
             WagesDO wagesDO = wagesService.get(i);
             list.add(wagesDO);
         }

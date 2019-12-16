@@ -8,28 +8,32 @@ $.validator.setDefaults({
 	}
 });
 function save() {
-	$.ajax({
-		cache : true,
-		type : "POST",
-		url : "/system/wages/save",
-		data : $('#signupForm').serialize(),// 你的formid
-		async : false,
-		error : function(request) {
-			parent.layer.alert("Connection error");
-		},
-		success : function(data) {
-			if (data.code == 0) {
-				parent.layer.msg("操作成功");
-				parent.reLoad();
-				var index = parent.layer.getFrameIndex(window.name); // 获取窗口索引
-				parent.layer.close(index);
+    if(localStorage.getItem("selectIndex")!=''){
+        $.ajax({
+            cache : true,
+            type : "POST",
+            url : "/system/wages/save",
+            data : $('#signupForm').serialize(),// 你的formid
+            async : false,
+            error : function(request) {
+                parent.layer.alert("Connection error");
+            },
+            success : function(data) {
+                if (data.code == 0) {
+                    parent.layer.msg("操作成功");
+                    parent.loadTable(data.msg);
+                    var index = parent.layer.getFrameIndex(window.name); // 获取窗口索引
+                    parent.layer.close(index);
 
-			} else {
-				parent.layer.alert(data.msg)
-			}
+                } else {
+                    parent.layer.alert(data.msg)
+                }
 
-		}
-	});
+            }
+        });
+	}else{
+    	alert("请选择寄件方式")
+	}
 
 }
 function validateRule() {

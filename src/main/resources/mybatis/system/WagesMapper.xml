@@ -13,7 +13,7 @@
         <where>
 				  product_code is NOT NULL AND product_code!=''
 		  		  <if test="id != null and id != ''"> and id = #{id} </if>
-		  		  <if test="billCode != null and billCode != ''"> and bill_code = #{billCode} </if>
+			    <if test="billCode != null and billCode != ''"> and bill_code = #{billCode} </if>
 		  		  <if test="dateMark != null and dateMark != ''"> and date_mark = #{dateMark} </if>
 		  		  <if test="peopleCode != null and peopleCode != ''"> and people_code = #{peopleCode} </if>
 		  		  <if test="name != null and name != ''"> and name = #{name} </if>
@@ -72,7 +72,7 @@
 		 <where>
 			 	  product_code is NOT NULL AND product_code!=''
 		  		  <if test="id != null and id != ''"> and id = #{id} </if>
-		  		  <if test="billCode != null and billCode != ''"> and bill_code = #{billCode} </if>
+			 <if test="billCode != null and billCode != ''"> and bill_code = #{billCode} </if>
 		  		  <if test="dateMark != null and dateMark != ''"> and date_mark = #{dateMark} </if>
 		  		  <if test="peopleCode != null and peopleCode != ''"> and people_code = #{peopleCode} </if>
 		  		  <if test="name != null and name != ''"> and name = #{name} </if>
@@ -107,8 +107,8 @@
 	<insert id="save" parameterType="com.hlwxy.xr_piece.system.domain.WagesDO" useGeneratedKeys="true" keyProperty="id">
 		insert into wages
 		(
-			`bill_code`, 
-			`date_mark`, 
+		     `bill_code`,
+			`date_mark`,
 			`people_code`, 
 			`name`, 
 			`pro_code`, 
@@ -122,8 +122,8 @@
 		)
 		values
 		(
-			#{billCode}, 
-			#{dateMark}, 
+		    #{billCode},
+			#{dateMark},
 			#{peopleCode}, 
 			#{name}, 
 			#{proCode}, 

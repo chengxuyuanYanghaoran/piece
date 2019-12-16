@@ -1,15 +1,14 @@
 package com.hlwxy.xr_piece.system.controller;
 
+import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
 import com.hlwxy.xr_piece.system.dao.ExamineWagesDao;
-import com.hlwxy.xr_piece.system.domain.ExamineWagesDO;
-import com.hlwxy.xr_piece.system.domain.ExamineYieDO;
-import com.hlwxy.xr_piece.system.domain.WagesHeaderDO;
-import com.hlwxy.xr_piece.system.domain.YieldHeaderDO;
+import com.hlwxy.xr_piece.system.domain.*;
 import com.hlwxy.xr_piece.system.service.WagesHeaderService;
+import com.hlwxy.xr_piece.system.service.WagesService;
 import com.hlwxy.xr_piece.utils.PageUtils;
 import com.hlwxy.xr_piece.utils.Query;
 import com.hlwxy.xr_piece.utils.R;
@@ -41,6 +40,9 @@ public class WagesHeaderController {
 	private WagesHeaderService wagesHeaderService;
 	@Autowired
 	private ExamineWagesDao examineWagesDao;
+
+	@Autowired
+	private WagesService wagesService;
 	@GetMapping()
 	String WagesHeader(){
 	    return "system/wagesHeader/wagesHeader";
@@ -66,7 +68,30 @@ public class WagesHeaderController {
 	String edit(@PathVariable("id") Integer id,Model model){
 		WagesHeaderDO wagesHeader = wagesHeaderService.get(id);
 		model.addAttribute("wagesHeader", wagesHeader);
-	    return "system/wagesHeader/edit";
+		Map<String,Object> map=new HashMap<>(1);
+		map.put("headerId",wagesHeader.getId());
+		List<ExamineWagesDO> list = examineWagesDao.list(map);
+		Integer [] ids=new Integer[list.size()];
+		for (int i=0;i<list.size();i++){
+			ids[i]=list.get(i).getWagesId();
+		}
+		model.addAttribute("ids",ids);
+		return "system/wagesHeader/edit";
+	}
+
+	@GetMapping("/resetPwd/{id}")
+	String resetPwd(@PathVariable("id") Integer id,Model model){
+		WagesHeaderDO wagesHeader = wagesHeaderService.get(id);
+		model.addAttribute("wagesHeader", wagesHeader);
+		Map<String,Object> map=new HashMap<>(1);
+		map.put("headerId",wagesHeader.getId());
+		List<ExamineWagesDO> list = examineWagesDao.list(map);
+		Integer [] ids=new Integer[list.size()];
+		for (int i=0;i<list.size();i++){
+			ids[i]=list.get(i).getWagesId();
+		}
+		model.addAttribute("ids",ids);
+		return "system/wagesHeader/edit2";
 	}
 	
 	/**
@@ -78,7 +103,33 @@ public class WagesHeaderController {
 		SimpleDateFormat sfd = new SimpleDateFormat("yyyy-MM-dd");
 		Date date = sfd.parse(wagesHeader.getAccountingDate());
 		wagesHeader.setBillDate(wagesHeader.getBillDate()+"-01");
+
+//		List<WagesDO> wagesList=wagesService.list(null);
+//		if("0".equals(item)){
+//			for (WagesDO d:wagesList){
+//				BigDecimal productPrice = d.getProductPrice();
+//				productPrice.setScale(2);
+//				BigDecimal bigDecimal = new BigDecimal(d.getHarvest());
+//				d.setMoney(productPrice.multiply(bigDecimal));
+//				wagesService.update(d);
+//			}
+//		}else{
+//			for (WagesDO d:wagesList){
+//				BigDecimal productPrice = d.getProPrice();
+//				productPrice.setScale(2);
+//				BigDecimal bigDecimal = new BigDecimal(d.getHarvest());
+//				d.setMoney(productPrice.multiply(bigDecimal));
+//				wagesService.update(d);
+//			}
+//		}
+
 		if(wagesHeaderService.save(wagesHeader)>0){
+			for (int i:ids){
+				ExamineWagesDO examineWagesDO=new ExamineWagesDO();
+				examineWagesDO.setWagesId(i);
+				examineWagesDO.setHeaderId(wagesHeader.getId());
+				examineWagesDao.save(examineWagesDO);
+			}
 			return R.ok();
 		}
            return R.error();
@@ -88,9 +139,12 @@ public class WagesHeaderController {
 	 */
 	@ResponseBody
 	@RequestMapping("/update")
-	public R update( WagesHeaderDO wagesHeader){
+	public R update( WagesHeaderDO wagesHeader,Integer[] ids){
 		wagesHeaderService.update(wagesHeader);
 		examineWagesDao.removeById(wagesHeader.getId());
+		for (int i : ids) {
+			examineWagesDao.save(new ExamineWagesDO(i, wagesHeader.getId()));
+		}
 		return R.ok();
 }
 	/**
@@ -111,7 +165,18 @@ public class WagesHeaderController {
 	@PostMapping( "/batchRemove")
 	@ResponseBody
 	public R remove(@RequestParam("ids[]") Integer[] ids){
-		wagesHeaderService.batchRemove(ids);
+		for(int i:ids){
+			int remove = wagesHeaderService.remove(i);
+			if(remove>0){
+				Map<String,Object> map=new HashMap<>(1);
+				map.put("headerId",i);
+				List<ExamineWagesDO> list = examineWagesDao.list(map);
+				for (ExamineWagesDO yieldHeader:list){
+					wagesService.remove(yieldHeader.getWagesId());
+					examineWagesDao.removeById(yieldHeader.getHeaderId());
+				}
+			}
+		}
 		return R.ok();
 	}
 

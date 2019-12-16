@@ -24,18 +24,15 @@
 							<button type="button" class="btn  btn-primary" onclick="add()">
 								<i class="fa fa-plus" aria-hidden="true"></i>添加
 							</button>
-							<button type="button" class="btn  btn-danger"
-									onclick="batchRemove()">
-								<i class="fa fa-trash" aria-hidden="true"></i>删除
-							</button>
+
 						</div>
-						<div class="columns pull-right">
-							<button class="btn btn-success" onclick="reLoad()">查询</button>
-						</div>
-						<div class="columns pull-right col-md-2 nopadding">
-							<input id="searchName" type="text" class="form-control"
-								   placeholder="姓名">
-						</div>
+						<!--<div class="columns pull-right">-->
+							<!--<button class="btn btn-success" onclick="reLoad()">查询</button>-->
+						<!--</div>-->
+						<!--<div class="columns pull-right col-md-2 nopadding">-->
+							<!--<input id="searchName" type="text" class="form-control"-->
+								   <!--placeholder="姓名">-->
+						<!--</div>-->
 					</div>
 					<table id="exampleTable" class="table table-striped table-bordered table-condensed" data-mobile-responsive="true">
 					</table>
@@ -59,21 +56,16 @@
 
 <div th:include="include :: footer"></div>
 <!--<script type="text/javascript"  src="/static/js/appjs/system/wages/wages.js"></script>-->
+<script th:inline="javascript">
+    var item=[[${item}]];
+</script>
 
 <script type="text/javascript">
     var item = localStorage.getItem("selectIndex");
-    if(item=='0'){
-        $("#exampleTable").append('<tr><th></th><th>日期</th><th>人员编码</th><th>姓名</th><th>产品编码</th><th>产品名称</th><th>产品单价</th><th>产量</th><th>金额</th></tr>');
-    }else if(item=='1'){
-        $("#exampleTable").append('<tr><th></th><th>日期</th><th>人员编码</th><th>姓名</th><th>工序编码</th><th>工序名称</th><th>工序单价</th><th>产量</th><th>金额</th></tr>');
-        console.log("工序计件");
-    }else{
-        alert("请选择计件方式!")
-    }
+        $("#exampleTable").append('<tr><th></th><th>日期</th><th>人员编码</th><th>姓名</th><th>工序编码</th><th>工序名称</th><th>产品编码</th><th>产品名称</th><th>工序单价</th><th>产品单价</th><th>产量</th><th>金额</th></tr>');
 
     var prefix = "/system/wages";
     function add() {
-        if(item=='0'){
             layer.open({
                 type : 2,
                 title : '增加',
@@ -82,17 +74,6 @@
                 area : [ '800px', '520px' ],
                 content : prefix + '/add' // iframe的url
             });
-        }else{
-            layer.open({
-                type : 2,
-                title : '增加',
-                maxmin : true,
-                shadeClose : false, // 点击遮罩关闭层
-                area : [ '800px', '520px' ],
-                content : prefix + '/add1' // iframe的url
-            });
-		}
-
     }
     function loadTable(msg) {
         $.ajax({
@@ -103,9 +84,9 @@
             success : function(data) {
                 var html='';
                 if(item=='0'){
-                    html='<tr><td><input  name="ids" checked="checked"   type="checkbox" value="'+data[i].id+'"></td><td>'+data[i].dateMark+'</td><td>'+data[i].peopleCode+'</td><td>'+data[i].name+'</td><td>'+data[i].productCode+'</td><td>'+data[i].productName+'</td><td>'+data[i].harvest+'</td><td>'+data[i].money+'</td></tr>';
+                    html='<tr><td><input  name="ids" checked="checked"   type="checkbox" value="'+data.id+'"></td><td>'+data.dateMark+'</td><td>'+data.peopleCode+'</td><td>'+data.name+'</td><td>'+data.proCode+'</td><td>'+data.proName+'</td><td>'+data.productCode+'</td><td>'+data.productName+'</td><td>'+data.proPrice+'</td><td>'+data.productPrice+'</td><td>'+data.harvest+'</td><td>'+data.money+'</td></tr>';
                 }else if(item=='1'){
-                    html='<tr><td><input  name="ids" checked="checked"   type="checkbox" value="'+data[i].id+'"></td><td>'+data[i].dateMark+'</td><td>'+data[i].peopleCode+'</td><td>'+data[i].name+'</td><td>'+data[i].productCode+'</td><td>'+data[i].productName+'</td><td>'+data[i].productPrice+'</td><td>'+data[i].money+'</td></tr>';
+                    html='<tr><td><input  name="ids" checked="checked"   type="checkbox" value="'+data.id+'"></td><td>'+data.dateMark+'</td><td>'+data.peopleCode+'</td><td>'+data.name+'</td><td>'+data.proCode+'</td><td>'+data.proName+'</td><td>'+data.productCode+'</td><td>'+data.productName+'</td><td>'+data.proPrice+'</td><td>'+data.productPrice+'</td><td>'+data.harvest+'</td><td>'+data.money+'</td></tr>';
                 }
                 $("#exampleTable").append(html);
             }
@@ -124,9 +105,9 @@
                 var html='';
                 for(var i=0;i<data.length;i++){
                     if(item=='0'){
-                        html='<tr><td><input  name="ids" checked="checked"   type="checkbox" value="'+data[i].id+'"></td><td>'+data[i].dateMark+'</td><td>'+data[i].peopleCode+'</td><td>'+data[i].name+'</td><td>'+data[i].productCode+'</td><td>'+data[i].productName+'</td><td>'+data[i].harvest+'</td><td>'+data[i].money+'</td></tr>';
+                        html+='<tr><td><input  name="ids" checked="checked"   type="checkbox" value="'+data[i].id+'"></td><td>'+data[i].dateMark+'</td><td>'+data[i].peopleCode+'</td><td>'+data[i].name+'</td><td>'+data[i].proCode+'</td><td>\'+data[i].proName+\'</td><td>'+data[i].productCode+'</td><td>'+data[i].productName+'</td><td>'+data[i].productPrice+'</td><td>'+data[i].harvest+'</td><td>'+data[i].money+'</td></tr>';
                     }else if(item=='1'){
-                        html='<tr><td><input  name="ids" checked="checked"   type="checkbox" value="'+data[i].id+'"></td><td>'+data[i].dateMark+'</td><td>'+data[i].peopleCode+'</td><td>'+data[i].name+'</td><td>'+data[i].productCode+'</td><td>'+data[i].productName+'</td><td>'+data[i].productPrice+'</td><td>'+data[i].money+'</td></tr>';
+                        html+='<tr><td><input  name="ids" checked="checked"   type="checkbox" value="'+data[i].id+'"></td><td>'+data[i].dateMark+'</td><td>'+data[i].peopleCode+'</td><td>'+data[i].name+'</td><td>'+data[i].proCode+'</td><td>'+data[i].proName+'</td><td>'+data[i].proPrice+'</td><td>'+data[i].harvest+'</td><td>'+data[i].money+'</td></tr>';
                     }
                 }
                 $("#exampleTable").append(html);

@@ -32,8 +32,8 @@ function load() {
 							return {
 								//说明：传入后台的参数包括offset开始索引，limit步长，sort排序列，order：desc或者,以及所有列的键值对
 								limit: params.limit,
-								offset:params.offset
-					           // name:$('#searchName').val(),
+								offset:params.offset,
+                                billCode:$('#searchName').val()
 					           // username:$('#searchName').val()
 							};
 						},
@@ -140,6 +140,16 @@ function remove(id) {
 }
 
 function resetPwd(id) {
+    var index = layer.open({
+        type: 2,
+        title: '查看',
+        maxmin: true,
+        shadeClose: false, // 点击遮罩关闭层
+        area: 'auto',
+        // area : [ '800px', '520px' ],
+        content: prefix + '/resetPwd/'+ id // iframe的url
+    });
+    layer.full(index);
 }
 function batchRemove() {
 	var rows = $('#exampleTable').bootstrapTable('getSelections'); // 返回所有选择的行，当没有选择的记录时，返回一个空数组

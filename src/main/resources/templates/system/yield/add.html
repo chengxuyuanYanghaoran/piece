@@ -33,12 +33,12 @@
                             <!---->
 
                             <div class="first">
-                                <!--<div class="form-group">-->
-                                <!--<label class="col-sm-3 control-label">单据编号：</label>-->
-                                <!--<div class="col-sm-8">-->
-                                <!--<input id="yieldCode" name="yieldCode" class="form-control" type="text">-->
-                                <!--</div>-->
-                                <!--</div>-->
+                                <div class="form-group" hidden>
+                                <label class="col-sm-3 control-label">单据编号：</label>
+                                <div class="col-sm-8">
+                                <input id="yieldCode" name="yieldCode" class="form-control" type="text">
+                                </div>
+                                </div>
                                 <div class="form-group">
                                     <label class="col-sm-3 control-label">日期：</label>
                                     <div class="col-sm-8">
@@ -48,7 +48,12 @@
                                 <div class="form-group">
                                     <label class="col-sm-3 control-label">人员编码：</label>
                                     <div class="col-sm-8">
-                                        <input id="peopleCode" name="peopleCode" class="form-control" type="number">
+                                        <!--<input id="peopleCode" name="peopleCode" class="form-control" type="number">-->
+                                        <select id="peopleCode" name="peopleCode" class="form-control">
+                                            <option th:each="dict: ${peopleDOList}" th:value="${dict.id}"
+                                                    th:attr="data-name=${dict.peopleName}"
+                                                    th:text="${dict.peopleCode}"></option>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -60,7 +65,11 @@
                                 <div class="form-group">
                                     <label class="col-sm-3 control-label">工序编码：</label>
                                     <div class="col-sm-8">
-                                        <input id="proCode" name="proCode" class="form-control" type="number">
+                                        <!--<input id="proCode" name="proCode" class="form-control" type="number">-->
+                                        <select id="proCode" name="proCode" class="form-control">
+                                            <option th:each="dict: ${procedureDOList}" th:value="${dict.id}"
+                                                    th:text="${dict.proCode}" th:attr="data-proName=${dict.proName},data-proPrice=${dict.proPrice}"></option>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -72,7 +81,11 @@
                                 <div class="form-group">
                                     <label class="col-sm-3 control-label">产品编码：</label>
                                     <div class="col-sm-8">
-                                        <input id="productCode" name="productCode" class="form-control" type="number">
+                                        <!--<input id="productCode" name="productCode" class="form-control" type="number">-->
+                                        <select id="productCode" name="productCode" class="form-control">
+                                            <option th:each="dict: ${productDOList}" th:value="${dict.id}"
+                                                    th:text="${dict.productCode}" th:attr="data-productName=${dict.productName},data-productPrice=${dict.productPrice}"></option>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -246,5 +259,21 @@
         });
     }
 </script>
+<script>
+    $("#peopleCode").click(function () {
+        var attr = $("#peopleCode").find("option:selected").attr("data-name");
+        $("#name").val(attr);
+    });
+
+    $("#productCode").click(function () {
+        var productName = $("#productCode").find("option:selected").attr("data-productName");
+        $("#productName").val(productName);
+    });
+    $("#proCode").click(function () {
+        var proName = $("#proCode").find("option:selected").attr("data-proName");
+        $("#proName").val(proName);
+    });
+</script>
+
 </body>
 </html>

@@ -5,10 +5,10 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 import com.hlwxy.xr_piece.system.dao.ExamineYieDao;
-import com.hlwxy.xr_piece.system.domain.ConditionDo;
-import com.hlwxy.xr_piece.system.domain.WagesDO;
-import com.hlwxy.xr_piece.system.domain.YieldDO;
-import com.hlwxy.xr_piece.system.domain.YieldHeaderDO;
+import com.hlwxy.xr_piece.system.domain.*;
+import com.hlwxy.xr_piece.system.service.PeopleService;
+import com.hlwxy.xr_piece.system.service.ProcedureService;
+import com.hlwxy.xr_piece.system.service.ProductService;
 import com.hlwxy.xr_piece.system.service.YieldService;
 import com.hlwxy.xr_piece.utils.PageUtils;
 import com.hlwxy.xr_piece.utils.Query;
@@ -47,6 +47,12 @@ public class YieldController {
 	private YieldService yieldService;
 	@Autowired
 	private ExamineYieDao examineYieDao;
+	@Autowired
+	private PeopleService peopleService;
+	@Autowired
+	private ProductService productService;
+	@Autowired
+	private ProcedureService procedureService;
 
 	@GetMapping()
 	String Yield() {
@@ -81,7 +87,13 @@ public class YieldController {
 	}
 
 	@GetMapping("/add")
-	String add() {
+	String add(Model model) {
+		List<PeopleDO> peopleDOList = peopleService.list(null);
+		List<ProductDO> productDOList = productService.list(null);
+		List<ProcedureDO> procedureDOList = procedureService.list(null);
+		model.addAttribute("peopleDOList",peopleDOList);
+		model.addAttribute("productDOList",productDOList);
+		model.addAttribute("procedureDOList",procedureDOList);
 		return "system/yield/add";
 	}
 
