@@ -63,20 +63,29 @@ public class YieldHeaderController {
 	    return "system/yieldHeader/add";
 	}
 
+	/*
+	* 统计表表单的编辑方法
+	* */
 	@GetMapping("/edit/{id}")
 	String edit(@PathVariable("id") Integer id,Model model){
 
 		YieldHeaderDO yieldHeader = yieldHeaderService.get(id);
+		//判断该表单是否审核，已审核返回error2，未审核继续执行
 		if (0==yieldHeader.getStats()){
+			//保存该该表单的表头
 			model.addAttribute("yieldHeader", yieldHeader);
      //		知道了审核人id，查询关联的产品
 			Map<String,Object> map=new HashMap<>(1);
+			//保存该表单的id
 			map.put("headerId",id);
+			//查询中间表
 			List<ExamineYieDO> list = examineYieDao.list(map);
 			Integer [] ids=new Integer[list.size()];
+			//遍历中间表，封装表体的id
 			for(int i=0;i<list.size();i++){
 				ids[i]=list.get(i).getYieId();
 			}
+			//保存表体id的数组
 			model.addAttribute("ids", ids);
 			return "system/yieldHeader/edit";
 		}else {
@@ -85,15 +94,19 @@ public class YieldHeaderController {
 
 	}
 
+	/*
+	* 统计表表单的查看方法
+	* */
     @GetMapping("/resetPwd/{id}")
     String resetPwd(@PathVariable("id") Integer id,Model model){
         YieldHeaderDO yieldHeader = yieldHeaderService.get(id);
 		model.addAttribute("yieldHeader", yieldHeader);
-		//		知道了审核人id，查询关联的产品
+		//知道了审核人id，查询关联的产品
 		Map<String,Object> map=new HashMap<>(1);
 		map.put("headerId",id);
 		List<ExamineYieDO> list = examineYieDao.list(map);
 		Integer [] ids=new Integer[list.size()];
+		//封装表体的id
 		for(int i=0;i<list.size();i++) {
 			ids[i] = list.get(i).getYieId();
 		}
