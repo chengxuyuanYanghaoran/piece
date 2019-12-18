@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hlwxy.xr_piece.system.dao.YieldExtendDao">
+
+	<resultMap id="yieldExtendDO" type="com.hlwxy.xr_piece.system.domain.YieldExtendDO">
+		<id column="id" property="id"></id>
+		<result column="date_mark" property="dateMark"></result>
+		<result column="people_code" property="peopleCode"></result>
+		<result column="name" property="name"></result>
+		<result column="pro_code" property="proCode"></result>
+		<result column="pro_name" property="proName"></result>
+		<result column="product_code" property="productCode"></result>
+		<result column="product_name" property="productName"></result>
+		<result column="harvest" property="harvest"></result>
+		<result column="pro_price" property="proPrice"></result>
+		<result column="product_price" property="productPrice"></result>
+	</resultMap>
+
+	<!--查询所有应审核且未添加到核算表单中的数据-->
+	<select id="list" resultType="java.lang.Integer">
+		SELECT
+			examine_yie.yie_id AS id
+		FROM
+			yield_header
+			LEFT JOIN examine_yie ON yield_header.id = examine_yie.header_id
+			WHERE
+			yield_header.stats = 1
+			AND yield_header.stats2 =0
+	</select>
+	<!--根据id查询对应的统计表体数据-->
+ 	<select id="get" parameterType="java.lang.Integer" resultMap="yieldExtendDO">
+		SELECT
+			yield.*,
+			`procedure`.pro_price,
+			product.product_price
+		FROM
+			yield
+			LEFT JOIN `procedure` ON yield.pro_code = `procedure`.pro_code
+			LEFT JOIN product ON yield.product_code = product.product_code
+			WHERE
+			yield.id=${id}
+	</select>
+	<!--向核算表单中插入表体数据-->
+	<insert id="add" parameterType="java.util.List">
+		INSERT INTO `wages` (bill_code,date_mark,people_code,`name`,pro_code,pro_name,product_code,product_name,harvest,pro_price,product_price,money) VALUES
+		<foreach collection="yieldExtendDOS" item="yieldExtendDO" index="index" separator=",">
+			(
+			#{yieldExtendDO.yieldCode},
+			#{yieldExtendDO.dateMark},
+			#{yieldExtendDO.peopleCode},
+			#{yieldExtendDO.name},
+			#{yieldExtendDO.proCode},
+			#{yieldExtendDO.proName},
+			#{yieldExtendDO.productCode},
+			#{yieldExtendDO.productName},
+			#{yieldExtendDO.harvest},
+			#{yieldExtendDO.proPrice},
+			#{yieldExtendDO.productPrice},
+			#{yieldExtendDO.money}
+			)
+		</foreach>
+	</insert>
+	<!--根据统计表单的表体id获取统计表单的表头id-->
+	<select id="getHeaderId" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+		SELECT
+			examine_yie.header_id AS id
+		FROM
+			yield
+			LEFT JOIN examine_yie ON examine_yie.yie_id = yield.id
+			WHERE yield.id=${id}
+	</select>
+	<!--根据表头id修改表头状态二-->
+	<update id="updateStats2" parameterType="java.lang.Integer">
+		UPDATE yield_header
+		SET yield_header.stats2 = 1
+		WHERE
+		yield_header.id=${id}
+	</update>
+	<!--根据核算单据的编号查询出表体的所有id-->
+	<select id="findWagesId" parameterType="java.lang.String" resultType="java.lang.Integer">
+		SELECT
+			wages.id AS id
+		FROM
+			wages_header
+			LEFT JOIN wages ON wages_header.bill_code = wages.bill_code
+			WHERE wages_header.bill_code='${code}'
+	</select>
+
+
+</mapper>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>根据相应条件查询并下载文件</title>
+</head>
+<body>
+<button onclick="downloadFile()" value="下载">下载</button>
+</body>
+<script src="/static/js/jquery-3.4.0.min.js"></script>
+<script>
+    function downloadFile() {
+
+        var url = "/system/department/exportExcel";
+        var filename = "测试文件";
+        var id=1;
+        alert(id);
+        var form = $("<form></form>").attr("action", url).attr("method", "post");
+        form.append($("<input></input>").attr("type", "hidden").attr("name", "filename").attr("value", filename));
+        form.append($("<input></input>").attr("type", "hidden").attr("name", "id").attr("value", id));
+
+        form.appendTo('body').submit().remove();
+    }
+</script>
+</html>
