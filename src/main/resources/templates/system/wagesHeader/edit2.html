@@ -54,9 +54,12 @@
 </script>
 <script type="text/javascript">
     var prefix = "/system/wages";
-    var item = localStorage.getItem("selectIndex");
-    $("#exampleTable").append('<tr><th></th><th>日期</th><th>人员编码</th><th>姓名</th><th>工序编码</th><th>工序名称</th><th>工序单价</th><th>产品编码</th><th>产品名称</th><th>产品单价</th><th>产量</th><th>金额</th></tr>');
-
+    var item = parent.parent.$("input[name='state']:checked").val();//获取计价的方式
+    if (item==0){ //按照产品计价
+        $("#exampleTable").append('<tr><th></th><th>日期</th><th>人员编码</th><th>姓名</th><th>产品编码</th><th>产品名称</th><th>产品单价</th><th>产量</th><th>金额</th></tr>');
+    }else { //按照工序计价
+        $("#exampleTable").append('<tr><th></th><th>日期</th><th>人员编码</th><th>姓名</th><th>工序编码</th><th>工序名称</th><th>工序单价</th><th>产量</th><th>金额</th></tr>');
+    }
     $(function () {
         loadTableIds(ids);
     });
@@ -103,9 +106,9 @@
             success : function(data) {
                 var html='';
                 if(item=='0'){
-                    html='<tr><td><input  name="ids" checked="checked"   type="checkbox" value="'+data.id+'"></td><td>'+data.dateMark+'</td><td>'+data.peopleCode+'</td><td>'+data.name+'</td><td>'+data.proCode+'</td><td>'+data.proName+'</td><td>'+data.proPrice+'</td><td>'+data.productCode+'</td><td>'+data.productName+'</td><td>'+data.productPrice+'</td><td>'+data.harvest+'</td><td>'+data.money+'</td></tr>';
+                    html+='<tr><td><input  name="ids" checked="checked"   type="checkbox" value="'+data[i].id+'"></td><td>'+data[i].dateMark+'</td><td>'+data[i].peopleCode+'</td><td>'+data[i].name+'</td><td>'+data[i].productCode+'</td><td>'+data[i].productName+'</td><td>'+data[i].productPrice+'</td><td>'+data[i].harvest+'</td><td>'+data[i].money+'</td></tr>';
                 }else if(item=='1'){
-                    html='<tr><td><input  name="ids" checked="checked"   type="checkbox" value="'+data.id+'"></td><td>'+data.dateMark+'</td><td>'+data.peopleCode+'</td><td>'+data.name+'</td><td>'+data.proCode+'</td><td>'+data.proName+'</td><td>'+data.proPrice+'</td><td>'+data.productCode+'</td><td>'+data.productName+'</td><td>'+data.productPrice+'</td><td>'+data.harvest+'</td><td>'+data.money+'</td></tr>';
+                    html+='<tr><td><input  name="ids" checked="checked"   type="checkbox" value="'+data[i].id+'"></td><td>'+data[i].dateMark+'</td><td>'+data[i].peopleCode+'</td><td>'+data[i].name+'</td><td>'+data[i].proCode+'</td><td>'+data[i].proName+'</td><td>'+data[i].proPrice+'</td>'+'<td>'+data[i].harvest+'</td><td>'+data[i].money+'</td></tr>';
                 }
                 $("#exampleTable").append(html);
             }
@@ -115,7 +118,7 @@
         $.ajax({
             cache : false,
             type : "POST",
-            url : "/system/wages/getByIds",
+            url : "/system/wages/getByIds2",
             data: {
                 "ids": ids
             },
@@ -124,9 +127,9 @@
                 var html='';
                 for(var i=0;i<data.length;i++){
                     if(item=='0'){
-                        html+='<tr><td><input  name="ids" checked="checked"   type="checkbox" value="'+data[i].id+'"></td><td>'+data[i].dateMark+'</td><td>'+data[i].peopleCode+'</td><td>'+data[i].name+'</td><td>'+data[i].proCode+'</td><td>'+data[i].proName+'</td><td>'+data[i].proPrice+'</td><td>'+data[i].productCode+'</td><td>'+data[i].productName+'</td><td>'+data[i].productPrice+'</td><td>'+data[i].harvest+'</td><td>'+data[i].money+'</td></tr>';
+                        html+='<tr><td><input  name="ids" checked="checked"   type="checkbox" value="'+data[i].id+'"></td><td>'+data[i].dateMark+'</td><td>'+data[i].peopleCode+'</td><td>'+data[i].name+'</td><td>'+data[i].productCode+'</td><td>'+data[i].productName+'</td><td>'+data[i].productPrice+'</td><td>'+data[i].harvest+'</td><td>'+data[i].money+'</td></tr>';
                     }else if(item=='1'){
-                        html+='<tr><td><input  name="ids" checked="checked"   type="checkbox" value="'+data[i].id+'"></td><td>'+data[i].dateMark+'</td><td>'+data[i].peopleCode+'</td><td>'+data[i].name+'</td><td>'+data[i].proCode+'</td><td>'+data[i].proName+'</td><td>'+data[i].proPrice+'</td><td>'+data[i].productCode+'</td><td>'+data[i].productName+'</td><td>'+data[i].productPrice+'</td><td>'+data[i].harvest+'</td><td>'+data[i].money+'</td></tr>';
+                        html+='<tr><td><input  name="ids" checked="checked"   type="checkbox" value="'+data[i].id+'"></td><td>'+data[i].dateMark+'</td><td>'+data[i].peopleCode+'</td><td>'+data[i].name+'</td><td>'+data[i].proCode+'</td><td>'+data[i].proName+'</td><td>'+data[i].proPrice+'</td>'+'<td>'+data[i].harvest+'</td><td>'+data[i].money+'</td></tr>';
                     }
                 }
                 $("#exampleTable").append(html);

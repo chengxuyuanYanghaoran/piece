@@ -1,13 +1,6 @@
 package com.hlwxy.xr_piece.system.controller;
 
-import com.hlwxy.xr_piece.system.domain.DepartmentDO;
-import com.hlwxy.xr_piece.system.service.DepartmentService;
-import com.hlwxy.xr_piece.utils.PageUtils;
-import com.hlwxy.xr_piece.utils.Query;
-import com.hlwxy.xr_piece.utils.R;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.ServletOutputStream;
@@ -16,8 +9,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
-import java.util.List;
-import java.util.Map;
+
 
 
 /**

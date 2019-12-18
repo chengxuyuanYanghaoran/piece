@@ -10,6 +10,7 @@ import com.hlwxy.xr_piece.system.service.DepartmentService;
 import com.hlwxy.xr_piece.utils.PageUtils;
 import com.hlwxy.xr_piece.utils.Query;
 import com.hlwxy.xr_piece.utils.R;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.stereotype.Controller;
@@ -20,12 +21,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 
 /**
  * 
  * 
- * @author lu
+ * @author lu/yanghaoran
  * @email 1992lcg@163.com
  * @date 2019-11-11 17:24:05
  */
@@ -64,6 +67,28 @@ public class DepartmentController {
 	    return "system/department/edit";
 	}
 
+	/*
+	* 测试下载文件
+	*
+	@RequestMapping("/exportExcel")
+	public void exportExcel(HttpServletRequest request, HttpServletResponse response,@RequestParam("filename") String filename, @RequestParam("id") String id){
+		try {
+			Integer id2= Integer.valueOf(id);
+			HSSFWorkbook workbook=departmentService.exportExcel(id2);
+			response.reset();
+			response.setContentType("application/octet-stream; charset=utf-8");
+			response.setHeader("Content-Disposition", "attachment; filename=" + filename + ".xlsx");
+			workbook.write(response.getOutputStream());
+		}catch (Exception e){
+			e.printStackTrace();
+		}
+	}
+	@GetMapping("/demo")
+	String demo(){
+		return "demo";
+	}
+
+	*/
 
 	/**
 	 * 保存

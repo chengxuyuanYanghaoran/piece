@@ -7,10 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.hlwxy.xr_piece.system.domain.*;
-import com.hlwxy.xr_piece.system.service.PeopleService;
-import com.hlwxy.xr_piece.system.service.ProcedureService;
-import com.hlwxy.xr_piece.system.service.ProductService;
-import com.hlwxy.xr_piece.system.service.WagesService;
+import com.hlwxy.xr_piece.system.service.*;
 import com.hlwxy.xr_piece.utils.PageUtils;
 import com.hlwxy.xr_piece.utils.Query;
 import com.hlwxy.xr_piece.utils.R;
@@ -42,6 +39,8 @@ public class WagesController {
     private ProductService productService;
     @Autowired
     private ProcedureService procedureService;
+    @Autowired
+    private YieldExtendService yieldExtendService;
 
     @GetMapping()
     String Wages() {
@@ -85,7 +84,19 @@ public class WagesController {
         model.addAttribute("productDOList", productDOList);
         List<ProcedureDO> procedureDOList = procedureService.list(null);
         model.addAttribute("procedureDOList", procedureDOList);
-        return "system/wages/add";
+        return "system/wages/addDemo";
+    }
+
+    /*
+    * 我写的
+    * mode：计价方式，0表示产品，1表示工序
+    * */
+    @GetMapping("/addDemo")
+    @ResponseBody
+    PageUtils addDemo(Model model,String mode) {
+        List<YieldExtendDO> yieldExtendDOS=yieldExtendService.list(mode);
+        PageUtils pageUtils = new PageUtils(yieldExtendDOS, yieldExtendDOS.size());
+        return pageUtils;
     }
 
     @GetMapping("/add1")
@@ -174,13 +185,24 @@ public class WagesController {
         return wagesDO;
     }
 
-    @PostMapping("/getByIds")
+    @PostMapping("/getByIds2")
     @ResponseBody
-    public List<WagesDO> getByIds(@RequestParam("ids[]") Integer[] ids) {
+    public List<WagesDO> getByIds2(@RequestParam("ids[]") Integer[] ids) {
         List<WagesDO> list = new ArrayList<>();
         for (int i : ids) {
             WagesDO wagesDO = wagesService.get(i);
             list.add(wagesDO);
+        }
+        return list;
+    }
+
+    @PostMapping("/getByIds")
+    @ResponseBody
+    public List<YieldExtendDO> getByIds(@RequestParam("ids[]") Integer[] ids,String mode) {
+        List<YieldExtendDO> list = new ArrayList<>();
+        for (int i : ids) {
+            YieldExtendDO yieldExtendDO=yieldExtendService.get(i,mode);
+            list.add(yieldExtendDO);
         }
         return list;
     }

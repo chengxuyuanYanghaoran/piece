@@ -9,6 +9,7 @@ import com.hlwxy.xr_piece.system.dao.ExamineWagesDao;
 import com.hlwxy.xr_piece.system.domain.*;
 import com.hlwxy.xr_piece.system.service.WagesHeaderService;
 import com.hlwxy.xr_piece.system.service.WagesService;
+import com.hlwxy.xr_piece.system.service.YieldExtendService;
 import com.hlwxy.xr_piece.utils.PageUtils;
 import com.hlwxy.xr_piece.utils.Query;
 import com.hlwxy.xr_piece.utils.R;
@@ -43,6 +44,8 @@ public class WagesHeaderController {
 
 	@Autowired
 	private WagesService wagesService;
+	@Autowired
+	private YieldExtendService yieldExtendService;
 	@GetMapping()
 	String WagesHeader(){
 	    return "system/wagesHeader/wagesHeader";
@@ -99,10 +102,22 @@ public class WagesHeaderController {
 	 */
 	@ResponseBody
 	@PostMapping("/saveTable")
-	public R save(WagesHeaderDO wagesHeader,Integer[] ids) throws ParseException {
+	public R save(WagesHeaderDO wagesHeader,Integer[] ids,String mode) throws ParseException {
 		SimpleDateFormat sfd = new SimpleDateFormat("yyyy-MM-dd");
 		Date date = sfd.parse(wagesHeader.getAccountingDate());
 		wagesHeader.setBillDate(wagesHeader.getBillDate()+"-01");
+
+		//获取表体数据的集合
+		List<YieldExtendDO> list = new ArrayList<>();
+		for (int i : ids) {
+			YieldExtendDO yieldExtendDO=yieldExtendService.get(i,mode);
+			yieldExtendDO.setYieldCode(wagesHeader.getBillCode());
+			list.add(yieldExtendDO);
+		}
+		//将表体数据插入到表中
+		yieldExtendService.add(list);
+		//修改表头状态二的值
+		yieldExtendService.getHeaderId(ids);
 
 //		List<WagesDO> wagesList=wagesService.list(null);
 //		if("0".equals(item)){
@@ -123,13 +138,22 @@ public class WagesHeaderController {
 //			}
 //		}
 
+		//将表头和表体的id都保存到中间表
 		if(wagesHeaderService.save(wagesHeader)>0){
-			for (int i:ids){
+			//获取核算表所有表体数据的id
+			List<Integer> wagesIds=yieldExtendService.findWagesId(wagesHeader.getBillCode());
+			for (Integer i:wagesIds) {
 				ExamineWagesDO examineWagesDO=new ExamineWagesDO();
 				examineWagesDO.setWagesId(i);
 				examineWagesDO.setHeaderId(wagesHeader.getId());
 				examineWagesDao.save(examineWagesDO);
 			}
+//			for (int i:ids){
+//				ExamineWagesDO examineWagesDO=new ExamineWagesDO();
+//				examineWagesDO.setWagesId(i);
+//				examineWagesDO.setHeaderId(wagesHeader.getId());
+//				examineWagesDao.save(examineWagesDO);
+//			}
 			return R.ok();
 		}
            return R.error();

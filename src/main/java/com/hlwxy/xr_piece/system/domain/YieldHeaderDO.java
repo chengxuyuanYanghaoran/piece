@@ -33,9 +33,10 @@ public class YieldHeaderDO  implements Serializable  {
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	@JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd")
 	private Date auditDate;
-
+	//审核状态
 	private Integer stats;
-
+	//是否已添加到核算表单
+	private Integer stats2;
 
 	private Set<YieldDO> roles = new HashSet<>();
 
@@ -44,7 +45,7 @@ public class YieldHeaderDO  implements Serializable  {
 	public YieldHeaderDO() {
 	}
 
-	public YieldHeaderDO(Integer id, String yieldCode, String yieldDate, java.sql.Date yieldDate2, String auditor, Date auditDate, Integer stats) {
+	public YieldHeaderDO(Integer id, String yieldCode, String yieldDate, java.sql.Date yieldDate2, String auditor, Date auditDate, Integer stats, Integer stats2) {
 		this.id = id;
 		this.yieldCode = yieldCode;
 		this.yieldDate = yieldDate;
@@ -52,8 +53,8 @@ public class YieldHeaderDO  implements Serializable  {
 		this.auditor = auditor;
 		this.auditDate = auditDate;
 		this.stats = stats;
+		this.stats2 = stats2;
 	}
-
 
 	public Set<YieldDO> getRoles() {
 		return roles;
@@ -119,5 +120,13 @@ public class YieldHeaderDO  implements Serializable  {
 
 	public void setStats(Integer stats) {
 		this.stats = stats;
+	}
+
+	public Integer getStats2() {
+		return stats2;
+	}
+
+	public void setStats2(Integer stats2) {
+		this.stats2 = stats2;
 	}
 }

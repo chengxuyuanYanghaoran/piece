@@ -4,11 +4,11 @@
 <mapper namespace="com.hlwxy.xr_piece.system.dao.YieldHeaderDao">
 
     <select id="get" resultType="com.hlwxy.xr_piece.system.domain.YieldHeaderDO">
-		select `id`,`yield_code`,`yield_date`,`auditor`,`audit_date`,`stats` from yield_header where id = #{value}
+		select `id`,`yield_code`,`yield_date`,`auditor`,`audit_date`,`stats`,`stats2` from yield_header where id = #{value}
 	</select>
 
     <select id="list" resultType="com.hlwxy.xr_piece.system.domain.YieldHeaderDO">
-        select `id`,`yield_code`,`yield_date`,`auditor`,`audit_date`,`stats` from yield_header
+        select `id`,`yield_code`,`yield_date`,`auditor`,`audit_date`,`stats`,`stats2` from yield_header
         <where>
             <if test="id != null and id != ''">and id = #{id}</if>
             <if test="yieldCode != null and yieldCode != ''">and yield_code = #{yieldCode}</if>
@@ -50,7 +50,8 @@
 			`yield_date`, 
 			`auditor`, 
 			`audit_date`,
-			`stats`
+			`stats`,
+			`stats2`
 		)
 		values
 		(
@@ -58,7 +59,8 @@
 			#{yieldDate}, 
 			#{auditor}, 
 			#{auditDate},
-			#{stats}
+			#{stats},
+			#{stats2}
 
 		)
 	</insert>
@@ -70,7 +72,8 @@
             <if test="yieldDate != null">`yield_date` = #{yieldDate},</if>
             <if test="auditor != null">`auditor` = #{auditor},</if>
             <if test="auditDate != null">`audit_date` = #{auditDate},</if>
-            <if test="stats != null">`stats` = #{stats}</if>
+            <if test="stats != null">`stats` = #{stats},</if>
+            <if test="stats2 != null">`stats2` = #{stats2}</if>
         </set>
         where id = #{id}
     </update>

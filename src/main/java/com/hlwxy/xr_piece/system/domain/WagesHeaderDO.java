@@ -22,7 +22,8 @@ public class WagesHeaderDO implements Serializable {
 
     private String accountingDate;
     //日期
-
+    @DateTimeFormat(pattern="yyyy-MM-dd")
+    @JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd")
 	private String billDate;
 	//审核人
 	private String auditor;

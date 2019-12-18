@@ -38,6 +38,8 @@
 					</table>
 
 					<hr style="margin-top: 0; margin-bottom: 10px"/>
+					<!--隐藏表单域 分装计件方式-->
+					<input type="hidden" id="mode" name="mode" value="0">
 					<div class="form-footer" style="display: flex; justify-content: space-around">
 						<div class="form-group">
 							<label>审核人:</label><input name="auditor" type="text" class="form-control" id="auditor" ></div>
@@ -59,10 +61,14 @@
 <script th:inline="javascript">
     var item=[[${item}]];
 </script>
-
 <script type="text/javascript">
-    var item = localStorage.getItem("selectIndex");
-        $("#exampleTable").append('<tr><th></th><th>日期</th><th>人员编码</th><th>姓名</th><th>工序编码</th><th>工序名称</th><th>产品编码</th><th>产品名称</th><th>工序单价</th><th>产品单价</th><th>产量</th><th>金额</th></tr>');
+    var item = parent.parent.$("input[name='state']:checked").val();//获取计价的方式
+    if (item==0){
+        $("#exampleTable").append('<tr><th></th><th>日期</th><th>人员编码</th><th>姓名</th><th>产品编码</th><th>产品名称</th><th>产品单价</th><th>产量</th><th>金额</th></tr>');
+	}else {
+        $("#exampleTable").append('<tr><th></th><th>日期</th><th>人员编码</th><th>姓名</th><th>工序编码</th><th>工序名称</th><th>工序单价</th><th>产量</th><th>金额</th></tr>');
+
+    }
 
     var prefix = "/system/wages";
     function add() {
@@ -83,9 +89,9 @@
             async : false,
             success : function(data) {
                 var html='';
-                if(item=='0'){
+                if(item=='0'){ //按照产品计价
                     html='<tr><td><input  name="ids" checked="checked"   type="checkbox" value="'+data.id+'"></td><td>'+data.dateMark+'</td><td>'+data.peopleCode+'</td><td>'+data.name+'</td><td>'+data.proCode+'</td><td>'+data.proName+'</td><td>'+data.productCode+'</td><td>'+data.productName+'</td><td>'+data.proPrice+'</td><td>'+data.productPrice+'</td><td>'+data.harvest+'</td><td>'+data.money+'</td></tr>';
-                }else if(item=='1'){
+                }else if(item=='1'){ //按照工序计价
                     html='<tr><td><input  name="ids" checked="checked"   type="checkbox" value="'+data.id+'"></td><td>'+data.dateMark+'</td><td>'+data.peopleCode+'</td><td>'+data.name+'</td><td>'+data.proCode+'</td><td>'+data.proName+'</td><td>'+data.productCode+'</td><td>'+data.productName+'</td><td>'+data.proPrice+'</td><td>'+data.productPrice+'</td><td>'+data.harvest+'</td><td>'+data.money+'</td></tr>';
                 }
                 $("#exampleTable").append(html);
@@ -98,15 +104,16 @@
             type : "POST",
             url : "/system/wages/getByIds",
             data: {
-                "ids": ids
+                "ids": ids,
+				"mode":item
             },
             async : false,
             success : function(data) {
                 var html='';
                 for(var i=0;i<data.length;i++){
-                    if(item=='0'){
-                        html+='<tr><td><input  name="ids" checked="checked"   type="checkbox" value="'+data[i].id+'"></td><td>'+data[i].dateMark+'</td><td>'+data[i].peopleCode+'</td><td>'+data[i].name+'</td><td>'+data[i].proCode+'</td><td>\'+data[i].proName+\'</td><td>'+data[i].productCode+'</td><td>'+data[i].productName+'</td><td>'+data[i].productPrice+'</td><td>'+data[i].harvest+'</td><td>'+data[i].money+'</td></tr>';
-                    }else if(item=='1'){
+                    if(item=='0'){ //按照产品计价
+                        html+='<tr><td><input  name="ids" checked="checked"   type="checkbox" value="'+data[i].id+'"></td><td>'+data[i].dateMark+'</td><td>'+data[i].peopleCode+'</td><td>'+data[i].name+'</td>'+'<td>'+data[i].productCode+'</td><td>'+data[i].productName+'</td><td>'+data[i].productPrice+'</td><td>'+data[i].harvest+'</td><td>'+data[i].money+'</td></tr>';
+                    }else if(item=='1'){ //按照工序计价
                         html+='<tr><td><input  name="ids" checked="checked"   type="checkbox" value="'+data[i].id+'"></td><td>'+data[i].dateMark+'</td><td>'+data[i].peopleCode+'</td><td>'+data[i].name+'</td><td>'+data[i].proCode+'</td><td>'+data[i].proName+'</td><td>'+data[i].proPrice+'</td><td>'+data[i].harvest+'</td><td>'+data[i].money+'</td></tr>';
                     }
                 }
@@ -116,6 +123,7 @@
     }
 
     function saveTable(){
+        $("#mode").val(item);//修改隐藏表单域的值
         $.ajax({
             cache : true,
             type : "POST",
