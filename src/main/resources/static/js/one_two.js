@@ -1,4 +1,5 @@
 
+
 //年范围
 layui.use(['form', 'layedit', 'laydate', "jquery"], function () {
     var form = layui.form
@@ -119,7 +120,7 @@ window.onload=function () {
 
                     let a = res.productDOS;
                     let p = 1;//根据p值显示每页的数据
-                    let d = 2;
+                    let d = 25;//每页显示多少条
                     let b=(res.productDOS.length)%(a.slice((p - 1) * d, d * p)).length;
                     let c=(res.productDOS.length)/(a.slice((p - 1) * d, d * p)).length;
                     if (b!=0){
@@ -155,7 +156,7 @@ window.onload=function () {
                     asAll[p - 1].classList.add('active');
                     //遍历总页数
                     asAll.forEach((item, index) => {
-//点击页数
+                    //点击页数
                         item.onclick = function () {
                             for (let j = 0; j < asAll.length; j++) {
                                 asAll[j].classList.remove('active');
@@ -303,7 +304,7 @@ window.onload=function () {
                     // });
                     let a = res.procedureDOS;
                     let p = 1;//根据p值显示每页的数据
-                    let d = 2;
+                    let d = 20;
                     let b=(res.procedureDOS.length)%(a.slice((p - 1) * d, d * p)).length;
                     let c=(res.procedureDOS.length)/(a.slice((p - 1) * d, d * p)).length;
                     if (b!=0){
@@ -339,7 +340,7 @@ window.onload=function () {
                     asAll[p - 1].classList.add('active');
                     //遍历总页数
                     asAll.forEach((item, index) => {
-//点击页数
+                    //点击页数
                         item.onclick = function () {
                             for (let j = 0; j < asAll.length; j++) {
                                 asAll[j].classList.remove('active');
@@ -485,7 +486,7 @@ window.onload=function () {
                     // });
                     let a = res.peopleDOS;
                     let p = 1;//根据p值显示每页的数据
-                    let d = 5;
+                    let d = 25;
                     let b=(res.peopleDOS.length)%(a.slice((p - 1) * d, d * p)).length;
                     let c=(res.peopleDOS.length)/(a.slice((p - 1) * d, d * p)).length;
                     if (b!=0){
@@ -521,7 +522,7 @@ window.onload=function () {
                     asAll[p - 1].classList.add('active');
                     //遍历总页数
                     asAll.forEach((item, index) => {
-//点击页数
+                    //点击页数
                         item.onclick = function () {
                             for (let j = 0; j < asAll.length; j++) {
                                 asAll[j].classList.remove('active');
@@ -669,7 +670,7 @@ window.onload=function () {
                     // });
                     let a = res.departmentDOS;
                     let p = 1;//根据p值显示每页的数据
-                    let d = 2;
+                    let d = 20;
                     let b=(res.departmentDOS.length)%(a.slice((p - 1) * d, d * p)).length;
                     let c=(res.departmentDOS.length)/(a.slice((p - 1) * d, d * p)).length;
                     if (b!=0){
@@ -704,7 +705,7 @@ window.onload=function () {
                     asAll[p - 1].classList.add('active');
                     //遍历总页数
                     asAll.forEach((item, index) => {
-//点击页数
+                    //点击页数
                         item.onclick = function () {
                             for (let j = 0; j < asAll.length; j++) {
                                 asAll[j].classList.remove('active');
